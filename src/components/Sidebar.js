@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import GlobalState from './GlobalState'
+import GlobalState from '../GlobalState'
 import { Person, ShoppingCart, HowToReg } from '@material-ui/icons'
 
 function Sidebar() {
-  return (
+
+    const [button1, setButton1] = useState(false)
+    const [button2, setButton2] = useState(false)
+    const [button3, setButton3] = useState(false)
+    const [button4, setButton4] = useState(false)
+
+    const handleClick = () => {
+        setButton1(prev => !prev)   
+    }
+   return (
     <Container>
         <GlobalState />
         <Logo>TShop</Logo>
@@ -19,24 +28,27 @@ function Sidebar() {
         </Wrapper>
 
         <SidebarList>
-            <SidebarItem isSelected={true}>
+            <SidebarItem 
+                isSelected={button1}
+                onClick = {handleClick}
+            >
                 <Person />
                 <span>User</span>
             </SidebarItem>
 
-            <SidebarItem isSelected={false}>
+            <SidebarItem isSelected={button2}>
                 <ShoppingCart />
                 <span>Product</span>
             </SidebarItem>
 
-            <SidebarItem isSelected={false}>
+            <SidebarItem isSelected={button3}>
                 <LoginIcon>
                     <img src='images/outline_login_black_24dp.png' alt='login'></img>
                 </LoginIcon>
                 <span>Login</span>
             </SidebarItem>
 
-            <SidebarItem isSelected={false}>
+            <SidebarItem isSelected={button4}>
                 <HowToReg />
                 <span>Register</span>
             </SidebarItem>
@@ -53,7 +65,7 @@ const Container = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    width: 275px;
+    width: var(--sidebar-width);
     height: 100vh;
     z-index: 999;
     border-right: 1px solid #e1e5e9; 
@@ -116,16 +128,16 @@ const SidebarItem = styled.li`
     display: flex;
     align-items: center;
     margin: 12px 0;
-
-    &:hover {
-        background-color: #f1f2f5;
-    }
-
     ${state=>state.isSelected ? `
         color: var(--primary-color);
         border-right: 4px solid var(--primary-color);
         background-color: #f1f2f5;   
-    `: ''};
+    `: ''}
+    
+    &:hover {
+        background-color: #f1f2f5;
+    }
+    
     span {
         margin-left: 16px;
         font-size: 14px;
