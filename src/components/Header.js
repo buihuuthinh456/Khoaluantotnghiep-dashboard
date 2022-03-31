@@ -61,7 +61,7 @@ function Header() {
         <Controller>
             <Notification ref={notiRef}  onClick={()=>setNotibox(state => !state)}>
                 <Badge badgeContent={2} color="secondary">
-                    <NotificationIcon />
+                    <NotificationIcon style={{ fontSize: 24 }}/>
                 </Badge>
 
                 {notiBox && <NotificationMenu>
@@ -151,6 +151,8 @@ const Controller = styled.div`
 `
 
 const NotificationIcon = styled(Notifications)`
+    width: 2rem;
+    height: 2rem;
     cursor: pointer;
     color: gray;
 `

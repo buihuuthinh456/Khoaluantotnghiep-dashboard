@@ -10,6 +10,18 @@ function GlobalState() {
 export default GlobalState
 
 const GlobalStyle = createGlobalStyle`
+  html{
+        font-size: 62.5%;
+        scroll-behavior: smooth;
+  }
+
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 1.6rem;
+  }
+
   :root {
     --header-height: 92px;
     --primary-color: #00ab55;

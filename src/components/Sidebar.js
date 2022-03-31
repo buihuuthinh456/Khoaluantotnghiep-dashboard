@@ -6,14 +6,8 @@ import { Link } from 'react-router-dom'
 
 function Sidebar() {
 
-    const [button1, setButton1] = useState(false)
-    const [button2, setButton2] = useState(false)
-    const [button3, setButton3] = useState(false)
-    const [button4, setButton4] = useState(false)
+   const [selectLi, setSelectLi] = useState('user')
 
-    const handleClick = () => {
-        setButton1(prev => !prev)   
-    }
    return (
     <Container>
         <GlobalState />
@@ -30,25 +24,31 @@ function Sidebar() {
 
         <SidebarList>
             <Link to="/" style={{ textDecoration: "none", color: "black"}}>
-                <SidebarItem 
-                    isSelected={button1}
-                    onClick = {handleClick}
+                <SidebarItem
+                    onClick={()=>setSelectLi('user')}  
+                    isSelected = {selectLi === 'user' ? true : false} 
                 >
-                    <Person />
+                    <Person style={{ fontSize: 24 }}/>
                     <span>User</span>
                 </SidebarItem>
             </Link>
 
             <Link to="/products" style={{ textDecoration: "none", color: "black"}}>
-                <SidebarItem isSelected={button2}>
-                    <ShoppingCart />
+                <SidebarItem 
+                    onClick={()=>setSelectLi('products')}
+                    isSelected = {selectLi === 'products' ? true : false} 
+                >
+                    <ShoppingCart style={{ fontSize: 24 }}/>
                     <span>Product</span>
                 </SidebarItem>
             </Link>
 
             
             <Link to="/login" style={{ textDecoration: 'none' }}>
-                <SidebarItem isSelected={button3}>  
+                <SidebarItem 
+                    onClick={()=>setSelectLi('login')}
+                    isSelected = {selectLi === 'login' ? true : false}
+                >  
                     <LoginIcon>
                         <img src='images/outline_login_black_24dp.png' alt='login'></img>
                     </LoginIcon>
@@ -57,8 +57,11 @@ function Sidebar() {
             </Link>
             
             <Link to="/register" style={{ textDecoration: "none", color: "black"}}>
-                <SidebarItem isSelected={button4}>
-                    <HowToReg />
+                <SidebarItem 
+                    onClick={()=>setSelectLi('register')}
+                    isSelected = {selectLi === 'register' ? true : false}
+                >
+                    <HowToReg style={{ fontSize: 24 }}/>
                     <span>Register</span>
                 </SidebarItem>
             </Link>
@@ -80,10 +83,6 @@ const Container = styled.div`
     height: 100vh;
     z-index: 999;
     border-right: 1px solid #e1e5e9; 
-`
-
-const LinkComponent = styled(Link)`
-    text-decoration: none;
 `
 
 const Logo = styled.h1`
