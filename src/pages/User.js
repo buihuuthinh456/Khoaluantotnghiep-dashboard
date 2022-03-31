@@ -3,14 +3,10 @@ import styled from 'styled-components'
 
 function User() {
   return (
-    <Container>
-        User
-    </Container>
+    <div>
+      user
+    </div>
   )
 }
 
 export default User
-
-const Container = styled.div`
-
-`

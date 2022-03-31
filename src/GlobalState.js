@@ -11,6 +11,7 @@ export default GlobalState
 
 const GlobalStyle = createGlobalStyle`
   :root {
+    --header-height: 92px;
     --primary-color: #00ab55;
     --hover-color: #f1f2f5;
     --sidebar-width: 275px;

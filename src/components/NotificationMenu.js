@@ -3,9 +3,9 @@ import { FadeIn } from '../GlobalState'
 import React from 'react'
 import styled from 'styled-components'
 
-function NotificationMenu() {
+function NotificationMenu(props) {
   return (
-    <Container>
+    <Container onClick={(e)=>e.stopPropagation()}>
         <Notification>
             <NotiInfo>
                 <h4>Notifications</h4>
@@ -115,7 +115,7 @@ const NotiInfo = styled.div`
 `
 
 const Mark = styled.div`
-    
+    cursor: pointer;
 `
 
 const CheckIcon = styled(Check)`
@@ -138,6 +138,7 @@ const NewNotiList = styled.ul`
 `
 
 const NewNotiItem = styled.li`
+    cursor: pointer;
     display:flex;
     align-items: center;
     padding: 12px 0;

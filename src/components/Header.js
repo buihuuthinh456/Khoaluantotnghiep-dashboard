@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { keyframes } from 'styled-components'
 import { Badge } from '@material-ui/core'
 import { Search, Notifications, Home, Person, Settings } from '@material-ui/icons'
 import NotificationMenu from './NotificationMenu'
@@ -60,12 +59,12 @@ function Header() {
         </SearchContainer>
 
         <Controller>
-            <Notification ref={notiRef} onClick={()=>setNotibox(state => !state)}>
+            <Notification ref={notiRef}  onClick={()=>setNotibox(state => !state)}>
                 <Badge badgeContent={2} color="secondary">
                     <NotificationIcon />
                 </Badge>
 
-                {notiBox && <NotificationMenu onClick={(e)=>e.stopPropagation()}>
+                {notiBox && <NotificationMenu>
                     
                 </NotificationMenu>}
 
@@ -152,6 +151,7 @@ const Controller = styled.div`
 `
 
 const NotificationIcon = styled(Notifications)`
+    cursor: pointer;
     color: gray;
 `
 
@@ -218,6 +218,7 @@ const UserInfo = styled.div`
 const UserController = styled.ul`
     list-style: none;
     padding: 0 20px;
+    margin-bottom: 12px;
 `
 
 const UserControllerItem = styled.li`

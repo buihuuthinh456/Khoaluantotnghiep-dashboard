@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import GlobalState from '../GlobalState'
 import { Person, ShoppingCart, HowToReg } from '@material-ui/icons'
+import { Link } from 'react-router-dom'
 
 function Sidebar() {
 
@@ -28,30 +29,40 @@ function Sidebar() {
         </Wrapper>
 
         <SidebarList>
-            <SidebarItem 
-                isSelected={button1}
-                onClick = {handleClick}
-            >
-                <Person />
-                <span>User</span>
-            </SidebarItem>
+            <Link to="/" style={{ textDecoration: "none", color: "black"}}>
+                <SidebarItem 
+                    isSelected={button1}
+                    onClick = {handleClick}
+                >
+                    <Person />
+                    <span>User</span>
+                </SidebarItem>
+            </Link>
 
-            <SidebarItem isSelected={button2}>
-                <ShoppingCart />
-                <span>Product</span>
-            </SidebarItem>
+            <Link to="/products" style={{ textDecoration: "none", color: "black"}}>
+                <SidebarItem isSelected={button2}>
+                    <ShoppingCart />
+                    <span>Product</span>
+                </SidebarItem>
+            </Link>
 
-            <SidebarItem isSelected={button3}>
-                <LoginIcon>
-                    <img src='images/outline_login_black_24dp.png' alt='login'></img>
-                </LoginIcon>
-                <span>Login</span>
-            </SidebarItem>
-
-            <SidebarItem isSelected={button4}>
-                <HowToReg />
-                <span>Register</span>
-            </SidebarItem>
+            
+            <Link to="/login" style={{ textDecoration: 'none' }}>
+                <SidebarItem isSelected={button3}>  
+                    <LoginIcon>
+                        <img src='images/outline_login_black_24dp.png' alt='login'></img>
+                    </LoginIcon>
+                    <span>Login</span>
+                </SidebarItem>
+            </Link>
+            
+            <Link to="/register" style={{ textDecoration: "none", color: "black"}}>
+                <SidebarItem isSelected={button4}>
+                    <HowToReg />
+                    <span>Register</span>
+                </SidebarItem>
+            </Link>
+            
         </SidebarList>
 
 
@@ -69,6 +80,10 @@ const Container = styled.div`
     height: 100vh;
     z-index: 999;
     border-right: 1px solid #e1e5e9; 
+`
+
+const LinkComponent = styled(Link)`
+    text-decoration: none;
 `
 
 const Logo = styled.h1`
@@ -142,6 +157,8 @@ const SidebarItem = styled.li`
         margin-left: 16px;
         font-size: 14px;
         font-weight: 400;
+        color: var(--text-color);
+        text-decoration: none !important;
     }
 `
 
