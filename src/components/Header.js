@@ -37,13 +37,11 @@ function Header() {
 
     const notiRef = useRef()
     useEffect(()=>{
-
         const handler = (e) => {
             if(!notiRef.current.contains(e.target)) {
                 setNotibox(false)
             }
         }
-
         window.addEventListener("mousedown", handler)
 
         return () => {
@@ -116,7 +114,9 @@ const Container = styled.div`
     height: 92px;
     display: flex;
     align-items: center;
-    justify-content: space-between;  
+    justify-content: space-between;
+    background-color: #f9fafb;
+    z-index: 100;  
 `
 
 const SearchIcon = styled(Search)`
@@ -174,6 +174,7 @@ const UserIcon = styled.div`
     height: 40px;
     border-radius: 50%;
     position: relative;
+    z-index: 100;
 
     img {
         width: 100%;
@@ -188,6 +189,7 @@ const UserIcon = styled.div`
 `
 
 const UserMenu = styled.div`
+    background-color: white;
     position: absolute;
     top: 50px;
     right: 0;
@@ -197,6 +199,7 @@ const UserMenu = styled.div`
     box-shadow: rgb(145 158 171 / 24%) 0px 0px 2px 0px, rgb(145 158 171 / 24%) 0px 20px 40px;
     transform-origin: top right;
     animation: ${FadeIn} ease 250ms;
+    z-index: 100;
 `
 
 const UserInfo = styled.div`

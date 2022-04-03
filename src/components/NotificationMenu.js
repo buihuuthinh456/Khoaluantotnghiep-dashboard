@@ -79,6 +79,7 @@ export default NotificationMenu
 
 const Container = styled.div`
     position: absolute;
+    background-color: white;
     top: 50px;
     right: 0;
     min-width: 360px;
@@ -87,6 +88,7 @@ const Container = styled.div`
     box-shadow: rgb(145 158 171 / 24%) 0px 0px 2px 0px, rgb(145 158 171 / 24%) 0px 20px 40px;
     transform-origin: top right;
     animation: ${FadeIn} 250ms ease;
+    z-index: 10;
 `
 
 const Notification = styled.div`

@@ -1,12 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import GlobalState from '../GlobalState'
 import { Person, ShoppingCart, HowToReg } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import {selectLogin, logOut} from '../features/login/loginSlice'
+import { useLocation } from 'react-router-dom';
 
 function Sidebar() {
 
-   const [selectLi, setSelectLi] = useState('user')
+    let location = useLocation();
+    const [selectLi, setSelectLi] = useState(location.pathname)
+
+    useEffect(()=>{
+        setSelectLi(location.pathname)
+    }, [])
+
+    const dispatch = useDispatch()
+    
+    const [isLogin, setIsLogin] = useState(false)
+
+   const loginState = useSelector(selectLogin)
+    useEffect(()=>{
+        setIsLogin(state => state = loginState.isLogin)
+    }, [loginState.isLogin])
 
    return (
     <Container>
@@ -25,8 +42,8 @@ function Sidebar() {
         <SidebarList>
             <Link to="/" style={{ textDecoration: "none", color: "black"}}>
                 <SidebarItem
-                    onClick={()=>setSelectLi('user')}  
-                    isSelected = {selectLi === 'user' ? true : false} 
+                    onClick={()=>setSelectLi('/')}  
+                    isSelected = {selectLi === '/' ? true : false} 
                 >
                     <Person style={{ fontSize: 24 }}/>
                     <span>User</span>
@@ -43,18 +60,33 @@ function Sidebar() {
                 </SidebarItem>
             </Link>
 
-            
-            <Link to="/login" style={{ textDecoration: 'none' }}>
-                <SidebarItem 
-                    onClick={()=>setSelectLi('login')}
-                    isSelected = {selectLi === 'login' ? true : false}
-                >  
-                    <LoginIcon>
-                        <img src='images/outline_login_black_24dp.png' alt='login'></img>
-                    </LoginIcon>
-                    <span>Login</span>
-                </SidebarItem>
-            </Link>
+            {isLogin 
+            ?   <Link to="/" style={{ textDecoration: 'none' }}>
+                    <SidebarItem 
+                        onClick={() => {
+                            setSelectLi("")
+                            dispatch(logOut())
+                        }}
+                        isSelected = {false}
+                    >  
+                        <LoginIcon>
+                            <img src='images/outline_login_black_24dp.png' alt='login'></img>
+                        </LoginIcon>
+                        <span>Log Out</span>
+                    </SidebarItem>
+                </Link>
+            :   <Link to="/login" style={{ textDecoration: 'none' }}>
+                    <SidebarItem 
+                        onClick={()=>setSelectLi('login')}
+                        isSelected = {selectLi === 'login' ? true : false}
+                    >  
+                        <LoginIcon>
+                            <img src='images/outline_login_black_24dp.png' alt='login'></img>
+                        </LoginIcon>
+                        <span>Login</span>
+                    </SidebarItem>
+                </Link>
+            }
             
             <Link to="/register" style={{ textDecoration: "none", color: "black"}}>
                 <SidebarItem 

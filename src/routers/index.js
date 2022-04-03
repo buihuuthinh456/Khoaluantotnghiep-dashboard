@@ -12,30 +12,20 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import SinglePageProduct from '../components/SinglePageProduct'
 
 
 function index() {
   return (
-    <div>
-      <Router>
-      <Sidebar />
-      <Header />
-          <Container>
-            <Routes>
-              <Route path="/login" element={<Login />}></Route>
-              <Route path="/register" element={<Register />}></Route>
-              <Route path="/products" element={<Product />}></Route>
-              <Route path="/" element={<User />}></Route>    
-            </Routes>
-          </Container>   
-      </Router>
-    </div>
+    <Routes>
+      <Route path="/login" element={<Login />}></Route>
+      <Route path="/register" element={<Register />}></Route>
+      <Route path="/products" element={<Product />}></Route>
+      <Route path="/" element={<User />}></Route>
+      <Route path="/SinglePageProduct" element={<SinglePageProduct />}></Route>    
+    </Routes>
   )
 }
 
 export default index
 
-const Container = styled.div`
-  padding-top: var(--header-height);
-  padding-left: var(--sidebar-width);
-`
