@@ -13,3 +13,22 @@ export const handleLoginUser = (payload) =>axios({
     url:`${URL}/user/login`,
     data:payload,
 })
+
+export const createProduct = (payload, token) => axios({
+    method:"post",
+    url:`${URL}/api/product`,
+    data:payload,
+    headers: { Authorization: token },
+})
+
+export const getCategory = () => axios({
+    method: 'get',
+    url: `${URL}/api/category`
+})
+
+export const uploadImage = (form, token) => axios({
+    method: "post",
+    url: `${URL}/api/upload`,
+    data: form,
+    headers: { "Content-Type": "multipart/form-data", Authorization: token },
+  });

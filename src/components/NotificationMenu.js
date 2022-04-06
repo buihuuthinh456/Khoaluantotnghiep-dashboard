@@ -13,7 +13,7 @@ function NotificationMenu(props) {
             </NotiInfo>
 
             <Mark>
-                <CheckIcon />
+                <CheckIcon style={{fontSize: 26}}/>
             </Mark>
         </Notification>
         <Wrapper>
@@ -107,6 +107,7 @@ const Wrapper = styled.div`
 const NotiInfo = styled.div`
     h4 {
         margin-bottom: 8px;
+        font-size: 1.8rem;
     }
 
     p {
@@ -122,6 +123,7 @@ const Mark = styled.div`
 
 const CheckIcon = styled(Check)`
     color: var(--primary-color);
+    font-size: 1.8rem;
 `
 
 const NewNoti = styled.div`
