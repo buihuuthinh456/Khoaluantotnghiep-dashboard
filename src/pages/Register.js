@@ -148,7 +148,6 @@ function Register() {
                   
                   placeholder="...First Name"
                   
-                 
                 />
               </Field>
               {formik.touched.firstName && formik.errors.firstName ? (

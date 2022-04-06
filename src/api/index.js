@@ -26,6 +26,11 @@ export const getCategory = () => axios({
     url: `${URL}/api/category`
 })
 
+export const getProduct = () => axios({
+    method: 'get',
+    url: `${URL}/api/product`
+})
+
 export const uploadImage = (form, token) => axios({
     method: "post",
     url: `${URL}/api/upload`,

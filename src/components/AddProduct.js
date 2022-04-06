@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 import Button from './Button/Button'
-import { getCategory, uploadImage, createProduct} from '../api'
-import axios from 'axios'
+import { getCategory, uploadImage, createProduct, getProduct} from '../api'
 import { selectLogin } from '../features/login/loginSlice'
 import {useSelector} from 'react-redux'
 
 function AddProduct() {
-
   const loginState = useSelector(selectLogin)
   useEffect(()=>{
     const getData = async() => {
@@ -27,8 +27,22 @@ function AddProduct() {
   const [category,setCategory] = useState('')
   const [price,setPrice] = useState(0)
   const [description,setDescription] = useState('')
-  const [selectedFile, setSelectedFile] = useState()
   const [listCategory, setListCategory] = useState([])
+  const [selectedFile, setSelectedFile] = useState()
+  const [preview, setPreview] = useState()
+
+  useEffect(()=>{
+    if(!selectedFile) {
+      setPreview(undefined)
+      return
+    }
+
+    const objectUrl = URL.createObjectURL(selectedFile)
+    console.log(objectUrl);
+    setPreview(objectUrl)
+
+    return () => URL.revokeObjectURL(objectUrl)
+  }, [selectedFile])
 
   const handleUpload = (e) => {
     setSelectedFile(e.target.files[0])
@@ -37,7 +51,7 @@ function AddProduct() {
   const handleSubmit = async(e) => {
     e.preventDefault()
     const form = new FormData();
-    form.append('fileUpload', selectedFile)
+    // form.append('fileUpload', selectedFile)
 
     try {
       const res = await uploadImage(form, loginState.accessToken)
@@ -61,79 +75,129 @@ function AddProduct() {
       <Header>
         <h1>Add Product</h1>
       </Header>
-      <Form onSubmit={handleSubmit}>
+      <Formik
+        initialValues={{
+          name: '',
+          productID: '',
+          category:'',
+          price: '',
+          description: '',
+        }}
+        validationSchema={Yup.object({
+          name: Yup.string().required('Thông tin này bắt buộc phải có'),
+          productID: Yup.string().required('Thông tin này bắt buộc phải có'),
+          category: Yup.string().required('Chọn category'),
+          price: Yup.string().required('Thông tin này bắt buộc phải có'),
+          description: Yup.string().required('Thông tin này bắt buộc phải có'),
+        })}
+      >
+        {(formik)=>(
+          <Form onSubmit={handleSubmit}>
         <ProductInfo>
           <Field>
-            <Label htmlFor='productID'>
+            <Label 
+              htmlFor='productID'
+              state={formik.errors.productID?"error":formik.touched.productID?"handling":null}
+            >
               Product ID
               <span style={{color: 'red'}}>*</span>
             </Label>
             <Input 
-              type='text'
-              value={productID}
-              onChange={(e)=>setProductID(e.target.value)}
               id='productID'
-              name='productID'
+              type='text'
+              {...formik.getFieldProps('productID')}
+              state = {formik.errors.productID?"error":formik.touched.productID?"handling":null}
               placeholder='Product ID'
             />
           </Field>
+          {formik.errors.productID&&formik.touched.productID?(
+            <Error>{formik.errors.productID}</Error>
+          ):null}
           <Field>
-            <Label htmlFor='name'>
+            <Label 
+              htmlFor='name'
+              state={formik.errors.name?"error":formik.touched.name?"handling":null}
+            >
               Name
               <span style={{color: 'red'}}>*</span>
             </Label>
             <Input 
               type='text'
-              value={name}
-              onChange={(e)=>setName(e.target.value)}
               id='name'
-              name='name'
+              {...formik.getFieldProps('name')}
+              state={formik.errors.name?"error":formik.touched.name?"handling":null}
               placeholder='Product name'
             />
           </Field>
+          {formik.errors.name&&formik.touched.name?(
+            <Error>{formik.errors.name}</Error>
+          ):null}
           <Field>
-            <Label htmlFor='category'>
+            <Label 
+              htmlFor='category'
+              state={formik.errors.category?"error":formik.touched.category?"handling":null}
+            >
               Category
               <span style={{color: 'red'}}>*</span>
             </Label>
-            <Select name="category" value={category} onChange={(e)=>setCategory(e.target.value)} id="category">
+            <Select 
+            name="category" 
+            {...formik.getFieldProps('category')}
+            state={formik.errors.category?"error":formik.touched.category?"handling":null}
+            id="category"
+            >
+            <Option defaultValue >Choose category</Option>
               {listCategory.length!==0 && listCategory.map(item=>(
                 <Option key={item._id} value={item.name}>{item.name}</Option>
               ))}
             </Select>
           </Field>
+          {formik.errors.category&&formik.touched.category?(
+            <Error>{formik.errors.category}</Error>
+          ):null}
           <Field>
-            <Label htmlFor='price'>
+            <Label 
+              htmlFor='price'
+              state={formik.errors.price?"error":formik.touched.price?"handling":null}
+            >
               Price
               <span style={{color: 'red'}}>*</span>
             </Label>
             <Input 
               type='number'
-              name="price"
-              value={price}
-              onChange={(e)=>setPrice(e.target.value)}
+              {...formik.getFieldProps('price')}
               id='price' 
               placeholder="Product Price"
+              state={formik.errors.price?"error":formik.touched.price?"handling":null}
             />
           </Field>
+          {formik.errors.price&&formik.touched.price?(
+            <Error>{formik.errors.price}</Error>
+          ):null}
           <Field>
-            <Label htmlFor='description'>
+            <Label 
+              htmlFor='description'
+              state={formik.errors.description?"error":formik.touched.description?"handling":null}
+            >
               Description
               {/* <span style={{color: 'red'}}>*</span> */}
             </Label>
             <TextArea
-              type='text' 
-              value={description} 
-              onChange={(e)=>setDescription(e.target.value)} 
+              type='text'
+              state={formik.errors.description?"error":formik.touched.description?"handling":null}
+              {...formik.getFieldProps('description')}
               id="description" 
-              name="description" 
               placeholder="Write description.."
             />
           </Field>
+          {formik.errors.description&&formik.touched.description?(
+            <Error>{formik.errors.description}</Error>
+          ):null}
         </ProductInfo>
         <ImageUpload>
             <h1>Image</h1>
             <input type="file" onChange={handleUpload} id="image" name="Image" />
+            {selectedFile && <Preview src={preview}></Preview>}
             <Button 
             type="submit" 
             fontSize="1.6rem" 
@@ -146,7 +210,10 @@ function AddProduct() {
           >Create Product
           </Button>
         </ImageUpload>
-      </Form>      
+      </Form>
+        )}
+      </Formik>
+            
     </Container>
   )
 }
@@ -162,10 +229,6 @@ const Header = styled.div`
   h1 {
     font-size: 2.4rem;
   }
-`
-
-const ProductForm = styled.div`
-  display: flex;
 `
 
 const ProductInfo = styled.div`
@@ -187,6 +250,7 @@ const Field = styled.div`
 `
 
 const Label = styled.label`
+  background-color: transparent;
   font-size: 1.6rem;
   top: -15px;
   left: 23px;
@@ -237,6 +301,11 @@ const Option = styled.option`
   color: var(--text-color);
 `
 
+const Error = styled.div`
+  font-size:1.6rem;
+  color:#ff4842;
+`
+
 const TextArea = styled.textarea`
   width: 100%;
   min-height: 200px;
@@ -247,4 +316,9 @@ const TextArea = styled.textarea`
 
 const ImageUpload = styled.div`
   flex: 1;
+`
+
+const Preview = styled.image`
+  width: 100%;
+  height: 50vh;
 `

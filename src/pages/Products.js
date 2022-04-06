@@ -1,12 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom';
 import SinglePageProduct from '../components/SinglePageProduct';
 import AddProduct from '../components/AddProduct';
+import { getProduct } from '../api';
 
 function Products() {
+  useEffect(()=>{
+    try {
+      const getProductData = async() => {
+        const res = await getProduct()
+        console.log(res);
+      }
+      getProductData()
+    } catch (error) {
+      console.log(error);
+    }
+  }, [])
 
   const [isAdd, setIsAdd] = useState(false)
 
