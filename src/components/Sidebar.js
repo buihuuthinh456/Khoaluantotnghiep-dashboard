@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import styled from 'styled-components'
 import GlobalState from '../GlobalState'
 import { Person, ShoppingCart, HowToReg } from '@material-ui/icons'
@@ -10,10 +10,9 @@ import { useLocation } from 'react-router-dom';
 function Sidebar() {
 
     let location = useLocation();
-    const [selectLi, setSelectLi] = useState(location.pathname)
-
-    useEffect(()=>{
-        setSelectLi(location.pathname)
+    const [selectLi, setSelectLi] = useState('')
+    useLayoutEffect(()=>{
+        setSelectLi(location.pathname) 
     }, [])
 
     const dispatch = useDispatch()

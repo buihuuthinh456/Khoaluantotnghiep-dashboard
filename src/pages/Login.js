@@ -106,8 +106,6 @@ function Login() {
       email,
       password
     }
-
-
     dispatch(handleLoginAsync(dataPost));
 
     func()    
