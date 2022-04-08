@@ -4,9 +4,22 @@ import { Badge } from '@material-ui/core'
 import { Search, Notifications, Home, Person, Settings } from '@material-ui/icons'
 import NotificationMenu from './NotificationMenu'
 import { FadeIn } from '../GlobalState'
+import { selectLogin } from '../features/login/loginSlice'
+import { useSelector } from 'react-redux'
 
 
 function Header() {
+
+    const loginState = useSelector(selectLogin)
+    const [isLogin, setIsLogin] = useState(false)
+    const [userInfo, setUserInfo] = useState({})
+
+    useEffect(()=>{
+        setUserInfo(loginState.info)
+        setIsLogin(state => state = loginState.isLogin)
+    }, [loginState.isLogin])
+
+    console.log(loginState);
 
     const [userBox,setUserBox] = useState(false)
     const [notiBox,setNotibox] = useState(false)
@@ -68,35 +81,39 @@ function Header() {
 
             </Notification>
 
-            <UserIcon ref={userRef} onClick={handleOpenUser}>
-                <img src='/images/default-user-image.jpg' alt='user-ava'></img>
-                { userBox && <UserMenu  onClick={(e)=>e.stopPropagation()}>
-                    <UserInfo>
-                        <p>ToanTon</p>
-                        <p>toanton0911@gmail.com</p>
-                    </UserInfo>
+            {isLogin && 
+                <UserIcon ref={userRef} onClick={handleOpenUser}>
+                    <img src='/images/default-user-image.jpg' alt='user-ava'></img>
+                    {userBox && 
+                        <UserMenu  onClick={(e)=>e.stopPropagation()}>
+                            <UserInfo>
+                                <p>{userInfo.name}</p>
+                                <p>{userInfo.email}</p>
+                            </UserInfo>
 
-                    <UserController>
-                        <UserControllerItem>
-                            <Home />
-                            <span>Home</span>
-                        </UserControllerItem>
-                        <UserControllerItem>
-                            <Person />
-                            <span>User</span>
-                        </UserControllerItem>
-                        <UserControllerItem>
-                            <Settings />
-                            <span>Home</span>
-                        </UserControllerItem>
-                    </UserController>
+                            <UserController>
+                                <UserControllerItem>
+                                    <Home />
+                                    <span>Home</span>
+                                </UserControllerItem>
+                                <UserControllerItem>
+                                    <Person />
+                                    <span>User</span>
+                                </UserControllerItem>
+                                <UserControllerItem>
+                                    <Settings />
+                                    <span>Settings</span>
+                                </UserControllerItem>
+                            </UserController>
 
-                    <LogoutButton>
-                        <button>Logout</button>
-                    </LogoutButton>
-                </UserMenu>
-                }                
-            </UserIcon>
+                            <LogoutButton>
+                                <button>Logout</button>
+                            </LogoutButton>
+                        </UserMenu>
+                    }                
+                </UserIcon>
+            }
+
         </Controller>
     </Container>
   )

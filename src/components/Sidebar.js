@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 import styled from 'styled-components'
 import GlobalState from '../GlobalState'
 import { Person, ShoppingCart, HowToReg } from '@material-ui/icons'
+import LoginIcon from '@mui/icons-material/Login';
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {selectLogin, logOut} from '../features/login/loginSlice'
@@ -11,17 +12,18 @@ function Sidebar() {
 
     let location = useLocation();
     const [selectLi, setSelectLi] = useState('')
+    const [userInfo, setUserInfo] = useState({})
     useLayoutEffect(()=>{
         setSelectLi(location.pathname) 
     }, [])
 
     const dispatch = useDispatch()
-    
     const [isLogin, setIsLogin] = useState(false)
 
    const loginState = useSelector(selectLogin)
     useEffect(()=>{
         setIsLogin(state => state = loginState.isLogin)
+        setUserInfo(loginState.info)
     }, [loginState.isLogin])
 
    return (
@@ -29,14 +31,16 @@ function Sidebar() {
         <GlobalState />
         <Logo>TShop</Logo>
 
-        <Wrapper>
-            <UserInfo>
-                <ImageWrap>
-                    <img src='/images/default-user-image.jpg' alt='user-ava'></img>
-                </ImageWrap>
-                <span>Toàn Tôn</span>
-            </UserInfo>
-        </Wrapper>
+        {isLogin && 
+            <Wrapper>
+                <UserInfo>
+                    <ImageWrap>
+                        <img src='/images/default-user-image.jpg' alt='user-ava'></img>
+                    </ImageWrap>
+                    <span>{userInfo.name}</span>
+                </UserInfo>
+            </Wrapper>  
+        }
 
         <SidebarList>
             <Link to="/" style={{ textDecoration: "none", color: "black"}}>
@@ -59,29 +63,14 @@ function Sidebar() {
                 </SidebarItem>
             </Link>
 
-            {isLogin 
-            ?   <Link to="/" style={{ textDecoration: 'none' }}>
-                    <SidebarItem 
-                        onClick={() => {
-                            setSelectLi("")
-                            dispatch(logOut())
-                        }}
-                        isSelected = {false}
-                    >  
-                        <LoginIcon>
-                            <img src='images/outline_login_black_24dp.png' alt='login'></img>
-                        </LoginIcon>
-                        <span>Log Out</span>
-                    </SidebarItem>
-                </Link>
-            :   <Link to="/login" style={{ textDecoration: 'none' }}>
+            {!isLogin && 
+                <Link to="/login" style={{ textDecoration: 'none', color: "black" }}>
                     <SidebarItem 
                         onClick={()=>setSelectLi('login')}
                         isSelected = {selectLi === 'login' ? true : false}
+                        isLogin = {false}
                     >  
-                        <LoginIcon>
-                            <img src='images/outline_login_black_24dp.png' alt='login'></img>
-                        </LoginIcon>
+                        <LoginIcon style={{ fontSize: 24 }}></LoginIcon>
                         <span>Login</span>
                     </SidebarItem>
                 </Link>
@@ -96,10 +85,25 @@ function Sidebar() {
                     <span>Register</span>
                 </SidebarItem>
             </Link>
-            
+
+            {isLogin && 
+                <Link to="/" style={{ textDecoration: 'none', color: "black" }}>
+                    <SidebarItem 
+                        onClick={() => {
+                            setSelectLi("")
+                            dispatch(logOut())
+                        }}
+                        isSelected = {false}
+                        isLogin = {true}
+                    >  
+                        <LoginIcon>
+                            <img src='images/outline_login_black_24dp.png' alt='login'></img>
+                        </LoginIcon>
+                        <span>Log Out</span>
+                    </SidebarItem>
+                </Link>
+            } 
         </SidebarList>
-
-
     </Container>
   )
 }
@@ -187,18 +191,7 @@ const SidebarItem = styled.li`
         margin-left: 16px;
         font-size: 14px;
         font-weight: 400;
-        color: var(--text-color);
+        color: ${state=>state.isLogin ? 'red' : 'var(--text-color)'};
         text-decoration: none !important;
-    }
-`
-
-const LoginIcon = styled.div`
-    width: 24px;
-    height: 24px;
-
-    img {
-        width:100%;
-        height: 100%;
-        object-fit: cover;
     }
 `

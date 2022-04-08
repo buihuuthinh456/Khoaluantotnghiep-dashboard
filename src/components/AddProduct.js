@@ -23,11 +23,7 @@ function AddProduct() {
     getData()
   }, [])
 
-  const [name,setName] = useState('')
-  const [productID,setProductID] = useState('')
   const [category,setCategory] = useState('')
-  const [price,setPrice] = useState(0)
-  const [description,setDescription] = useState('')
   const [listCategory, setListCategory] = useState([])
   const [selectedFile, setSelectedFile] = useState()
   const [preview, setPreview] = useState()
@@ -79,6 +75,10 @@ function AddProduct() {
       });
     } catch (error) {
       console.log(error);
+      toast.error("Cannot Upload", {
+        position: toast.POSITION.TOP_RIGHT,
+        style:{fontSize:"1.6rem"}
+      });
     }
 
 

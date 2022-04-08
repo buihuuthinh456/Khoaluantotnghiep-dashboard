@@ -8,11 +8,13 @@ import AddProduct from '../components/AddProduct';
 import { getProduct } from '../api';
 
 function Products() {
+
+  const [productList, setProductList] = useState([])
   useEffect(()=>{
     try {
       const getProductData = async() => {
         const res = await getProduct()
-        console.log(res);
+        setProductList(res.data.products)
       }
       getProductData()
     } catch (error) {
@@ -20,19 +22,19 @@ function Products() {
     }
   }, [])
 
+  console.log(productList);
   const [isAdd, setIsAdd] = useState(false)
 
   const handleAddPage = () => {
     setIsAdd(true)
   }
-
+  
   return (
     <Container>
       {!isAdd 
       ? <ProductCategory>
           <HeaderTitle>
                 <h2>Product</h2>
-
                 <ButtonAdd onClick={handleAddPage}>
                   <AddIcon style={{fontSize: 20,}}></AddIcon>
                   <span>Add</span>
@@ -46,21 +48,25 @@ function Products() {
               </SearchField>
 
               <ContentMenu>
-                <Link to='/SinglePageProduct' style={{textDecoration: 'none'}}>
-                  <ContentItem>
-                    <ItemImage>
-                      <img src='images/product-image.jpg' alt='item-img'></img>
-                      <ItemInfo>
-                      <Icon>
-                        <SearchIcon></SearchIcon>
-                      </Icon>
-                    </ItemInfo>
-                    </ItemImage>
-                    <ProductName>
-                        <span>Nike Air Force 1 NDESTRUKT</span>
-                    </ProductName>
-                  </ContentItem>
-                </Link>
+                {
+                  productList.length!==0 && productList.map(item => (
+                    <Link key={item._id} to='/SinglePageProduct' style={{textDecoration: 'none'}}>
+                      <ContentItem >
+                          <ItemImage>
+                            <img key={item.images[0].public_id} src={item.images[0].url} alt=''></img>
+                            <ItemInfo>
+                            <Icon>
+                              <SearchIcon></SearchIcon>
+                            </Icon>
+                          </ItemInfo>
+                          </ItemImage>
+                          <ProductName>
+                              <span>{item.name}</span>
+                          </ProductName>
+                      </ContentItem>
+                    </Link>
+                  ))
+                }
               </ContentMenu>
             </Content>
         </ProductCategory>
