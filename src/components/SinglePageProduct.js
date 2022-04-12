@@ -2,31 +2,55 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import { getProduct } from '../api';
+import { getProduct, getSingleProduct } from '../api';
 import { useParams } from 'react-router-dom';
+import {selectLogin} from '../features/login/loginSlice'
+import {useSelector} from 'react-redux';
 
 
 function SinglePageProduct() {
-
-    const [productList, setProductList] = useState([])
+    // const [productList, setProductList] = useState([])
+    const [thisProduct, setThisProduct] = useState({})
     const {productID} = useParams()
+    const loginState = useSelector(selectLogin)
     const [amount, setAmount] = useState(1)
+    // useEffect(()=>{
+    //     try {
+    //         const getThisProduct = async() => {
+    //             const res = await getProduct()
+    //             setProductList(res.data.products)
+    //         }
+    //         getThisProduct()
+    //     } catch (error) {
+    //         console.log(error.response);
+    //     }
+    // }, [productID])
+
+    // const thisProduct = productList.find(item => item._id === productID)
+    // console.log(thisProduct);
+
     useEffect(()=>{
         try {
-            const getThisProduct = async() => {
-                const res = await getProduct()
-                setProductList(res.data.products)
+            const getThisProduct = async () => {
+                const res = await getSingleProduct(productID, loginState.accessToken)
+                console.log(res.data);
+                setThisProduct(res.data)
             }
             getThisProduct()
-        } catch (error) {
+        } catch(error) {
             console.log(error.response);
         }
     }, [productID])
-    const thisProduct = productList.find(item => item._id === productID)
-    console.log(thisProduct);
+
+    console.log(thisProduct)
+
+    if (!thisProduct) {
+        return <h1>loading</h1>
+    }
+
   return (
     <Container>
-        {thisProduct && <Wrapper>
+        {/* {thisProduct && <Wrapper>
             <ImgWrapper>
                 <img src={thisProduct.images[0].url} alt='product-img'></img>
             </ImgWrapper>
@@ -60,7 +84,7 @@ function SinglePageProduct() {
                     </ButtonAdd>
                 </ProductController>
             </ProductInfo>
-        </Wrapper>}
+        </Wrapper>} */}
     </Container>
 )
 }

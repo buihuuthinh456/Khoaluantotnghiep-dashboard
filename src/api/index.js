@@ -37,3 +37,9 @@ export const uploadImage = (form, token) => axios({
     data: form,
     headers: { "Content-Type": "multipart/form-data", Authorization: token },
   });
+
+export const getSingleProduct = (id, token) => axios({
+    method: 'get',
+    url: `${URL}/api/product/${id}`,
+    headers: {Authorization: token}
+}) 
