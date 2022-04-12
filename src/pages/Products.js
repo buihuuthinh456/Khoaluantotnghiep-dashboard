@@ -3,9 +3,11 @@ import styled from 'styled-components'
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom';
-import SinglePageProduct from '../components/SinglePageProduct';
 import AddProduct from '../components/AddProduct';
 import { getProduct } from '../api';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import Loading from '../components/Loading'
 
 function Products() {
 
@@ -22,16 +24,14 @@ function Products() {
     }
   }, [])
 
-  console.log(productList);
   const [isAdd, setIsAdd] = useState(false)
-
   const handleAddPage = () => {
     setIsAdd(true)
   }
-  
   return (
     <Container>
-      {!isAdd 
+      {!productList ? <Loading></Loading> : 
+      !isAdd 
       ? <ProductCategory>
           <HeaderTitle>
                 <h2>Product</h2>
@@ -50,7 +50,7 @@ function Products() {
               <ContentMenu>
                 {
                   productList.length!==0 && productList.map(item => (
-                    <Link key={item._id} to='/SinglePageProduct' style={{textDecoration: 'none'}}>
+                    <Link key={item._id} to={`/products/${item._id}`} style={{textDecoration: 'none'}}>
                       <ContentItem >
                           <ItemImage>
                             <img key={item.images[0].public_id} src={item.images[0].url} alt=''></img>

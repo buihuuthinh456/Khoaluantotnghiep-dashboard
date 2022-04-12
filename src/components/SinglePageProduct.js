@@ -1,62 +1,68 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import { getProduct } from '../api';
+import { useParams } from 'react-router-dom';
+
 
 function SinglePageProduct() {
 
+    const [productList, setProductList] = useState([])
+    const {productID} = useParams()
     const [amount, setAmount] = useState(1)
+    useEffect(()=>{
+        try {
+            const getThisProduct = async() => {
+                const res = await getProduct()
+                setProductList(res.data.products)
+            }
+            getThisProduct()
+        } catch (error) {
+            console.log(error.response);
+        }
+    }, [productID])
+    const thisProduct = productList.find(item => item._id === productID)
+    console.log(thisProduct);
   return (
     <Container>
-        <ImgWrapper>
-            <img src='images/product-image.jpg' alt='product-img'></img>
-        </ImgWrapper>
+        {thisProduct && <Wrapper>
+            <ImgWrapper>
+                <img src={thisProduct.images[0].url} alt='product-img'></img>
+            </ImgWrapper>
 
-        <ProductInfo>
-            <Title>Nike Air Force 1 NDESTRUKT</Title>
-            <Price>
-                <span>$65</span>
-            </Price>
-            <Desc>
-                <h2>Desciption</h2>
-                <span>
-                    "Sed ut perspiciatis unde omnis iste natus error sit 
-                    voluptatem accusantium doloremque laudantium, totam 
-                    rem aperiam, eaque ipsa quae ab illo inventore veritatis 
-                    et quasi architecto beatae vitae dicta sunt explicabo. 
-                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut 
-                    odit aut fugit, sed quia consequuntur magni dolores eos qui 
-                    ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui 
-                    dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed 
-                    quia non numquam eius modi tempora incidunt ut labore et dolore 
-                    magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis 
-                    nostrum exercitationem ullam corporis suscipit laboriosam, 
-                    nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum 
-                    iure reprehenderit qui in ea voluptate velit esse quam nihil 
-                    molestiae consequatur, vel illum qui dolorem eum fugiat quo 
-                    voluptas nulla pariatur?"
-                </span>
-            </Desc>
-            <ProductController>
-                <Quantity>
-                    <Remove onClick={()=>setAmount(state=>state-1)}>
-                        <RemoveIcon style={{fontSize: 20}}></RemoveIcon>
-                    </Remove>
-                    <Amount>
-                        {amount}
-                    </Amount>
-                    <Add onClick={()=>setAmount(state=>state+1)}>
-                        <AddIcon style={{fontSize: 20}}/>
-                    </Add>
-                </Quantity>
+            <ProductInfo>
+                <Title>{thisProduct.name}</Title>
+                <Price>
+                    <span>{`$${thisProduct.price}`}</span>
+                </Price>
+                <Desc>
+                    <h2>Desciption</h2>
+                    <span>
+                        {thisProduct.description}
+                    </span>
+                </Desc>
+                <ProductController>
+                    <Quantity>
+                        <Remove onClick={()=>setAmount(state=>state-1)}>
+                            <RemoveIcon style={{fontSize: 20}}></RemoveIcon>
+                        </Remove>
+                        <Amount>
+                            {amount}
+                        </Amount>
+                        <Add onClick={()=>setAmount(state=>state+1)}>
+                            <AddIcon style={{fontSize: 20}}/>
+                        </Add>
+                    </Quantity>
 
-                <ButtonAdd>
-                    Add to cart
-                </ButtonAdd>
-            </ProductController>
-        </ProductInfo>
+                    <ButtonAdd>
+                        Add to cart
+                    </ButtonAdd>
+                </ProductController>
+            </ProductInfo>
+        </Wrapper>}
     </Container>
-  )
+)
 }
 
 export default SinglePageProduct
@@ -64,6 +70,12 @@ export default SinglePageProduct
 const Container = styled.div`
     padding: 0 36px;
     display: flex;
+`
+
+const Wrapper = styled.div`
+    display: flex;
+    width: 100%;
+    padding: 24px 0;
 `
 
 const ImgWrapper = styled.div`

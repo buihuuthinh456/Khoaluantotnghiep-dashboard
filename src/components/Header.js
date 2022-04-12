@@ -81,38 +81,36 @@ function Header() {
 
             </Notification>
 
-            {isLogin && 
-                <UserIcon ref={userRef} onClick={handleOpenUser}>
-                    <img src='/images/default-user-image.jpg' alt='user-ava'></img>
-                    {userBox && 
-                        <UserMenu  onClick={(e)=>e.stopPropagation()}>
-                            <UserInfo>
-                                <p>{userInfo.name}</p>
-                                <p>{userInfo.email}</p>
-                            </UserInfo>
+            <UserIcon ref={userRef} onClick={handleOpenUser}>
+                <img src='/images/default-user-image.jpg' alt='user-ava'></img>
+                {userBox && 
+                    <UserMenu  onClick={(e)=>e.stopPropagation()}>
+                        <UserInfo>
+                            <p>{userInfo.name}</p>
+                            <p>{userInfo.email}</p>
+                        </UserInfo>
 
-                            <UserController>
-                                <UserControllerItem>
-                                    <Home />
-                                    <span>Home</span>
-                                </UserControllerItem>
-                                <UserControllerItem>
-                                    <Person />
-                                    <span>User</span>
-                                </UserControllerItem>
-                                <UserControllerItem>
-                                    <Settings />
-                                    <span>Settings</span>
-                                </UserControllerItem>
-                            </UserController>
+                        <UserController>
+                            <UserControllerItem>
+                                <Home />
+                                <span>Home</span>
+                            </UserControllerItem>
+                            <UserControllerItem>
+                                <Person />
+                                <span>User</span>
+                            </UserControllerItem>
+                            <UserControllerItem>
+                                <Settings />
+                                <span>Settings</span>
+                            </UserControllerItem>
+                        </UserController>
 
-                            <LogoutButton>
-                                <button>Logout</button>
-                            </LogoutButton>
-                        </UserMenu>
-                    }                
-                </UserIcon>
-            }
+                        <LogoutButton>
+                            <button>Logout</button>
+                        </LogoutButton>
+                    </UserMenu>
+                }                
+            </UserIcon>
 
         </Controller>
     </Container>
