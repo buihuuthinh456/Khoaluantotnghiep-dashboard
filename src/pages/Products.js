@@ -12,6 +12,8 @@ import Loading from '../components/Loading'
 function Products() {
 
   const [productList, setProductList] = useState([])
+  const [input, setInput] = useState('') 
+
   useEffect(()=>{
     try {
       const getProductData = async() => {
@@ -28,6 +30,11 @@ function Products() {
   const handleAddPage = () => {
     setIsAdd(true)
   }
+
+  const filterProducts = productList.filter(product => {
+    return product.name.toLowerCase().indexOf(input.toLowerCase()) !== -1
+  })
+
   return (
     <Container>
       {!productList ? <Loading></Loading> : 
@@ -44,12 +51,12 @@ function Products() {
             <Content>
               <SearchField>
                 <SearchIcon style={{fontSize: 20, marginRight: 16}}></SearchIcon>
-                <input placeholder='Search Product'></input>
+                <input placeholder='Search Product' onChange={(e)=>setInput(e.target.value)}></input>
               </SearchField>
 
               <ContentMenu>
                 {
-                  productList.length!==0 && productList.map(item => (
+                  filterProducts.length!==0 && filterProducts.map(item => (
                     <Link key={item._id} to={`/products/${item._id}`} style={{textDecoration: 'none'}}>
                       <ContentItem >
                           <ItemImage>
