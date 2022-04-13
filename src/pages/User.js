@@ -1,6 +1,13 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import styled from 'styled-components'
+import styled from 'styled-components';
+
+
+import {selectUsers,fetchUsers} from '../features/users/usersSlice';
+import {useSelector, useDispatch} from 'react-redux'
+
+import {selectLogin} from '../features/login/loginSlice';
+
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -37,8 +44,18 @@ const rows = [
 ];
 
 function User() {
+
+  const data = useSelector(selectUsers)
+  const token = useSelector(selectLogin).accessToken
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(fetchUsers(token))
+  },[dispatch])
+
+  if(data.isLoading) return <h1>Loading</h1>
   return (
     <Container>
+      {console.log(data.users)}
       <h2>USER</h2>
       
       <DataContainer>

@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import Button from "@mui/material/Button";
 
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams,useNavigate } from "react-router-dom";
 import AddProduct from "../components/AddProduct";
 import Loading from "../components/Loading";
 import Modal from "../components/Modal";
@@ -24,6 +24,7 @@ function Products() {
   const productList = useSelector(selectProducts).products;
   const isLoading = useSelector(selectProducts).isLoading;
   const user = useSelector(selectLogin)
+  const navigate = useNavigate()
 
 
 
@@ -38,11 +39,13 @@ function Products() {
 
   const [isAdd, setIsAdd] = useState(false);
   const handleAddPage = () => {
+    
     if(user.isLogin){
       setIsAdd(true);
+      navigate('/create-product')
     }
     else{
-      toast.error(`You haven't login or You isn't admin`, {
+      toast.error(`You haven't login`, {
         position: toast.POSITION.TOP_RIGHT,
         style:{fontSize:"1.6rem"}
       });

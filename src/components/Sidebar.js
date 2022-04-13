@@ -3,23 +3,21 @@ import styled from "styled-components";
 import GlobalState from "../GlobalState";
 import { Person, ShoppingCart, HowToReg } from "@material-ui/icons";
 import LoginIcon from "@mui/icons-material/Login";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectLogin, logOut } from "../features/login/loginSlice";
-import { useLocation } from "react-router-dom";
+
 
 function Sidebar() {
   let location = useLocation();
-  const [selectLi, setSelectLi] = useState("");
   const [userInfo, setUserInfo] = useState({});
   const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState(false);
   const loginState = useSelector(selectLogin);
 
+
   const navigate = useNavigate();
-  useLayoutEffect(() => {
-    setSelectLi(location.pathname);
-  }, []);
+
   useEffect(() => {
     setIsLogin((state) => (state = loginState.isLogin));
     setUserInfo(loginState.info);
@@ -44,8 +42,7 @@ function Sidebar() {
       <SidebarList>
         <Link to="/" style={{ textDecoration: "none", color: "black" }}>
           <SidebarItem
-            onClick={() => setSelectLi("/")}
-            isSelected={selectLi === "/" ? true : false}
+            isSelected={location.pathname === "/" ? true : false}
           >
             <Person style={{ fontSize: 24 }} />
             <span>User</span>
@@ -54,8 +51,7 @@ function Sidebar() {
 
         <Link to="/products" style={{ textDecoration: "none", color: "black" }}>
           <SidebarItem
-            onClick={() => setSelectLi("products")}
-            isSelected={selectLi === "products" ? true : false}
+            isSelected={location.pathname === "/products" ? true : false}
           >
             <ShoppingCart style={{ fontSize: 24 }} />
             <span>Product</span>
@@ -65,8 +61,7 @@ function Sidebar() {
         {!isLogin && (
           <Link to="/login" style={{ textDecoration: "none", color: "black" }}>
             <SidebarItem
-              onClick={() => setSelectLi("login")}
-              isSelected={selectLi === "login" ? true : false}
+              isSelected={location.pathname === "/login" ? true : false}
               isLogin={false}
             >
               <LoginIcon style={{ fontSize: 24 }}></LoginIcon>
@@ -77,8 +72,7 @@ function Sidebar() {
 
         <Link to="/register" style={{ textDecoration: "none", color: "black" }}>
           <SidebarItem
-            onClick={() => setSelectLi("register")}
-            isSelected={selectLi === "register" ? true : false}
+            isSelected={location.pathname === "/register" ? true : false}
           >
             <HowToReg style={{ fontSize: 24 }} />
             <span>Register</span>
@@ -89,8 +83,8 @@ function Sidebar() {
           <Link to="/" style={{ textDecoration: "none", color: "black" }}>
             <SidebarItem
               onClick={() => {
-                setSelectLi("");
                 dispatch(logOut());
+                navigate('/')
               }}
               isSelected={false}
               isLogin={true}

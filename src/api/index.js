@@ -47,12 +47,16 @@ export const searchProductAPI = (regex) => {
     const searchParam = new URLSearchParams({
         'name[regex]':regex
     }).toString();
-
     console.log(searchParam)
-
-
     return axios({
         method:'get',
         url:`${URL}/api/product?${searchParam}`,
     })
 }
+
+export const getUsers = (token) => axios({
+    method: 'get',
+    url: `${URL}/user/`,
+    headers: { "Content-Type": "multipart/form-data", Authorization: token },
+}) 
+
