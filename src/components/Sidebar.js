@@ -44,7 +44,7 @@ function Sidebar() {
     },
     {
       path:'/orders',
-      name:"Ordes",
+      name:"Orders",
       component:"ShoppingCart"
     },
     {
