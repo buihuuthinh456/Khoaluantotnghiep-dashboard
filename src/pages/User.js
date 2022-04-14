@@ -2,70 +2,93 @@ import React,{useEffect} from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 import styled from 'styled-components';
 
+import {useNavigate} from 'react-router-dom'
+
 
 import {selectUsers,fetchUsers} from '../features/users/usersSlice';
 import {useSelector, useDispatch} from 'react-redux'
 
 import {selectLogin} from '../features/login/loginSlice';
 
+import { toast } from "react-toastify";
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  {
-    field: 'user',
-    headerName: 'User',
-    description: 'UserName',
-    sortable: false,
-    width: 230,
-    renderCell: (param) => {
-      return (
-        <CellWithImg>
-          <img src={param.row.userImg} alt="user-img"></img>
-          <span>{`${param.row.firstName} ${param.row.lastName}`}</span>
-        </CellWithImg>
-      )
-    }
-  },
-  { field: 'address', headerName: 'Address',type: 'text', width: 300},
-  { field: 'contact', headerName: 'Contact Number', width: 300, sortable: false},
-  { field: 'verify', headerName: 'Verify', width: 150}
-];
 
-const rows = [
-  { id: 1,userImg:'images/default-user-image.jpg', lastName: 'Snow', firstName: 'Jon',address: 'hello', contact: '0932697135', verify: 'true' },
-  { id: 2,userImg:'images/default-user-image.jpg', lastName: 'Lannister', firstName: 'Cersei',address: 'hello', contact: '0932697135', verify: 'true' },
-  { id: 3,userImg:'images/default-user-image.jpg', lastName: 'Lannister', firstName: 'Jaime',address: 'hello', contact: '0932697135', verify: 'true' },
-  { id: 4,userImg:'images/default-user-image.jpg', lastName: 'Stark', firstName: 'Arya',address: 'hello', contact: '0932697135', verify: 'true' },
-  { id: 5,userImg:'images/default-user-image.jpg', lastName: 'Targaryen', firstName: 'Daenerys',address: 'hello', contact: '0932697135', verify: 'true' },
-  { id: 6,userImg:'images/default-user-image.jpg', lastName: 'Melisandre', firstName: null, address: 'hello',contact: '0932697135', verify: 'true' },
-  { id: 7,userImg:'images/default-user-image.jpg', lastName: 'Clifford', firstName: 'Ferrara',address: 'hello', contact: '0932697135', verify: 'true' },
-  { id: 8,userImg:'images/default-user-image.jpg', lastName: 'Frances', firstName: 'Rossini',address: 'hello', contact: '0932697135', verify: 'true' },
-  { id: 9,userImg:'images/default-user-image.jpg', lastName: 'Roxie', firstName: 'Harvey',address: 'hello', contact: '0932697135', verify: 'true' },
-];
+
+
+// const rows = [
+//   { id: 1,userImg:'images/default-user-image.jpg', lastName: 'Snow', firstName: 'Jon',address: 'hello', contact: '0932697135', verify: 'true' },
+//   { id: 2,userImg:'images/default-user-image.jpg', lastName: 'Lannister', firstName: 'Cersei',address: 'hello', contact: '0932697135', verify: 'true' },
+//   { id: 3,userImg:'images/default-user-image.jpg', lastName: 'Lannister', firstName: 'Jaime',address: 'hello', contact: '0932697135', verify: 'true' },
+//   { id: 4,userImg:'images/default-user-image.jpg', lastName: 'Stark', firstName: 'Arya',address: 'hello', contact: '0932697135', verify: 'true' },
+//   { id: 5,userImg:'images/default-user-image.jpg', lastName: 'Targaryen', firstName: 'Daenerys',address: 'hello', contact: '0932697135', verify: 'true' },
+//   { id: 6,userImg:'images/default-user-image.jpg', lastName: 'Melisandre', firstName: null, address: 'hello',contact: '0932697135', verify: 'true' },
+//   { id: 7,userImg:'images/default-user-image.jpg', lastName: 'Clifford', firstName: 'Ferrara',address: 'hello', contact: '0932697135', verify: 'true' },
+//   { id: 8,userImg:'images/default-user-image.jpg', lastName: 'Frances', firstName: 'Rossini',address: 'hello', contact: '0932697135', verify: 'true' },
+//   { id: 9,userImg:'images/default-user-image.jpg', lastName: 'Roxie', firstName: 'Harvey',address: 'hello', contact: '0932697135', verify: 'true' },
+// ];
 
 function User() {
 
   const data = useSelector(selectUsers)
   const token = useSelector(selectLogin).accessToken
+  const isLogin = useSelector(selectLogin).isLogin
+
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   useEffect(()=>{
-    dispatch(fetchUsers(token))
+    if(!isLogin) {
+      navigate('/login')
+      toast.warning("You have to login",{
+        style:{
+          fontSize:'1.6rem',
+        }
+      })
+    }
+    else{
+      dispatch(fetchUsers(token))
+    }
   },[dispatch])
 
-  if(data.isLoading) return <h1>Loading</h1>
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 120 },
+    {
+      field: 'user',
+      headerName: 'User',
+      description: 'UserName',
+      sortable: false,
+      width: 230,
+      renderCell: (param) => {
+        return (
+          <CellWithImg>
+            <img src={param.row.userImg} alt="user-img"></img>
+            <span>{`${param.row.name}`}</span>
+          </CellWithImg>
+        )
+      }
+    },
+    { field: 'isAdmin', headerName: 'Admin', width: 150},
+    { field: '_id', headerName: 'Code', width: 300 },
+  ];
+
+  const rows = data.users.map((item,index)=>({
+    ...item,id:index+1,userImg:'images/default-user-image.jpg'
+  }))
+
+ 
+
+  if(data.isLoading) return (<h1>Loading</h1>)
   return (
     <Container>
-      {console.log(data.users)}
       <h2>USER</h2>
       
       <DataContainer>
         <DataGrid
-          style={{fontSize: 16}}
+          style={{fontSize: '1.6rem'}}
           rows={rows}
           columns={columns}
           pageSize={8}
           rowsPerPageOptions={[5]}
-          checkboxSelection
+          // checkboxSelection
         />
       </DataContainer>
 

@@ -5,13 +5,24 @@ import * as Yup from 'yup';
 import Button from './Button/Button'
 import { uploadImage, createProduct} from '../api'
 import { selectLogin } from '../features/login/loginSlice'
-import {selectProducts} from '../features/products/productsSlice'
-import {useSelector} from 'react-redux'
+import {selectProducts,createProductThunk} from '../features/products/productsSlice'
+import {useSelector,useDispatch} from 'react-redux'
 import { toast } from 'react-toastify';
 
-function AddProduct() {
+
+
+// Component
+import Modal from '../components/Modal'
+import Loading from '../components/Loading';
+
+// MUI
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
+function AddProduct({callback}) {
   const loginState = useSelector(selectLogin)
   const listCategory = useSelector(selectProducts).category
+  const isLoading = useSelector(selectProducts).isLoading
+  const dispatch = useDispatch()
   useEffect(()=>{
     setCategory(listCategory[0].name)
   }, [listCategory.length])
@@ -41,54 +52,59 @@ function AddProduct() {
     const form = new FormData();
     form.append('fileUpload', selectedFile)
     
-    try {
-      // const imgUpload = await uploadImage(form, loginState.accessToken)
-      const imgUpload = await toast.promise(uploadImage(form, loginState.accessToken),{
-        pending: 'Upload image to cloud',
-        success: 'Upload image successfully 👌',
-        error: 'Upload image error 🤯'
-      },{
-        style:{fontSize:"1.6rem"}
-      });
+    // try {
+    //   const imgUpload = await toast.promise(uploadImage(form, loginState.accessToken),{
+    //     pending: 'Upload image to cloud',
+    //     success: 'Upload image successfully 👌',
+    //     error: 'Upload image error 🤯'
+    //   },{
+    //     style:{fontSize:"1.6rem"}
+    //   });
 
-      const {data} = imgUpload
-      const {name,
-            productID,
-            category,
-            price,
-            description} = values
+    //   const {data} = imgUpload
+    //   const {name,
+    //         productID,
+    //         category,
+    //         price,
+    //         description} = values
 
-      const dataPost = {
-        productId: productID,
-        name: name,
-        description: description,
-        price: price,
-        category: category,
-        images: [data]
-      }
-      const res = await toast.promise(createProduct(dataPost, loginState.accessToken),{
-        pending: 'Creating a product',
-        success: 'Create successfully 👌',
-        error: 'Create Error 🤯'
-      },{
-        style:{fontSize:"1.6rem"}
-      });
-    } catch (error) {
-      console.log(error.response);
-      toast.error(error.response.data.msg, {
-        position: toast.POSITION.TOP_RIGHT,
-        style:{fontSize:"1.6rem"}
-      });
-    }
-
+    //   const dataPost = {
+    //     productId: productID,
+    //     name: name,
+    //     description: description,
+    //     price: price,
+    //     category: category,
+    //     images: [data]
+    //   }
+    //   const res = await toast.promise(createProduct(dataPost, loginState.accessToken),{
+    //     pending: 'Creating a product',
+    //     success: 'Create successfully 👌',
+    //     error: 'Create Error 🤯'
+    //   },{
+    //     style:{fontSize:"1.6rem"}
+    //   });
+    // } catch (error) {
+    //   console.log(error.response);
+    //   toast.error(error.response.data.msg, {
+    //     position: toast.POSITION.TOP_RIGHT,
+    //     style:{fontSize:"1.6rem"}
+    //   });
+    // }
+    dispatch(createProductThunk(values,form,loginState.accessToken))
 
     func()
   }
 
+  if(isLoading) return <Modal><Loading/></Modal>
+
   return (
     <Container>
       <Header>
-        <h1>Add Product</h1>
+      <ButtonBack onClick={(e)=>callback(false)}>
+          <ArrowBackIcon style={{ fontSize: '2rem' }}/>
+        </ButtonBack>
+        <h1>Add Product </h1>
+        
       </Header>
       <Formik
         initialValues={{
@@ -245,15 +261,41 @@ function AddProduct() {
 export default AddProduct
 
 const Container = styled.div`
-
+  padding: 12px 36px;
 `
 
 const Header = styled.div`
   margin-bottom: 24px;
+  display: flex;
   h1 {
     font-size: 2.4rem;
+    margin-left:12px;
   }
 `
+
+const ButtonBack = styled.button`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  border-radius: 50px;
+  box-shadow: rgb(145 158 171 / 24%) 0px 0px 2px 0px,
+    rgb(145 158 171 / 24%) 0px 20px 40px;
+
+  span {
+    font-size: 1.6rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-left: 8px;
+  }
+
+  &:hover {
+    opacity: 0.85;
+  }
+`;
 
 const ProductInfo = styled.div`
   flex: 1;

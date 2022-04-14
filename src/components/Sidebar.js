@@ -2,6 +2,8 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import GlobalState from "../GlobalState";
 import { Person, ShoppingCart, HowToReg } from "@material-ui/icons";
+import CategoryIcon from '@mui/icons-material/Category';
+import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import LoginIcon from "@mui/icons-material/Login";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,6 +25,44 @@ function Sidebar() {
     setUserInfo(loginState.info);
   }, [loginState.isLogin]);
 
+
+  let sidebarItem = [
+    {
+      path:'/',
+      name:"User",
+      component:"Person"
+    },
+    {
+      path:'/category',
+      name:"Category",
+      component:"CategoryIcon"
+    },
+    {
+      path:'/products',
+      name:"Product",
+      component:"PlaylistAddCheckCircleIcon"
+    },
+    {
+      path:'/orders',
+      name:"Ordes",
+      component:"ShoppingCart"
+    },
+    {
+      path:'/login',
+      name:"Login",
+      component:"LoginIcon"
+    },
+    {
+      path:'/register',
+      name:"Register",
+      component:"HowToReg"
+    },
+  ]
+
+  if(isLogin){
+    sidebarItem = sidebarItem.filter((item)=>item.path!=='/login')
+  }
+
   return (
     <Container>
       <GlobalState />
@@ -40,44 +80,23 @@ function Sidebar() {
       )}
 
       <SidebarList>
-        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-          <SidebarItem
-            isSelected={location.pathname === "/" ? true : false}
-          >
-            <Person style={{ fontSize: 24 }} />
-            <span>User</span>
-          </SidebarItem>
-        </Link>
-
-        <Link to="/products" style={{ textDecoration: "none", color: "black" }}>
-          <SidebarItem
-            isSelected={location.pathname === "/products" ? true : false}
-          >
-            <ShoppingCart style={{ fontSize: 24 }} />
-            <span>Product</span>
-          </SidebarItem>
-        </Link>
-
-        {!isLogin && (
-          <Link to="/login" style={{ textDecoration: "none", color: "black" }}>
+        
+        {sidebarItem.map((item,index)=>(
+          <Link key={index} to={item.path} style={{ textDecoration: "none", color: "black" }}>
             <SidebarItem
-              isSelected={location.pathname === "/login" ? true : false}
-              isLogin={false}
+              isSelected={location.pathname === item.path ? true : false}
             >
-              <LoginIcon style={{ fontSize: 24 }}></LoginIcon>
-              <span>Login</span>
+              {item.component==='Person'&&<Person style={{ fontSize: 24 }} />}
+              {item.component==='ShoppingCart'&&<ShoppingCart style={{ fontSize: 24 }} />}
+              {item.component==='HowToReg'&&<HowToReg style={{ fontSize: 24 }} />}
+              {item.component==='LoginIcon'&&<LoginIcon style={{ fontSize: 24 }} />}
+              {item.component==='CategoryIcon'&&<CategoryIcon style={{ fontSize: 24 }} />}
+              {item.component==='PlaylistAddCheckCircleIcon'&&<PlaylistAddCheckCircleIcon style={{ fontSize: 24 }} />}
+              <span>{item.name}</span>
             </SidebarItem>
           </Link>
-        )}
-
-        <Link to="/register" style={{ textDecoration: "none", color: "black" }}>
-          <SidebarItem
-            isSelected={location.pathname === "/register" ? true : false}
-          >
-            <HowToReg style={{ fontSize: 24 }} />
-            <span>Register</span>
-          </SidebarItem>
-        </Link>
+        ))}
+        
 
         {isLogin && (
           <Link to="/" style={{ textDecoration: "none", color: "black" }}>

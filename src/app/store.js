@@ -4,6 +4,7 @@ import loginReducer from '../features/login/loginSlice';
 import productsReducer from '../features/products/productsSlice';
 import detailProductReducer from '../features/detailProduct/detailProductSlice';
 import usersReducer from '../features/users/usersSlice';
+import categoriesReducer from '../features/categories/categoriesSlice'
 
 
 export const store = configureStore({
@@ -13,5 +14,6 @@ export const store = configureStore({
     products:productsReducer,
     detailProduct:detailProductReducer,
     users:usersReducer,
+    categories:categoriesReducer,
   },
 });

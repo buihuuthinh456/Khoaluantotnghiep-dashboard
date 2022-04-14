@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+
+
 const URL = "https://khoaluantotnghiep-ecommerce.herokuapp.com";
 
 export const handleRegisterUser = (payload) =>axios({
@@ -44,9 +46,12 @@ export const getDetailProduct = (id) => axios({
 }) 
 
 export const searchProductAPI = (regex) => {
-    const searchParam = new URLSearchParams({
-        'name[regex]':regex
-    }).toString();
+ 
+    Object.keys(regex)
+        .forEach(key => {
+            return (regex[key] === undefined||regex[key]==false) && delete regex[key]
+        })
+    const searchParam = new URLSearchParams(regex).toString();
     console.log(searchParam)
     return axios({
         method:'get',
@@ -59,4 +64,6 @@ export const getUsers = (token) => axios({
     url: `${URL}/user/`,
     headers: { "Content-Type": "multipart/form-data", Authorization: token },
 }) 
+
+
 

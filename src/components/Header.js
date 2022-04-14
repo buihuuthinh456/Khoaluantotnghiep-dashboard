@@ -64,10 +64,10 @@ function Header() {
 
   return (
     <Container>
-        <SearchContainer>
+        {/* <SearchContainer>
             <SearchIcon />
             <input type='text'></input>
-        </SearchContainer>
+        </SearchContainer> */}
 
         <Controller>
             <Notification ref={notiRef}  onClick={()=>setNotibox(state => !state)}>
@@ -128,6 +128,7 @@ const Container = styled.div`
     padding-right: 36px;
     height: 92px;
     display: flex;
+    flex-direction: row-reverse;
     align-items: center;
     justify-content: space-between;
     background-color: #f9fafb;

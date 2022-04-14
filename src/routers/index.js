@@ -4,7 +4,7 @@ import Login from '../pages/Login'
 import Register from '../pages/Register'
 import Product from '../pages/Products'
 import DetailProduct from '../pages/DetailProduct'
-import CreateProduct from '../pages/CreateProduct'
+import Categories from '../pages/Categories'
 import {
   Routes,
   Route,
@@ -18,7 +18,7 @@ function index() {
       <Route path="/register" element={<Register />}></Route>
       <Route path="/products" element={<Product />}></Route>  
       <Route path='/products/:productID' element={<DetailProduct/>} ></Route>
-      <Route path='/create-product' element={<CreateProduct/>} />
+      <Route path='/category' element={<Categories/>}/>
     </Routes>
   )
 }
