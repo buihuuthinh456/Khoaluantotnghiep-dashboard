@@ -47,10 +47,10 @@ export const getDetailProduct = (id) => axios({
 
 export const searchProductAPI = (regex) => {
  
-    Object.keys(regex)
-        .forEach(key => {
-            return (regex[key] === undefined||regex[key]==false) && delete regex[key]
-        })
+    // Object.keys(regex)
+    //     .forEach(key => {
+    //         return (regex[key] === undefined||regex[key]==false) && delete regex[key]
+    //     })
     const searchParam = new URLSearchParams(regex).toString();
     console.log(searchParam)
     return axios({
@@ -65,5 +65,22 @@ export const getUsers = (token) => axios({
     headers: { "Content-Type": "multipart/form-data", Authorization: token },
 }) 
 
+export const getInfoUser = () => {
+    const token = localStorage.getItem('accessToken')
+    console.log(token)
+    return axios({
+        method: 'get',
+        url: `${URL}/user/infor`,
+        headers: { "Content-Type": "multipart/form-data", Authorization:token },
+    })
+}
+
+
+export const createCategory = (payload, token) => axios({
+    method:"post",
+    url:`${URL}/api/category`,
+    data:payload,
+    headers: { Authorization: token },
+})
 
 

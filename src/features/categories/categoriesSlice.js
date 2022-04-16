@@ -1,6 +1,8 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
-import {getCategory} from '../../api';
+import {getCategory,createCategory} from '../../api';
+
+import { toast } from 'react-toastify';
 
 const initialState = {
     isLoading: false,
@@ -17,6 +19,27 @@ export const fetchCategories = createAsyncThunk(
            return response
         } catch (error) {
             console.log(error.response)
+            
+        }
+    }
+)
+
+export const createCategoryThunk = createAsyncThunk(
+    'category/createCategory',
+    async (data)=>{
+        try {
+            console.log(data)
+            const response = await createCategory(data.values,data.token)
+           return response
+        } catch (error) {
+            console.log(error.response)
+            
+            toast.error(error.response.data.msg,{
+                style:{
+                    fontSize:'1.6rem',
+                }
+            })
+            return {status:400}
         }
     }
 )
@@ -39,6 +62,29 @@ export const categoriesSlice = createSlice({
                 }
                 state.isLoading=false;
             })
+            .addCase(createCategoryThunk.pending,(state,action)=>{
+                state.isLoading = true;
+            })
+            .addCase(createCategoryThunk.fulfilled,(state,action)=>{
+                state.isLoading = false;
+                console.log(action.payload)
+                if(action.payload.status===400)
+                {
+                    toast.error('Create category error',{
+                        style:{
+                            fontSize:'1.6rem',
+                        }
+                    })
+                }else{
+                    toast.success('Create category successfull',{
+                        style:{
+                            fontSize:'1.6rem',
+                        }
+                    })
+                }
+                
+            })
+            
     }
 })
 

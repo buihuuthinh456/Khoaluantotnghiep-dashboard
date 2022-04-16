@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import './App.css';
 import Routers from './routers'
 import styled from 'styled-components'
@@ -6,7 +6,18 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import { ToastContainer } from 'react-toastify';
 
+import {getInfo} from './features/login/loginSlice';
+import {useSelector,useDispatch} from 'react-redux'
+
 function App() {
+
+  const accessToken = localStorage.getItem('accessToken');
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(getInfo())
+  },[accessToken])
+
   return (
     <div className="App">
       <Sidebar />

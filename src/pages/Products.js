@@ -40,14 +40,20 @@ function Products() {
   let [searchParams, setSearchParams] = useSearchParams();
   let [searchInfo, setSearchInfo] = useState({
     page: 1,
-    limit: 10,
+    limit:12,
     "price[gt]": undefined,
     "price[gte]": undefined,
     "price[lt]": undefined,
     "price[lte]": undefined,
     "name[regex]": undefined,
     "category[regex]": undefined,
+    "sort":undefined,
   });
+
+  // Lấy state => Ghi đè
+  // Lọc undefined
+  // Set searchParam
+  // Dispatch ( call api)
 
   useEffect(() => {
     dispatch(fetchProducts());
