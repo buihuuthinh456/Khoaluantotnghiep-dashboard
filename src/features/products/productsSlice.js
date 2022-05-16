@@ -1,7 +1,8 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 import {getAllProduct,searchProductAPI,getCategory,uploadImage, createProduct} from '../../api';
-import {toast} from 'react-toastify'
+import {toast} from 'react-toastify';
+
 
 const initialState = {
     isLoading: false,
@@ -25,9 +26,13 @@ export const fetchProducts = createAsyncThunk(
 
 export const createProductThunk = createAsyncThunk(
     'products/createProduct',
-    async (value,img,token)=>{
+    async (dataPass)=>{
         try {
-           const imgUpload = await uploadImage(img, token)
+            console.log(dataPass)
+            const accessToken = dataPass.accessToken
+            const img = dataPass.img
+            const value = dataPass.value
+           const imgUpload = await uploadImage(img, accessToken)
            const {data} = imgUpload
            const {name,
                  productID,
@@ -43,7 +48,8 @@ export const createProductThunk = createAsyncThunk(
             category: category,
             images: [data]
             }
-            const res = await createProduct(dataPost, token)
+            const res = await createProduct(dataPost, accessToken)
+            return res
         } catch (error) {
             console.log(error.response)
             toast.error(error.response.msg,{
@@ -51,6 +57,7 @@ export const createProductThunk = createAsyncThunk(
                     fontSize:'1.6rem',
                 }
             })
+            return error.response
         }
     }
 )
@@ -95,16 +102,21 @@ export const productsSlice = createSlice({
             })
             .addCase(createProductThunk.fulfilled,(state,action)=>{
                 state.isLoading = false;
-                // toast.success(action.payload.data.msg,{
-                //     style:{
-                //         fontSize:'1.6rem',
-                //     }
-                // })
-                toast.success('Create product successfull',{
-                    style:{
-                        fontSize:'1.6rem',
-                    }
-                })
+                console.log(action.payload)
+                if(action.payload.status===400)
+                {
+                    toast.error('Create product error',{
+                        style:{
+                            fontSize:'1.6rem',
+                        }
+                    })
+                }else{
+                    toast.success('Create product successfull',{
+                        style:{
+                            fontSize:'1.6rem',
+                        }
+                    })
+                }
             })
             .addCase(searchProduct.pending,(state,action)=>{
                 state.isLoading = true;
