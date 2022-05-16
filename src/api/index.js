@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-
-
 const URL = "https://khoaluantotnghiep-ecommerce.herokuapp.com";
 
 export const handleRegisterUser = (payload) =>axios({
