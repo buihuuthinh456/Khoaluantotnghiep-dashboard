@@ -1,12 +1,8 @@
 @use "../../scss" as *;
 
 .container {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: $sidebar-width;
   height: 100vh;
-  z-index: 999;
   border-right: 1px solid #e1e5e9;
   padding: 0 20px;
   background-color: white;

@@ -70,7 +70,7 @@ function Header() {
         </SearchContainer> */}
 
         <Controller>
-            <Notification ref={notiRef}  onClick={()=>setNotibox(state => !state)}>
+            {/* <Notification ref={notiRef}  onClick={()=>setNotibox(state => !state)}>
                 <Badge badgeContent={2} color="secondary">
                     <NotificationIcon style={{ fontSize: 24 }}/>
                 </Badge>
@@ -79,7 +79,7 @@ function Header() {
                     
                 </NotificationMenu>}
 
-            </Notification>
+            </Notification> */}
 
             <UserIcon ref={userRef} onClick={handleOpenUser}>
                 <img src='/images/default-user-image.jpg' alt='user-ava'></img>

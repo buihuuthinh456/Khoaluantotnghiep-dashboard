@@ -1,0 +1,121 @@
+@use '../../scss/' as *;
+
+.container {
+    height: $header-height;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #f9fafb;
+    padding-right: 36px;
+}
+
+.userIcon {
+    margin-left: 36px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: relative;
+    z-index: 100;
+    outline: none;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+    }
+}
+
+.userMenu {
+    background-color: white;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    min-width: 220px;
+    border: 2px solid $hover-color;
+    border-radius: 5px;
+    box-shadow: rgb(145 158 171 / 24%) 0px 0px 2px 0px, rgb(145 158 171 / 24%) 0px 20px 40px;
+    transform-origin: top right;
+    animation: FadeIn ease 250ms;
+}
+
+.userInfo {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e1e5e9;
+    p:first-child {
+        font-size: 16px;
+        font-weight: 400;
+        color: $text-color;
+        margin: 0;
+        margin-bottom: 8px;
+    }
+
+    p:last-child {
+        font-size: 14px;
+        font-weight: 300;
+        margin: 0;
+    }
+}
+
+.userController {
+    list-style: none;
+    padding: 0 20px;
+    margin-bottom: 12px;
+}
+
+.userControllerItem {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+
+    &:first-child {
+        margin-top: 8px;
+    }
+
+
+
+    &:hover {
+        background-color: $hover-color;
+    } 
+
+    span {
+        margin-left: 16px;
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--text-color);
+    }
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0;
+
+    button {
+        cursor: pointer;
+        padding: 8px 52px;
+        background-color: white;
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: 1.1px;
+        border: 1px solid #c5cbed;
+        border-radius: 10px;
+
+        &:hover {
+            background-color: $hover-color
+        }
+    }
+}
+
+@keyframes FadeIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    } to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
