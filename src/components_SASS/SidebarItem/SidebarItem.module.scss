@@ -1,0 +1,28 @@
+@use "../../scss/" as *;
+
+.container {
+  cursor: pointer;
+  padding: 20px 0;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+
+  &.active {
+    color: $primary-color;
+    border-right: 4px solid $primary-color;
+    background-color: #f1f2f5; 
+  }
+
+  &:hover {
+    background-color: #f1f2f5;
+  }
+
+  span {
+    margin-left: 16px;
+    font-size: 14px;
+    font-weight: 400;
+    color: $text-color;
+    text-decoration: none !important;
+  }
+}
