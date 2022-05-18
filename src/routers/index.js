@@ -5,7 +5,8 @@ import Login from '../pages/Login'
 import Register from '../pages/Register'
 import Product from '../pages/Products'
 import DetailProduct from '../pages/DetailProduct'
-import Categories from '../pages/Categories'
+// import Categories from '../pages/Categories'
+import Categories from '../pagesSass/Categories'
 import Home from '../pages/Home'
 
 

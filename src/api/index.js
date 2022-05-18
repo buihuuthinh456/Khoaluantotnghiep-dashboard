@@ -81,4 +81,13 @@ export const createCategory = (payload, token) => axios({
     headers: { Authorization: token },
 })
 
+export const deleteCategory = (id, token) => {
+    console.log('callAPI', id)
+    return axios({
+        method: 'delete',
+        url:`${URL}/api/category/${id}`,
+        headers: { Authorization: token },
+    })
+}
+
 

@@ -11,9 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import Loading from "../../components/Loading";
 import Modal from "../../components/Modal";
-import { Button } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+
 // Others
 import { toast } from "react-toastify";
 
