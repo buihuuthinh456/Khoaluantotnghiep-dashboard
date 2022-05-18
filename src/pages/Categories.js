@@ -104,6 +104,7 @@ function Categories() {
             pageSize={8}
             rowsPerPageOptions={[5]}
             checkboxSelection
+            onRowClick={(e)=>console.log(e.row)}
           />
         </DataContainer>
       )}

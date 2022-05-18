@@ -12,7 +12,11 @@ import {
   Settings,
 } from "@material-ui/icons";
 
+import { useNavigate } from 'react-router-dom'
+
 function Header() {
+
+  const navigate = useNavigate()
   const loginState = useSelector(selectLogin);
   useEffect(() => {
     setUserInfo(loginState.info);
@@ -84,8 +88,8 @@ function Header() {
         </div>
       ) : (
         <div className={styles.loginSection}>
-          <Button style={{margin: 12}} variant="outlined">Register</Button>
-          <Button variant="contained">Sign Up</Button>
+          <Button style={{margin: 12}} variant="outlined" onClick={()=>navigate('/register')}>Register</Button>
+          <Button variant="contained" onClick={()=>navigate('/login')}>Sign Up</Button>
         </div>
       )}
     </div>

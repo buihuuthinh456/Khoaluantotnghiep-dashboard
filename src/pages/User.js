@@ -87,6 +87,7 @@ function User() {
           columns={columns}
           pageSize={8}
           rowsPerPageOptions={[5]}
+          onRowClick={(e)=>console.log('user select', e.row)}
           // checkboxSelection
         />
       </DataContainer>

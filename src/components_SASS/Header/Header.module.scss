@@ -109,6 +109,22 @@
     }
 }
 
+.loginSection {
+    button:first-child {
+        font-size: 1.45rem;
+        color: $primary-color;
+        padding: 4px 8px;
+        border: 1px solid $primary-color; 
+    }
+
+    button:last-child {
+        font-size: 1.45rem;
+        padding: 4px 8px;
+        color: white;
+        background-color: $primary-color;
+    }
+}
+
 @keyframes FadeIn {
     from {
         transform: scale(0);
