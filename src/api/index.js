@@ -81,6 +81,15 @@ export const createCategory = (payload, token) => axios({
     headers: { Authorization: token },
 })
 
+export const updateCategory = (payload, token, id) => {
+    return axios({
+        method: 'put',
+        url:`${URL}/api/category/${id}`,
+        headers: { Authorization: token },
+        data: payload
+    })
+}
+
 export const deleteCategory = (id, token) => {
     console.log('callAPI', id)
     return axios({

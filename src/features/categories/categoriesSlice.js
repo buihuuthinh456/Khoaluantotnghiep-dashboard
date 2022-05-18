@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { getCategory, createCategory, deleteCategory } from "../../api";
+import {
+  getCategory,
+  createCategory,
+  deleteCategory,
+  updateCategory,
+} from "../../api";
 
 import { toast } from "react-toastify";
 
@@ -48,11 +53,27 @@ export const deleteCategoryAsync = createAsyncThunk(
     try {
       if (localStorage.getItem("accessToken")) {
         const token = localStorage.getItem("accessToken");
-        console.log("payload", payload);
         const id = payload._id;
         const response = await deleteCategory(id, token);
         return response;
       }
+    } catch (error) {
+      toast.error(error.response.data.msg, {
+        style: {
+          fontSize: "1.6rem",
+        },
+      });
+    }
+  }
+);
+
+export const updateCategoryAsync = createAsyncThunk(
+  "category/updateCategoryAsync",
+  async (payload) => {
+    try {
+      const { id, token, values } = payload;
+      const response = await updateCategory(values, token, id);
+      return response;
     } catch (error) {
       toast.error(error.response.data.msg, {
         style: {
@@ -111,6 +132,17 @@ export const categoriesSlice = createSlice({
     });
     builder.addCase(deleteCategoryAsync.rejected, (state, action) => {
       console.log("delete rejected", action);
+    });
+
+    builder.addCase(updateCategoryAsync.fulfilled, (state, action) => {
+        console.log('updateCategoryAsync.fulfilled', action.payload);
+      if (action.payload.data.msg) {
+        toast.success(action.payload.data.msg, {
+          style: {
+            fontSize: "1.6rem",
+          },
+        });
+      }
     });
   },
 });

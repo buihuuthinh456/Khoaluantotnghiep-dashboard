@@ -28,8 +28,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 function Categories() {
   // useState
-  const [mountAdd, setMountAdd] = useState(false);
-  const [dataRow, setDataRow] = useState(null)
+  const [mountForm, setMountForm] = useState(false);
+  const [dataRow, setDataRow] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
 
   // redux
   const loginState = useSelector(selectLogin);
@@ -52,24 +53,33 @@ function Categories() {
       headerName: "Option",
       flex: 1,
       renderCell: (param) => {
-
         const handleEdit = (param) => {
-            console.log('row selected', param.row);
-          }
-        
-          const handleDelete = (param) => {
-            dispatch(deleteCategoryAsync(param.row))
-          }
+          setIsEdit(true);
+          setMountForm(true);
+          setDataRow(param.row);
+        };
+
+        const handleDelete = (param) => {
+          dispatch(deleteCategoryAsync(param.row));
+        };
 
         return (
           <div className={styles.option}>
             <div className={styles.optionEdit}>
-              <Button variant="contained" color="success" onClick={()=>handleEdit(param)}>
+              <Button
+                variant="contained"
+                color="success"
+                onClick={() => handleEdit(param)}
+              >
                 <EditIcon></EditIcon>
               </Button>
             </div>
             <div className={styles.optionDelelte}>
-              <Button variant="contained" color="error" onClick={()=>handleDelete(param)}>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => handleDelete(param)}
+              >
                 <DeleteIcon></DeleteIcon>
               </Button>
             </div>
@@ -92,7 +102,9 @@ function Categories() {
   // function when Click button
   const handleSwitchPage = () => {
     if (loginState.isLogin && loginState.isAdmin) {
-      setMountAdd((state) => !state);
+      setMountForm((state) => !state);
+      setDataRow(null);
+      setIsEdit(false);
     } else {
       toast.error(`You haven't login or not admin`, {
         position: toast.POSITION.TOP_RIGHT,
@@ -113,7 +125,7 @@ function Categories() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>Categories</h2>
-        {!mountAdd ? (
+        {!mountForm ? (
           <div className={styles.headerButton}>
             <Button variant="contained" onClick={() => handleSwitchPage()}>
               <AddIcon style={{ fontSize: 20 }}></AddIcon>
@@ -123,14 +135,14 @@ function Categories() {
         ) : (
           <div className={styles.headerButton}>
             <Button variant="contained" onClick={() => handleSwitchPage()}>
-              <ArrowBackIcon  style={{ fontSize: 20 }}/>
+              <ArrowBackIcon style={{ fontSize: 20 }} />
               Back
             </Button>
           </div>
         )}
       </div>
 
-      {!mountAdd && rows && (
+      {!mountForm && rows && (
         <div className={styles.dataContainer}>
           <DataGrid
             style={{ fontSize: 16 }}
@@ -141,7 +153,7 @@ function Categories() {
           />
         </div>
       )}
-      {mountAdd && <FormCreateCategory></FormCreateCategory>}
+      {mountForm && <FormCreateCategory isEdit={isEdit} dataRow={dataRow} />}
     </div>
   );
 }
