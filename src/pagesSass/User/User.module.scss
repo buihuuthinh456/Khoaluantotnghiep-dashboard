@@ -1,0 +1,66 @@
+@use "../../scss/" as *;
+
+.container {
+  position: relative;
+  padding: 20px 36px;
+  h2 {
+    font-size: 2.6rem;
+  }
+  z-index: 1;
+}
+
+.dataContainer {
+  margin-top: 24px;
+  height: 600px;
+  z-index: 1;
+}
+
+.cellWithImg {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+
+  span {
+    font-size: 1.6rem;
+    color: $text-color;
+    font-weight: 300;
+  }
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .optionEdit {
+        position: relative;
+        margin-right: 24px;
+        button {
+            padding: 8px 0;
+            font-size: 1.45rem;
+        }
+    }
+
+    .optionDelete {
+        margin-right: 24px;
+        button {
+            padding: 8px 0;
+            font-size: 1.45rem;
+        }
+    }
+}
+
+:global(.MuiDataGrid-main) {
+    font-size: 1.5rem !important;
+}
+
+:global(.MuiTablePagination-displayedRows ) {
+    font-size: 1.5rem !important; 
+}

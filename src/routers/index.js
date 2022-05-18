@@ -1,5 +1,6 @@
 import React from 'react'
-import User from '../pages/User'
+// import User from '../pages/User'
+import User from '../pagesSass/User'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
 import Product from '../pages/Products'
