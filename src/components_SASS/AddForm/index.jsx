@@ -253,6 +253,7 @@ function AddForm() {
                 <TextField
                     sx={{height: 200}}
                   required
+                  multiline
                   error={
                     // formik.errors.productID
                     // ? true
