@@ -67,12 +67,13 @@ function User() {
       }
     },
     { field: 'isAdmin', headerName: 'Admin', width: 150},
-    { field: '_id', headerName: 'Code', width: 300 },
+    { field: 'email', headerName: 'Email', width: 300 },
   ];
 
   const rows = data.users.map((item,index)=>({
     ...item,id:index+1,userImg:'images/default-user-image.jpg'
   }))
+  console.log(rows)
 
  
 

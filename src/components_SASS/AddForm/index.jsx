@@ -252,6 +252,8 @@ function AddForm() {
               <div className={styles.field}>
                 <TextField
                     sx={{height: 200}}
+                    multiline
+                    minRows={3}
                   required
                   multiline
                   error={
