@@ -110,12 +110,12 @@ function AddProduct({ callback }) {
 
   return (
     <Container>
-      <Header>
+      {/* <Header>
         <ButtonBack onClick={(e) => callback(false)}>
           <ArrowBackIcon style={{ fontSize: "2rem" }} />
         </ButtonBack>
         <h1>Add Product </h1>
-      </Header>
+      </Header> */}
       <Formik
         initialValues={{
           name: "",
@@ -344,7 +344,7 @@ function AddProduct({ callback }) {
 export default AddProduct;
 
 const Container = styled.div`
-  padding: 12px 36px;
+  padding: 12px 0;
 `;
 
 const Header = styled.div`

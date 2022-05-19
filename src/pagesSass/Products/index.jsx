@@ -26,7 +26,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 
 // Components
-import AddProduct from "../../components/AddProduct";
+import AddProduct from "../../components_SASS/AddForm";
 import Loading from "../../components/Loading";
 import Modal from "../../components/Modal";
 // Other
@@ -187,29 +187,31 @@ function Products() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2>Products</h2>
-        <div className={styles.category}>
-          <FormControl>
-            <InputLabel id="filter-data">Category</InputLabel>
-            <Select
-              labelId="filter-data"
-              id="demo-simple-select"
-              value={category}
-              label="Filter"
-              onChange={handleChangeCategory}
-            >
-              <MenuItem value="all">All</MenuItem>
-              {categories &&
-                categories.map((item) => {
-                  return (
-                    <MenuItem key={item._id} value={item.name}>
-                      {item.name}
-                    </MenuItem>
-                  );
-                })}
-            </Select>
-          </FormControl>
-        </div>
+        <h2>{mountForm ? 'Add Product' : 'Products'}</h2>
+        {!mountForm && 
+          <div className={styles.category}>
+            <FormControl>
+              <InputLabel id="filter-data">Category</InputLabel>
+              <Select
+                labelId="filter-data"
+                id="demo-simple-select"
+                value={category}
+                label="Filter"
+                onChange={handleChangeCategory}
+              >
+                <MenuItem value="all">All</MenuItem>
+                {categories &&
+                  categories.map((item) => {
+                    return (
+                      <MenuItem key={item._id} value={item.name}>
+                        {item.name}
+                      </MenuItem>
+                    );
+                  })}
+              </Select>
+            </FormControl>
+          </div>
+        }
         {!mountForm ? (
           <div className={styles.headerButton}>
             <Button variant="contained" onClick={() => handleAddForm()}>
@@ -246,6 +248,7 @@ function Products() {
           </div>
         </div>
       )}
+      {mountForm && <AddProduct />}
     </div>
   );
 }
