@@ -64,7 +64,6 @@ function Categories() {
       if (loginState.isLogin && loginState.isAdmin) {
         setMounteAdd(state=>!state);
         // navigate("/create-product");
-        console.log(123)
       } else {
         toast.error(`You haven't login or not admin`, {
           position: toast.POSITION.TOP_RIGHT,
@@ -104,6 +103,7 @@ function Categories() {
             pageSize={8}
             rowsPerPageOptions={[5]}
             checkboxSelection
+            onRowClick={(e)=>console.log(e.row)}
           />
         </DataContainer>
       )}

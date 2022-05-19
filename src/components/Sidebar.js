@@ -25,7 +25,7 @@ function Sidebar() {
     setUserInfo(loginState.info);
   }, [loginState.isLogin]);
 
-// Comment 22
+
   let sidebarItem = [
     {
       path:'/',

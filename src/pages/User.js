@@ -81,7 +81,6 @@ function User() {
   return (
     <Container>
       <h2>USER</h2>
-      
       <DataContainer>
         <DataGrid
           style={{fontSize: '1.6rem'}}
@@ -89,6 +88,7 @@ function User() {
           columns={columns}
           pageSize={8}
           rowsPerPageOptions={[5]}
+          onRowClick={(e)=>console.log('user select', e.row)}
           // checkboxSelection
         />
       </DataContainer>

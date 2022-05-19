@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-
-
 const URL = "https://khoaluantotnghiep-ecommerce.herokuapp.com";
 
 export const handleRegisterUser = (payload) =>axios({
@@ -82,5 +80,23 @@ export const createCategory = (payload, token) => axios({
     data:payload,
     headers: { Authorization: token },
 })
+
+export const updateCategory = (payload, token, id) => {
+    return axios({
+        method: 'put',
+        url:`${URL}/api/category/${id}`,
+        headers: { Authorization: token },
+        data: payload
+    })
+}
+
+export const deleteCategory = (id, token) => {
+    console.log('callAPI', id)
+    return axios({
+        method: 'delete',
+        url:`${URL}/api/category/${id}`,
+        headers: { Authorization: token },
+    })
+}
 
 

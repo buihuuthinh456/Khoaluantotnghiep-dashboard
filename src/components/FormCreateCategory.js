@@ -1,34 +1,55 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
-import Button from "./Button/Button";
 
-import { Formik } from "formik";
-import * as Yup from "yup";
-
+// Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
   createCategoryThunk,
   selectCategories,
+  updateCategoryAsync,
 } from "../features/categories/categoriesSlice";
 import { selectLogin } from "../features/login/loginSlice";
 
+// Components
+import Button from "./Button/Button";
 import Modal from "./Modal";
 import Loading from "./Loading";
-function FormCreateCategory() {
+// Other
+import { Formik } from "formik";
+import * as Yup from "yup";
+
+function FormCreateCategory({ isEdit, dataRow }) {
+  
+  const [data, setData] =useState()
+
+  useEffect(()=>{
+    setData(dataRow)
+  }, [dataRow])
+
   const loginState = useSelector(selectLogin);
   const isLoading = useSelector(selectCategories).isLoading;
   const dispatch = useDispatch();
 
   const handleSubmit = async (values, func) => {
-    console.log(loginState.accessToken)
-    const token = loginState.accessToken
-    const object = {
+    if (!isEdit) {
+      const token = loginState.accessToken;
+      const object = {
         values,
-        token
+        token,
+      };
+      dispatch(createCategoryThunk(object));
+      func();
+    } else {
+      const token = loginState.accessToken;
+      const dataPost = {
+        id: dataRow._id,
+        token,
+        values
+      }
+      dispatch(updateCategoryAsync(dataPost))
+      dataRow.name = null
+      func()
     }
-
-    dispatch(createCategoryThunk(object));
-    func();
   };
 
   if (isLoading)
@@ -41,13 +62,20 @@ function FormCreateCategory() {
   return (
     <Container>
       <Header>
-        <h1>Form Create Category </h1>
+        <h1>{isEdit ? "Edit Category" : "Create Category"}</h1>
       </Header>
 
       <Formik
-        initialValues={{
-          name: "",
-        }}
+        initialValues={
+          isEdit && 
+          dataRow
+            ? {
+                name: dataRow.name,
+              }
+            : {
+                name: "",
+              }
+        }
         validationSchema={Yup.object({
           name: Yup.string().required("Thông tin này bắt buộc phải có"),
         })}
