@@ -24,6 +24,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
 // Components
 import AddProduct from "../../components_SASS/AddForm";
@@ -99,7 +100,7 @@ function Products() {
 
         return (
           <div className={styles.option}>
-            <div className={styles.optionEdit}>
+            <div className={styles.optionBtn}>
               <Button
                 variant="contained"
                 color="success"
@@ -108,13 +109,22 @@ function Products() {
                 <EditIcon></EditIcon>
               </Button>
             </div>
-            <div className={styles.optionDelete}>
+            <div className={styles.optionBtn}>
               <Button
                 variant="contained"
                 color="error"
                 //   onClick={(e) => handleDelete(e)}
               >
                 <DeleteIcon></DeleteIcon>
+              </Button>
+            </div>
+            <div className={styles.optionBtn}>
+              <Button
+                variant="contained"
+                color="success"
+                //   onClick={(e) => handleEdit(e)}
+              >
+                <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
               </Button>
             </div>
           </div>
