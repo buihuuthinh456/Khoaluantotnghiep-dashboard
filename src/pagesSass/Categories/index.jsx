@@ -11,7 +11,6 @@ import { selectLogin } from "../../features/login/loginSlice";
 // MUI
 import AddIcon from "@mui/icons-material/Add";
 import { DataGrid } from "@mui/x-data-grid";
-import styled from "styled-components";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -43,7 +42,7 @@ function Categories() {
     dispatch(fetchCategories());
   }, []);
 
-  // data collumns
+  // data columns
   const columns = [
     { field: "id", headerName: "No", width: 70 },
     { field: "name", headerName: "Category Name", flex: 1, sortable: true },
@@ -53,7 +52,8 @@ function Categories() {
       headerName: "Option",
       flex: 1,
       renderCell: (param) => {
-        const handleEdit = (param) => {
+        const handleEdit = (e) => {
+          e.stopPropagation()
           setIsEdit(true);
           setMountForm(true);
           setDataRow(param.row);
@@ -64,21 +64,21 @@ function Categories() {
         };
 
         return (
-          <div className={styles.option}>
+          <div className={styles.option}> 
             <div className={styles.optionEdit}>
               <Button
                 variant="contained"
                 color="success"
-                onClick={() => handleEdit(param)}
+                onClick={(e) => handleEdit(e)}
               >
                 <EditIcon></EditIcon>
               </Button>
             </div>
-            <div className={styles.optionDelelte}>
+            <div className={styles.optionDelete}>
               <Button
                 variant="contained"
                 color="error"
-                onClick={() => handleDelete(param)}
+                onClick={(e) => handleDelete(e)}
               >
                 <DeleteIcon></DeleteIcon>
               </Button>
@@ -150,6 +150,7 @@ function Categories() {
             columns={columns}
             pageSize={8}
             rowsPerPageOptions={[5]}
+            onRowClick = {()=>console.log('row select')}
           />
         </div>
       )}

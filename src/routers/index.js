@@ -3,7 +3,8 @@ import React from 'react'
 import User from '../pagesSass/User'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
-import Product from '../pages/Products'
+// import Product from '../pages/Products'
+import Product from '../pagesSass/Products'
 import DetailProduct from '../pages/DetailProduct'
 // import Categories from '../pages/Categories'
 import Categories from '../pagesSass/Categories'
@@ -32,6 +33,7 @@ const publicRoutes = [
   {path: '/products', component: Product },
   {path: '/products/:productID', component: DetailProduct },
   {path: '/category', component: Categories },
+  {path: '/orders', component: User },
 ]
 
 export { publicRoutes }
