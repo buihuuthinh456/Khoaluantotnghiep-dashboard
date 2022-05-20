@@ -89,7 +89,7 @@ function Header() {
       ) : (
         <div className={styles.loginSection}>
           <Button style={{margin: 12}} variant="outlined" onClick={()=>navigate('/register')}>Register</Button>
-          <Button variant="contained" onClick={()=>navigate('/login')}>Sign Up</Button>
+          <Button variant="contained" onClick={()=>navigate('/login')}>Login</Button>
         </div>
       )}
     </div>
