@@ -84,7 +84,7 @@ function Products() {
 
   //   data columns
   const columns = [
-    { field: "id", headerName: "No", width: 70 },
+    { field: "id", headerName: "No", width: 70},
     { field: "name", headerName: "Product Name", flex: 2 },
     {
       field: "price",
@@ -188,6 +188,7 @@ function Products() {
   };
 
   const handleChangeCategory = (e) => {
+    setCategory(e.target.value)
     const value = e.target.value === 'all' ? undefined : e.target.value
     setQuery(state => {
       const param = { ...state, "category[regex]": value,}
