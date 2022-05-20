@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-import { selectLogin } from "../../features/login/loginSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { selectLogin, logOut } from "../../features/login/loginSlice";
 import styles from "./Header.module.scss";
 import { Badge } from "@material-ui/core";
 import Button from "@mui/material/Button";
@@ -15,7 +15,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 
 function Header() {
-
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const loginState = useSelector(selectLogin);
   useEffect(() => {
@@ -35,6 +35,11 @@ function Header() {
       setUserBox(true);
     }
   };
+
+  const handleLogout = (e) => {
+    e.stopPropagation()
+    dispatch(logOut())
+  }
 
   // close user
   const userRef = useRef();
@@ -80,7 +85,7 @@ function Header() {
                 </li>
 
                 <div className={styles.logout}>
-                  <button>Logout</button>
+                  <button onClick={(e)=>handleLogout(e)}>Logout</button>
                 </div>
               </ul>
             </div>
