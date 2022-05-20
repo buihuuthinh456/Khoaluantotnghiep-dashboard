@@ -96,6 +96,7 @@ function AddProduct({ callback }) {
       img:form,
       accessToken:accessToken
     }
+    console.log('data before submut', data);
     dispatch(createProductThunk(data));
 
     func();

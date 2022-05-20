@@ -21,6 +21,14 @@ export const createProduct = (payload, token) => axios({
     headers: { Authorization: token },
 })
 
+export const deleteProduct = (id, token) => {
+    return axios({
+        method: "delete",
+        url:`${URL}/api/product/${id}`,
+        headers: { Authorization: token },
+    })
+}
+
 export const getCategory = () => axios({
     method: 'get',
     url: `${URL}/api/category`

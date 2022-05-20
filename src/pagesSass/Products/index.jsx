@@ -8,6 +8,7 @@ import {
   selectProducts,
   fetchProducts,
   searchProduct,
+  deleteProductAsync,
 } from "../../features/products/productsSlice";
 
 import { selectLogin } from "../../features/login/loginSlice";
@@ -24,6 +25,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
 // Components
 import AddProduct from "../../components_SASS/AddForm";
@@ -33,6 +35,7 @@ import Modal from "../../components/Modal";
 import { toast } from "react-toastify";
 import CurrencyFormat from "../../functionJS";
 import { MenuItem } from "@mui/material";
+import BeforeAction from "../../components_SASS/BeforeAction";
 
 function Products() {
   // redux
@@ -53,6 +56,9 @@ function Products() {
     limit: 12,
     "category[regex]": undefined,
   });
+  const [beforeAction, setBeforeAction] = useState(false)
+  const [isConfirm, setIsConfirm] = useState(false)
+  const [dataSelect, setDataSelect] = useState(null)
 
   //   function
   const navigate = useNavigate();
@@ -67,6 +73,14 @@ function Products() {
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
+
+  // useEffect(() => {
+  //   // if (dataSelect._id) {
+      
+  //   //   // dispatch(deleteProductAsync(dataSelect._id))
+  //   // }
+  //   console.log('data confirm', isConfirm)
+  // }, [isConfirm]);
 
   //   data columns
   const columns = [
@@ -93,13 +107,17 @@ function Products() {
         //     setDataRow(param.row);
         //   };
 
-        //   const handleDelete = (param) => {
-        //     dispatch(deleteCategoryAsync(param.row));
-        //   };
+          const handleDelete = (param) => {
+            setBeforeAction(state=>!state)
+          };
+
+        const handleDetail = (e) => {
+          navigate(`/products/${param.row._id}`)
+        }
 
         return (
           <div className={styles.option}>
-            <div className={styles.optionEdit}>
+            <div className={styles.optionBtn}>
               <Button
                 variant="contained"
                 color="success"
@@ -108,13 +126,22 @@ function Products() {
                 <EditIcon></EditIcon>
               </Button>
             </div>
-            <div className={styles.optionDelete}>
+            <div className={styles.optionBtn}>
               <Button
                 variant="contained"
                 color="error"
-                //   onClick={(e) => handleDelete(e)}
+                onClick={(e) => handleDelete(e)}
               >
                 <DeleteIcon></DeleteIcon>
+              </Button>
+            </div>
+            <div className={styles.optionBtn}>
+              <Button
+                variant="contained"
+                color="info"
+                  onClick={(e) => handleDetail(e)}
+              >
+                <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
               </Button>
             </div>
           </div>
@@ -162,7 +189,6 @@ function Products() {
 
   const handleChangeCategory = (e) => {
     const value = e.target.value === 'all' ? undefined : e.target.value
-    // console.log('cate chooose', value);
     setQuery(state => {
       const param = { ...state, "category[regex]": value,}
       Object.keys(param).forEach((key) => {
@@ -176,6 +202,7 @@ function Products() {
       return param;
     })
   };
+
   //   loading
   if (isLoading)
     return (
@@ -237,7 +264,7 @@ function Products() {
             columns={columns}
             pageSize={12}
             rowsPerPageOptions={[5]}
-            onRowClick={() => console.log("row select")}
+            onRowClick={(e) => setDataSelect(e.row)}
           />
           <div className={styles.pagination}>
             <Pagination
@@ -249,6 +276,14 @@ function Products() {
         </div>
       )}
       {mountForm && <AddProduct />}
+      {beforeAction && <BeforeAction 
+        title = "Xóa Sản phẩm"
+        onCancel = {()=>setBeforeAction(false)}
+        onConfirm = {()=>{
+          setBeforeAction(false)
+          dispatch(deleteProductAsync(dataSelect._id))
+        }} 
+      />}
     </div>
   );
 }
