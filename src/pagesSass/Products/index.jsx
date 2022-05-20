@@ -86,11 +86,11 @@ function Products() {
   //   data columns
   const columns = [
     { field: "id", headerName: "No", width: 70},
-    { field: "name", headerName: "Product Name", flex: 2 },
+    { field: "name", headerName: "Product Name", flex: 2},
     {
       field: "price",
       headerName: "Price",
-      flex: 1,
+      width: 150,
       renderCell: (param) => {
         return <span>{CurrencyFormat(param.row.price)}</span>;
       },
@@ -99,7 +99,7 @@ function Products() {
       field: "Option",
       headerName: "Option",
       sortable: true,
-      flex: 1,
+      flex: 2,
       renderCell: (param) => {
         //   const handleEdit = (e) => {
         //     e.stopPropagation()
