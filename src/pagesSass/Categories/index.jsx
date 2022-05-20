@@ -20,6 +20,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Modal from "../../components/Modal";
 import Loading from "../../components/Loading";
 import FormCreateCategory from "../../components/FormCreateCategory";
+import BeforeAction from "../../components_SASS/BeforeAction";
 
 // Other
 import { toast } from "react-toastify";
@@ -30,6 +31,7 @@ function Categories() {
   const [mountForm, setMountForm] = useState(false);
   const [dataRow, setDataRow] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
+  const [beforeAction, setBeforeAction] = useState(false);
 
   // redux
   const loginState = useSelector(selectLogin);
@@ -53,18 +55,18 @@ function Categories() {
       flex: 1,
       renderCell: (param) => {
         const handleEdit = (e) => {
-          e.stopPropagation()
+          e.stopPropagation();
           setIsEdit(true);
           setMountForm(true);
           setDataRow(param.row);
         };
 
         const handleDelete = (param) => {
-          dispatch(deleteCategoryAsync(param.row));
+          setBeforeAction(true);
         };
 
         return (
-          <div className={styles.option}> 
+          <div className={styles.option}>
             <div className={styles.optionEdit}>
               <Button
                 variant="contained"
@@ -150,11 +152,22 @@ function Categories() {
             columns={columns}
             pageSize={8}
             rowsPerPageOptions={[5]}
-            onRowClick = {()=>console.log('row select')}
+            onRowClick={(e) => setDataRow(e.row)}
           />
         </div>
       )}
       {mountForm && <FormCreateCategory isEdit={isEdit} dataRow={dataRow} />}
+      {console.log("data row", dataRow)}
+      {beforeAction && (
+        <BeforeAction
+          title="Xóa Category"
+          onCancel={() => setBeforeAction(false)}
+          onConfirm={() => {
+            setBeforeAction(false);
+            dispatch(deleteCategoryAsync(dataRow));
+          }}
+        ></BeforeAction>
+      )}
     </div>
   );
 }

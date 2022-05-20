@@ -31,11 +31,12 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import AddProduct from "../../components_SASS/AddForm";
 import Loading from "../../components/Loading";
 import Modal from "../../components/Modal";
+import BeforeAction from "../../components_SASS/BeforeAction";
 // Other
 import { toast } from "react-toastify";
 import CurrencyFormat from "../../functionJS";
 import { MenuItem } from "@mui/material";
-import BeforeAction from "../../components_SASS/BeforeAction";
+
 
 function Products() {
   // redux
