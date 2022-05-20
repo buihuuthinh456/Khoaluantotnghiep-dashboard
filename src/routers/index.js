@@ -9,6 +9,7 @@ import DetailProduct from '../pages/DetailProduct'
 // import Categories from '../pages/Categories'
 import Categories from '../pagesSass/Categories'
 import Home from '../pages/Home'
+import Orders from '../pagesSass/Orders'
 
 
 // function index() {
@@ -33,7 +34,7 @@ const publicRoutes = [
   {path: '/products', component: Product },
   {path: '/products/:productID', component: DetailProduct },
   {path: '/category', component: Categories },
-  {path: '/orders', component: User },
+  {path: '/orders', component: Orders },
 ]
 
 export { publicRoutes }

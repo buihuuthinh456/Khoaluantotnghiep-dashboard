@@ -100,3 +100,10 @@ export const deleteCategory = (id, token) => {
 }
 
 
+export const getOrders = () => axios({
+    method: 'get',
+    url: `${URL}/api/payment`,
+    headers: { "Content-Type": "multipart/form-data", Authorization: localStorage.getItem('accessToken') },
+}) 
+
+
