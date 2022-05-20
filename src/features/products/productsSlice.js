@@ -6,6 +6,7 @@ import {
   getCategory,
   uploadImage,
   createProduct,
+  deleteProduct,
 } from "../../api";
 import { toast } from "react-toastify";
 
@@ -52,11 +53,11 @@ export const createProductThunk = createAsyncThunk(
       return res;
     } catch (error) {
       console.log(error.response);
-    //   toast.error(error.response.msg, {
-    //     style: {
-    //       fontSize: "1.6rem",
-    //     },
-    //   });
+      //   toast.error(error.response.msg, {
+      //     style: {
+      //       fontSize: "1.6rem",
+      //     },
+      //   });
       return error.response;
     }
   }
@@ -68,6 +69,22 @@ export const searchProduct = createAsyncThunk(
     try {
       const response = await searchProductAPI(regex);
       return response;
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
+);
+
+export const deleteProductAsync = createAsyncThunk(
+  "products/deleteProductAsync",
+  async (payload) => {
+    try {
+      if (localStorage.getItem("accessToken")) {
+        const token = localStorage.getItem("accessToken");
+        const id = payload;
+        const response = await deleteProduct(id, token);
+        return response;
+      }
     } catch (error) {
       console.log(error.response);
     }
@@ -129,6 +146,24 @@ export const productsSlice = createSlice({
         }
 
         state.isLoading = false;
+      });
+
+    builder
+      .addCase(deleteProductAsync.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteProductAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if (action.payload.data.msg) {
+          toast.success("Delete product complete", {
+            style: {
+              fontSize: "1.6rem",
+            },
+          });
+        }
+      })
+      .addCase(deleteProductAsync.rejected, (state, action) => {
+        console.log("rejected", action);
       });
   },
 });

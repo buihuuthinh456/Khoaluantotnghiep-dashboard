@@ -1,0 +1,49 @@
+@use '../../scss/' as *;
+
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;  
+    background-color: rgba(0,0,0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.body {
+    min-width: 200px;
+    min-height: 100px;
+    background-color: white;
+}   
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 2px solid $primary-color;
+    h3 {
+        font-size: 2rem;
+        font-weight: 400;
+        color: $text-color;
+    }
+}
+
+.action {
+    margin-top: 12px;
+    padding: 12px;
+}
+
+.btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    button {
+        padding: 4px;
+        font-size: 1.4rem;
+    }
+}
