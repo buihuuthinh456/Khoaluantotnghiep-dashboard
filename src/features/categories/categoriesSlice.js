@@ -13,6 +13,7 @@ const initialState = {
   isLoading: false,
   resultTotal: 0,
   categories: null,
+  isReload: false,
 };
 
 export const fetchCategories = createAsyncThunk(
@@ -99,13 +100,14 @@ export const categoriesSlice = createSlice({
           state.resultTotal = 1;
         }
         state.isLoading = false;
+        state.isReload = false;
       })
       .addCase(createCategoryThunk.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(createCategoryThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
+        state.isReload = true;
         if (action.payload.status === 400) {
           toast.error("Create category error", {
             style: {
@@ -123,6 +125,7 @@ export const categoriesSlice = createSlice({
 
     builder.addCase(deleteCategoryAsync.fulfilled, (state, action) => {
       if (action.payload.data.msg) {
+        state.isReload = true
         toast.success(action.payload.data.msg, {
           style: {
             fontSize: "1.6rem",
@@ -140,6 +143,7 @@ export const categoriesSlice = createSlice({
 
     builder.addCase(updateCategoryAsync.fulfilled, (state, action) => {
       state.isLoading = false
+      state.isReload = true;
       if (action.payload.data.msg) {
         toast.success(action.payload.data.msg, {
           style: {

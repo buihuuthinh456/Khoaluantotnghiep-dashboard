@@ -32,10 +32,10 @@ function Categories() {
   const [dataRow, setDataRow] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [beforeAction, setBeforeAction] = useState(false);
-
   // redux
   const loginState = useSelector(selectLogin);
   const categories = useSelector(selectCategories);
+  const isReload = useSelector(selectCategories).isReload;
   // function redux
   const dispatch = useDispatch();
 
@@ -43,6 +43,10 @@ function Categories() {
   useEffect(() => {
     dispatch(fetchCategories());
   }, []);
+
+  useEffect(() => {
+    if (isReload) dispatch(fetchCategories());
+  }, [isReload]);
 
   // data columns
   const columns = [
