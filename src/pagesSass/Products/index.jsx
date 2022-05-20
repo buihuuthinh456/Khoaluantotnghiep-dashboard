@@ -98,6 +98,10 @@ function Products() {
         //     dispatch(deleteCategoryAsync(param.row));
         //   };
 
+        const handleDetail = (e) => {
+          navigate(`/products/${param.row._id}`)
+        }
+
         return (
           <div className={styles.option}>
             <div className={styles.optionBtn}>
@@ -122,7 +126,7 @@ function Products() {
               <Button
                 variant="contained"
                 color="success"
-                //   onClick={(e) => handleEdit(e)}
+                  onClick={(e) => handleDetail(e)}
               >
                 <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
               </Button>
@@ -172,7 +176,6 @@ function Products() {
 
   const handleChangeCategory = (e) => {
     const value = e.target.value === 'all' ? undefined : e.target.value
-    // console.log('cate chooose', value);
     setQuery(state => {
       const param = { ...state, "category[regex]": value,}
       Object.keys(param).forEach((key) => {
