@@ -132,10 +132,14 @@ export const categoriesSlice = createSlice({
     });
     builder.addCase(deleteCategoryAsync.rejected, (state, action) => {
       console.log("delete rejected", action);
-    });
+    })
+
+    builder.addCase(updateCategoryAsync.pending, (state,action) =>{
+      state.isLoading = true
+    })
 
     builder.addCase(updateCategoryAsync.fulfilled, (state, action) => {
-        console.log('updateCategoryAsync.fulfilled', action.payload);
+      state.isLoading = false
       if (action.payload.data.msg) {
         toast.success(action.payload.data.msg, {
           style: {
