@@ -1,0 +1,69 @@
+@use '../../scss/' as *;
+
+
+.container {
+    .menuIcon {
+        cursor: pointer;
+    }
+
+    .burgerNav {
+        background-color: rgb(134, 193, 253);
+        position: fixed;
+        top: $userController-height;
+        left: 0;
+        bottom: 0;
+        width: 300px;
+        z-index: 200;
+        padding: 20px;
+        display: flex;
+        overflow: scroll;
+        flex-direction: column;
+        transform: translateX(-100%);
+        transition: transform 300ms ease;
+        &.active {
+            transform: translateX(0);
+        }
+
+        .closeBurgerNav {
+            position: absolute;
+            padding: 10px;
+            top: 12px;
+            right: 12px;
+
+            .closeIcon {
+                cursor: pointer;
+            }
+        }
+        .logo {
+            cursor: pointer;
+            font-size: 3.4rem;
+            line-height: 40px;
+            font-weight: bold;
+            color: #0D0E43;
+            letter-spacing: 1.1px;
+            font-family: 'Josefin Sans', sans-serif;
+            text-decoration: none;
+            margin-bottom: 40px;
+        }
+    }
+
+    .menuContainer {
+        list-style: none;
+        >.menuItem {
+            width: 100%;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0,0,0,.2);
+
+            .menuItemLink {
+                display: block;
+                width: 100%;
+                height: 100%;
+                text-decoration: none;
+                font-weight: 700;
+                color: 	#F5F5F5;
+                font-size: 2rem;
+            }
+        }
+
+    }
+}

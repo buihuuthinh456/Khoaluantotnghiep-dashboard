@@ -9,6 +9,16 @@
     padding-right: 36px;
 }
 
+.navbarMenuMobile {
+    margin-right: auto;
+    margin-left: 36px;
+    display: none;
+
+    @include tablet() {
+        display: block;
+    }
+}
+
 .userIcon {
     margin-left: 36px;
     width: 40px;

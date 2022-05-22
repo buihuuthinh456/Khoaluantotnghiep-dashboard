@@ -1,0 +1,82 @@
+@use "../../scss/" as *;
+
+.container {
+    .menuIcon {
+        cursor: pointer;
+        :global(.MuiSvgIcon-root) {
+            border: none;
+            outline: none;
+        } 
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.6);
+        z-index: 50;
+        opacity: 0;
+        transition: opacity 300ms ease;
+        display: none;
+    }
+
+    .burgerNav {
+        &.active {
+            .overlay {
+                display: block;
+                opacity: 1;
+            }
+
+            .burgerNavContent {
+                transform: translate(0);
+            }
+        }
+    }
+
+    .burgerNavContent {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        min-width: 34vw;
+        background-color: white;
+        padding: 20px;
+        z-index: 100;
+        transform: translateX(-100%);
+        transition: transform 300ms ease;
+    }
+    
+    .closeBurgerNav {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .logo {
+        cursor: pointer;
+        font-size: 3.4rem;
+        line-height: 40px;
+        font-weight: bold;
+        color: #0D0E43;
+        letter-spacing: 1.1px;
+        font-family: 'Josefin Sans', sans-serif;
+        text-decoration: none;
+        margin-bottom: 40px;
+    }
+    
+}
+
+
+.burgerNavBody {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.menuContainer {
+    
+}
+

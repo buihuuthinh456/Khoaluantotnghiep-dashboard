@@ -6,6 +6,10 @@
   border-right: 1px solid #e1e5e9;
   padding: 0 20px;
   background-color: white;
+
+  @include tablet() {
+    display: none;
+  }
 }
 
 .logo {

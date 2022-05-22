@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
+import styles from "./Header.module.scss";
+
+// redux
 import { useSelector, useDispatch } from "react-redux";
 import { selectLogin, logOut } from "../../features/login/loginSlice";
-import styles from "./Header.module.scss";
+
+// MUI
 import { Badge } from "@material-ui/core";
 import Button from "@mui/material/Button";
 import {
@@ -12,7 +16,11 @@ import {
   Settings,
 } from "@material-ui/icons";
 
+// Components
+import NavbarMenuMobile from "../NavbarMenuMobile";
+// Others
 import { useNavigate } from 'react-router-dom'
+
 
 function Header() {
   const dispatch = useDispatch()
@@ -57,6 +65,9 @@ function Header() {
 
   return (
     <div className={styles.container}>
+      <div className={styles.navbarMenuMobile}>
+        <NavbarMenuMobile />
+      </div>
       {isLogin ? (
         <div ref={userRef} className={styles.userIcon} onClick={handleOpenUser}>
           <img src="/images/default-user-image.jpg" alt="user-ava"></img>

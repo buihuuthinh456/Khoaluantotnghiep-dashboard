@@ -5,11 +5,12 @@ import CategoryIcon from "@mui/icons-material/Category";
 import PlaylistAddCheckCircleIcon from "@mui/icons-material/PlaylistAddCheckCircle";
 import { Link } from "react-router-dom";
 
-function SidebarItem({ isSelected, icon, path, name }) {
+function SidebarItem({ isSelected, icon, path, name, isCloseNav=null }) {
   return (
     <Link to={path} style={{ textDecoration: "none", color: "black" }}>
       <li
         className={`${styles.container} ${isSelected ? `${styles.active}` : ""}`}
+        onClick = {isCloseNav}
       >
         <div className={styles.icon}>
           {icon === "Person" && <Person style={{ fontSize: 24 }} />}
