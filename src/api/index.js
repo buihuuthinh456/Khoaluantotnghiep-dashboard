@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const URL = "https://khoaluantotnghiep-ecommerce.herokuapp.com";
-
+// const URL = "https://khoaluantotnghiep-ecommerce.herokuapp.com";
+const URL = "http://localhost:5000";
 export const handleRegisterUser = (payload) =>axios({
     method:"post",
     url:`${URL}/user/register`,
@@ -119,12 +119,11 @@ export const createMoreProductInfo = (id, payload) => {
     const dataPost = {
         moreInfoData: payload
     }
-    console.log("dataPosttttt", dataPost);
     return axios({
         method: "post",
         url: `${URL}/api/product/${id}/more`,
+        headers: {Authorization: localStorage.getItem('accessToken')},
         data: dataPost,
-        header: {"Content-Type": "multipart/form-data", Authorization: localStorage.getItem('accessToken')},
     })
 }
 
