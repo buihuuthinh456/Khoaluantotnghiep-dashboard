@@ -86,7 +86,7 @@ function Products() {
   //   data columns
   const columns = [
     { field: "id", headerName: "No", width: 70},
-    { field: "name", headerName: "Product Name", flex: 2},
+    { field: "name", headerName: "Product Name", flex: 1},
     {
       field: "price",
       headerName: "Price",
@@ -98,8 +98,9 @@ function Products() {
     {
       field: "Option",
       headerName: "Option",
-      sortable: true,
-      flex: 2,
+      sortable: false,
+      flex: 1,
+      headerAlign: 'center',
       renderCell: (param) => {
         //   const handleEdit = (e) => {
         //     e.stopPropagation()
