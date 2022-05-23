@@ -107,11 +107,25 @@ export const deleteCategory = (id, token) => {
     })
 }
 
-
 export const getOrders = () => axios({
     method: 'get',
     url: `${URL}/api/payment`,
     headers: { "Content-Type": "multipart/form-data", Authorization: localStorage.getItem('accessToken') },
-}) 
+})
+
+// Thêm thông tin cho sản phẩm
+
+export const createMoreProductInfo = (id, payload) => {
+    const dataPost = {
+        moreInfoData: payload
+    }
+    console.log("dataPosttttt", dataPost);
+    return axios({
+        method: "post",
+        url: `${URL}/api/product/${id}/more`,
+        data: dataPost,
+        header: {"Content-Type": "multipart/form-data", Authorization: localStorage.getItem('accessToken')},
+    })
+}
 
 

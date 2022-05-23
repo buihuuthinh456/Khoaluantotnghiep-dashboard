@@ -6,7 +6,6 @@ import styles from "./DetailProduct.module.scss";
 // Components
 import Modal from "../../components/Modal";
 import Loading from "../../components/Loading";
-import MoreInfoForm from "../../components_SASS/MoreInfoForm";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -18,6 +17,7 @@ import { Link, useParams } from "react-router-dom";
 import CurrencyFormat from "../../functionJS";
 import { Button } from "@mui/material";
 import AddForm from "../../components_SASS/AddForm";
+import MoreInfoProduct from "../../components_SASS/MoreInfoForm";
 
 function DetailProduct() {
   const { productID } = useParams();
@@ -77,9 +77,11 @@ function DetailProduct() {
         </Button>
       </div>
 
-      <div className={styles.moreInfo}>
-        
-      </div>
+      {addMoreInfo && 
+        <div className={styles.moreInfo}>
+          <MoreInfoProduct id={productID}/>
+        </div>
+      }  
     </div>
   );
 }

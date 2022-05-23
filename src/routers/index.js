@@ -11,7 +11,7 @@ import DetailProduct from '../pagesSass/DetailProduct'
 import Categories from '../pagesSass/Categories'
 import Home from '../pages/Home'
 import Orders from '../pagesSass/Orders'
-import MoreInfoForm from '../components_SASS/MoreInfoForm'
+// import MoreInfoForm from '../components_SASS/MoreInfoForm'
 import AddForm from '../components_SASS/AddForm'
 
 
@@ -38,7 +38,6 @@ const publicRoutes = [
   {path: '/products/:productID', component: DetailProduct },
   {path: '/category', component: Categories },
   {path: '/orders', component: Orders },
-  {path: '/info', component: AddForm },
 ]
 
 export { publicRoutes }

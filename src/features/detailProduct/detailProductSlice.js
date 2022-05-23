@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { getDetailProduct } from "../../api";
+import { createMoreProductInfo, getDetailProduct, uploadImage } from "../../api";
 
 const initialState = {
   isLoading: false,
@@ -15,6 +15,29 @@ export const fetchDetailProduct = createAsyncThunk(
       return response;
     } catch (error) {
       console.log(error);
+    }
+  }
+);
+
+// create more info products
+
+export const createMoreInfoProductAsync = createAsyncThunk(
+  "detailProduct/createMoreInfoProductAsync",
+  async (payload) => {
+    try {
+      const {id, value, formImg} = payload
+      const imgUpload = await uploadImage(formImg, localStorage.getItem('accessToken'))
+      const {data} = imgUpload
+      const dataPost = {
+        title: value.title,
+        table: value.table,
+        id: id,
+        url_img: [data],
+      }
+      const response = await createMoreProductInfo(id, dataPost)
+      return response
+    } catch (error) {
+      console.log(error.response);
     }
   }
 );
@@ -36,6 +59,12 @@ export const detailProductSlice = createSlice({
 
         state.isLoading = false;
       });
+    builder.addCase(createMoreInfoProductAsync.pending, (state, action)=>{
+      state.isLoading = true
+    }).addCase(createMoreInfoProductAsync.fulfilled,(state,action)=>{
+      state.isLoading = false
+      console.log("add complete", action.payload);
+    })
   },
 });
 
