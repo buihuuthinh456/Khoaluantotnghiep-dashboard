@@ -1,0 +1,146 @@
+@use '../../scss/' as *;
+
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background-color: rgba(0,0,0,.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .body {
+        min-width: 75vw;
+        min-height: 80vh;
+        background-color: white;
+
+        .title {
+            padding: 16px 32px;
+            margin-bottom: 16px;
+
+            h1 {
+                font-size: 3.1rem;
+                font-weight: 400;
+                font-family: 'Rubik', sans-serif;
+                color: $text-color;
+            }
+        }
+    }       
+}
+
+.productList {
+    list-style-type: none;
+    padding: 0 32px;
+    overflow-y: scroll;
+    max-height: 42vh;
+    .productTitle {
+        display: flex;
+        padding-bottom: 16px;
+        border-bottom: 2px solid #C0C0C0;
+        position: sticky;
+        top: 0;
+        background-color: white;
+        z-index: 1;
+
+        .name,.money,.quantity,.totalMoney {
+            flex: 3;
+            padding-right: 16px;
+            span {
+                font-size: 1.85rem;
+                font-weight: 600;
+                color: $text-color;
+                text-align: left;
+            }   
+        }
+        
+        .money {
+            flex: 2;
+        }
+        
+        .quantity {
+            flex: 1;
+        }
+        
+        .totalMoney {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            border-right: 0;
+        }
+    }
+}
+
+.productItem {
+    display: flex;
+    border-bottom: 2px solid 	#DCDCDC;
+    .productName {
+        flex: 3;
+        display: flex;
+        padding: 16px 0;
+        align-items: center;
+        .imgWrapper {
+            width: 60px;
+            height: 60px;
+            margin-right: 30px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        span {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: $text-color;
+            flex-wrap: wrap;
+        }
+    }
+
+    .productMoney {
+        padding-right: 16px;
+        flex: 2;
+        display: flex;
+        padding: 16px 0;
+        align-items: center;
+        justify-content: flex-start;
+        span {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: $text-color;
+        }
+    }
+
+    .productQuantity {
+        padding-right: 16px;
+        flex: 1;
+        display: flex;
+        padding: 16px 0;
+        align-items: center;
+        justify-content: flex-start;
+        span {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: $text-color;
+        }
+    }
+
+    .productTotalMoney {
+        
+        flex: 1;
+        display: flex;
+        padding: 16px 0;
+        padding-right: 16px;
+        align-items: center;
+        justify-content: flex-end;
+        span {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: $text-color;
+        }
+    }
+}

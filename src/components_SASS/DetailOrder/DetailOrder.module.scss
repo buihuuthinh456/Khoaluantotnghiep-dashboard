@@ -1,0 +1,71 @@
+@use "../../scss/" as *;
+
+.header {
+
+  margin: 0;
+
+  @include tablet() {
+    margin: 20px 0;
+}
+}
+
+.content {
+  display: flex;
+
+  @include tablet() {
+      flex-direction: column;
+  }
+}
+
+.table {
+  flex: 1;
+  margin-right: 50px;
+}
+
+.extraData {
+  flex: 1;
+
+  .cartList {
+      list-style-type: none;
+      max-height: 500px;
+      overflow-y: scroll;
+      padding-right: 20px;
+  }
+
+  .cartItem {
+      margin: 12px 0;
+      display: flex;
+      align-items: center;
+      border: 1px solid #DCDCDC;
+      padding: 16px;
+      border-radius: 10px;
+  }
+
+  .imgWrapper {
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+  }
+
+  .productInfo {
+      flex: 1;
+      display: flex;
+      align-items: center;
+  }
+
+  .productPrice {
+      margin-left: auto;
+  }
+
+  .productName,.productPrice {
+    font-size: 1.8rem;
+    color: $text-color;
+    font-weight: 400;
+    line-height: 19px;
+  }
+}

@@ -124,7 +124,7 @@ export const createMoreProductInfo = (id, payload) => {
         method: "post",
         url: `${URL}/api/product/${id}/more`,
         data: dataPost,
-        header: {"Content-Type": "multipart/form-data", Authorization: localStorage.getItem('accessToken')},
+        headers: {Authorization: localStorage.getItem('accessToken')},
     })
 }
 

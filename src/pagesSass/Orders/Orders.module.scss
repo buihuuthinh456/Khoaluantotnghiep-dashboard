@@ -1,0 +1,36 @@
+@use "../../scss/" as *;
+
+
+.container {
+    padding: 20px 36px;
+
+    @include tablet() {
+        padding: 20px 15px;
+    }
+}
+
+.header {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .headerButton {
+        button {
+            padding: 8px 12px;
+            font-size: 1.45rem;
+            background-color: $primary-color;
+
+            &:hover {
+                background-color: $primary-color;
+                opacity: 0.85;
+            }
+        }
+    }
+}
+
+
+
+.dataContainer {
+
+}
