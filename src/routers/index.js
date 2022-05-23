@@ -5,11 +5,14 @@ import Login from '../pages/Login'
 import Register from '../pages/Register'
 // import Product from '../pages/Products'
 import Product from '../pagesSass/Products'
-import DetailProduct from '../pages/DetailProduct'
+// import DetailProduct from '../pages/DetailProduct'
+import DetailProduct from '../pagesSass/DetailProduct'
 // import Categories from '../pages/Categories'
 import Categories from '../pagesSass/Categories'
 import Home from '../pages/Home'
 import Orders from '../pagesSass/Orders'
+import MoreInfoForm from '../components_SASS/MoreInfoForm'
+import AddForm from '../components_SASS/AddForm'
 
 
 // function index() {
@@ -35,6 +38,7 @@ const publicRoutes = [
   {path: '/products/:productID', component: DetailProduct },
   {path: '/category', component: Categories },
   {path: '/orders', component: Orders },
+  {path: '/info', component: AddForm },
 ]
 
 export { publicRoutes }
