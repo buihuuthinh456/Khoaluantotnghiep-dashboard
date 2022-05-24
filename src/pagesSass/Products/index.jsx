@@ -25,7 +25,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 // Components
 import AddProduct from "../../components_SASS/AddForm";
@@ -37,12 +37,12 @@ import { toast } from "react-toastify";
 import CurrencyFormat from "../../functionJS";
 import { MenuItem } from "@mui/material";
 
-
 function Products() {
   // redux
   const productList = useSelector(selectProducts).products;
   const categories = useSelector(selectProducts).category;
   const isLoading = useSelector(selectProducts).isLoading;
+  const isReload = useSelector(selectProducts).isReload;
   const totalPageValue = useSelector(selectProducts).totalPage;
   const user = useSelector(selectLogin);
   const loginState = useSelector(selectLogin);
@@ -51,15 +51,15 @@ function Products() {
   const [mountForm, setMountForm] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [page, setPage] = useState(1);
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState("all");
   const [query, setQuery] = useState({
     page: 1,
     limit: 12,
     "category[regex]": undefined,
   });
-  const [beforeAction, setBeforeAction] = useState(false)
-  const [isConfirm, setIsConfirm] = useState(false)
-  const [dataSelect, setDataSelect] = useState(null)
+  const [beforeAction, setBeforeAction] = useState(false);
+  const [dataRow, setDataRow] = useState();
+  const [dataSelect, setDataSelect] = useState(null);
 
   //   function
   const navigate = useNavigate();
@@ -75,9 +75,20 @@ function Products() {
     dispatch(fetchProducts());
   }, []);
 
+  useEffect(() => {
+    if (isReload) dispatch(fetchProducts());
+  }, [isReload]);
+
+  useEffect(() => {
+    if (!mountForm) {
+      setIsEdit(false);
+      setDataRow(null);
+    }
+  }, [mountForm]);
+
   // useEffect(() => {
   //   // if (dataSelect._id) {
-      
+
   //   //   // dispatch(deleteProductAsync(dataSelect._id))
   //   // }
   //   console.log('data confirm', isConfirm)
@@ -85,8 +96,9 @@ function Products() {
 
   //   data columns
   const columns = [
-    { field: "id", headerName: "No", width: 70},
-    { field: "name", headerName: "Product Name", flex: 1},
+    { field: "id", headerName: "No", width: 30 },
+    { field: "name", headerName: "Product Name", flex: 1 },
+    { field: "category", headerName: "Category", width: 150},
     {
       field: "price",
       headerName: "Price",
@@ -100,22 +112,22 @@ function Products() {
       headerName: "Option",
       sortable: false,
       flex: 1,
-      headerAlign: 'center',
+      headerAlign: "center",
       renderCell: (param) => {
-        //   const handleEdit = (e) => {
-        //     e.stopPropagation()
-        //     setIsEdit(true);
-        //     setMountForm(true);
-        //     setDataRow(param.row);
-        //   };
+        const handleEdit = (e) => {
+          e.stopPropagation();
+          setIsEdit(true);
+          setMountForm(true);
+          setDataRow(param.row);
+        };
 
-          const handleDelete = (param) => {
-            setBeforeAction(state=>!state)
-          };
+        const handleDelete = (param) => {
+          setBeforeAction((state) => !state);
+        };
 
         const handleDetail = (e) => {
-          navigate(`/products/${param.row._id}`)
-        }
+          navigate(`/products/${param.row._id}`);
+        };
 
         return (
           <div className={styles.option}>
@@ -123,7 +135,7 @@ function Products() {
               <Button
                 variant="contained"
                 color="success"
-                //   onClick={(e) => handleEdit(e)}
+                onClick={(e) => handleEdit(e)}
               >
                 <EditIcon></EditIcon>
               </Button>
@@ -141,7 +153,7 @@ function Products() {
               <Button
                 variant="contained"
                 color="info"
-                  onClick={(e) => handleDetail(e)}
+                onClick={(e) => handleDetail(e)}
               >
                 <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
               </Button>
@@ -190,10 +202,10 @@ function Products() {
   };
 
   const handleChangeCategory = (e) => {
-    setCategory(e.target.value)
-    const value = e.target.value === 'all' ? undefined : e.target.value
-    setQuery(state => {
-      const param = { ...state, "category[regex]": value,}
+    setCategory(e.target.value);
+    const value = e.target.value === "all" ? undefined : e.target.value;
+    setQuery((state) => {
+      const param = { ...state, "category[regex]": value };
       Object.keys(param).forEach((key) => {
         return (
           (param[key] === undefined || param[key] === false) &&
@@ -203,7 +215,7 @@ function Products() {
       setSearchParams(param);
       dispatch(searchProduct(param));
       return param;
-    })
+    });
   };
 
   //   loading
@@ -217,8 +229,10 @@ function Products() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2>{mountForm ? 'Add Product' : 'Products'}</h2>
-        {!mountForm && 
+        <h2>
+          {mountForm ? (isEdit ? "Edit Product" : "Add Product") : "Products"}
+        </h2>
+        {!mountForm && (
           <div className={styles.category}>
             <FormControl>
               <InputLabel id="filter-data">Category</InputLabel>
@@ -241,7 +255,7 @@ function Products() {
               </Select>
             </FormControl>
           </div>
-        }
+        )}
         {!mountForm ? (
           <div className={styles.headerButton}>
             <Button variant="contained" onClick={() => handleAddForm()}>
@@ -278,15 +292,23 @@ function Products() {
           </div>
         </div>
       )}
-      {mountForm && <AddProduct />}
-      {beforeAction && <BeforeAction 
-        title = "Xóa Sản phẩm"
-        onCancel = {()=>setBeforeAction(false)}
-        onConfirm = {()=>{
-          setBeforeAction(false)
-          dispatch(deleteProductAsync(dataSelect._id))
-        }} 
-      />}
+      {mountForm && (
+        <AddProduct
+          isEdit={isEdit}
+          dataSend={dataRow}
+          afterSubmit={() => setDataRow(null)}
+        />
+      )}
+      {beforeAction && (
+        <BeforeAction
+          title="Xóa Sản phẩm"
+          onCancel={() => setBeforeAction(false)}
+          onConfirm={() => {
+            setBeforeAction(false);
+            dispatch(deleteProductAsync(dataSelect._id));
+          }}
+        />
+      )}
     </div>
   );
 }

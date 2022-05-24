@@ -7,6 +7,7 @@ import {
   uploadImage,
   createProduct,
   deleteProduct,
+  updateProduct,
 } from "../../api";
 import { toast } from "react-toastify";
 
@@ -16,6 +17,7 @@ const initialState = {
   products: [],
   category: [],
   totalPage: 0,
+  isReload: false,
 };
 
 export const fetchProducts = createAsyncThunk(
@@ -63,14 +65,35 @@ export const createProductThunk = createAsyncThunk(
   }
 );
 
-export const searchProduct = createAsyncThunk(
-  "products/searchProduct",
-  async (regex) => {
+export const updateProductAsync = createAsyncThunk(
+  "products/updateProductAsync",
+  async (payload) => {
     try {
-      const response = await searchProductAPI(regex);
-      return response;
+      const accessToken = payload.accessToken;
+      const img = payload.img;
+      const value = payload.value;
+      const id = payload.id;
+      const imgUpload = await uploadImage(img, accessToken);
+      const { data } = imgUpload;
+      const { name, productID, category, price, description } = value;
+      const dataPost = {
+        productId: productID,
+        name: name,
+        description: description,
+        price: price,
+        category: category,
+        images: [data],
+      };
+      const res = await updateProduct(dataPost, accessToken, id);
+      return res;
     } catch (error) {
       console.log(error.response);
+      //   toast.error(error.response.msg, {
+      //     style: {
+      //       fontSize: "1.6rem",
+      //     },
+      //   });
+      return error.response;
     }
   }
 );
@@ -85,6 +108,18 @@ export const deleteProductAsync = createAsyncThunk(
         const response = await deleteProduct(id, token);
         return response;
       }
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
+);
+
+export const searchProduct = createAsyncThunk(
+  "products/searchProduct",
+  async (regex) => {
+    try {
+      const response = await searchProductAPI(regex);
+      return response;
     } catch (error) {
       console.log(error.response);
     }
@@ -110,12 +145,14 @@ export const productsSlice = createSlice({
           state.totalPage = totalPage;
         }
         state.isLoading = false;
+        state.isReload = false;
       })
       .addCase(createProductThunk.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(createProductThunk.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isReload = true;
         console.log(action.payload);
         if (action.payload.status === 400) {
           toast.error("Create product error", {
@@ -154,6 +191,7 @@ export const productsSlice = createSlice({
       })
       .addCase(deleteProductAsync.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isReload = true;
         if (action.payload.data.msg) {
           toast.success("Delete product complete", {
             style: {
@@ -163,6 +201,26 @@ export const productsSlice = createSlice({
         }
       })
       .addCase(deleteProductAsync.rejected, (state, action) => {
+        console.log("rejected", action);
+      });
+
+    builder
+      .addCase(updateProductAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProductAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isReload = true;
+        if (action.payload.data.msg) {
+          toast.success("Update product complete", {
+            style: {
+              fontSize: "1.6rem",
+            },
+          });
+        }
+      })
+      .addCase(updateProductAsync.rejected, (state, action) => {
+        state.isLoading = false;
         console.log("rejected", action);
       });
   },

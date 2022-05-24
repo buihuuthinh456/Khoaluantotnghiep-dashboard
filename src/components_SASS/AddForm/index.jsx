@@ -6,6 +6,7 @@ import { selectLogin } from "../../features/login/loginSlice";
 import {
   selectProducts,
   createProductThunk,
+  updateProductAsync,
 } from "../../features/products/productsSlice";
 import { useSelector, useDispatch } from "react-redux";
 // MUI
@@ -20,7 +21,12 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-function AddForm() {
+function AddForm({ isEdit, dataSend, afterSubmit }) {
+  const [preData, setPreData] = useState()
+
+  useEffect(()=>{
+    setPreData(dataSend)
+  }, [dataSend])
   // redux
   const loginState = useSelector(selectLogin);
   const listCategory = useSelector(selectProducts).category;
@@ -56,15 +62,24 @@ function AddForm() {
   const handleSubmit = async (values, func) => {
     const form = new FormData();
     form.append("fileUpload", selectedFile);
-    const accessToken = loginState.accessToken
-    const data = {
+    const accessToken = loginState.accessToken;
+    let data = {
       value: values,
-      img:form,
-      accessToken:accessToken
+      img: form,
+      accessToken: accessToken,
+    };
+    if (!isEdit) {
+      dispatch(createProductThunk(data));
+      func()
+    } else {
+      data = {
+        ...data,
+        id: dataSend._id
+      }
+      console.log("data send when edit", data);
+      dispatch(updateProductAsync(data));
+      afterSubmit()
     }
-    dispatch(createProductThunk(data));
-
-    func();
   };
 
   if (isLoading)
@@ -76,13 +91,23 @@ function AddForm() {
   return (
     <div className={styles.container}>
       <Formik
-        initialValues={{
-          name: "",
-          productID: "",
-          category: "",
-          price: "",
-          description: "",
-        }}
+        initialValues={
+          dataSend
+            ? {
+                name: dataSend.name,
+                productID: dataSend.productId,
+                category: dataSend.category,
+                price: dataSend.price,
+                description: dataSend.description,
+              }
+            : {
+                name: "",
+                productID: "",
+                category: "",
+                price: "",
+                description: "",
+              }
+        }
         validationSchema={Yup.object({
           name: Yup.string().required("Thông tin này bắt buộc phải có"),
           productID: Yup.string().required("Thông tin này bắt buộc phải có"),
@@ -221,7 +246,7 @@ function AddForm() {
                 <div className={styles.field}>
                   <TextField
                     required
-                    type='number'
+                    type="number"
                     error={
                       // formik.errors.productID
                       // ? true
