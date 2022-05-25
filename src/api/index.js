@@ -137,4 +137,31 @@ export const createMoreProductInfo = (id, payload) => {
     })
 }
 
+// Slider Image
+
+export const createSliderImage = (payload) => {
+    return axios({
+        method:"post",
+        url: `${URL}/api/topic-img`,
+        headers: {Authorization: localStorage.getItem('accessToken')},
+        data: payload
+    })
+}
+
+export const getSliderImage = () => {
+    return axios({
+        method:"get",
+        url: `${URL}/api/topic-img`,
+        headers: {Authorization: localStorage.getItem('accessToken')},
+    })
+}
+
+export const deleteSliderImage = (payload) => {
+    return axios({
+        method:"delete",
+        url: `${URL}/api/topic-img`,
+        headers: {Authorization: localStorage.getItem('accessToken')},
+        data: payload
+    })
+}
 

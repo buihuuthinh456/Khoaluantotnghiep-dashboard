@@ -13,6 +13,7 @@ import Home from '../pages/Home'
 import Orders from '../pagesSass/Orders'
 // import MoreInfoForm from '../components_SASS/MoreInfoForm'
 import AddForm from '../components_SASS/AddForm'
+import ImgSlider from '../pagesSass/ImgSlider'
 
 
 // function index() {
@@ -38,6 +39,7 @@ const publicRoutes = [
   {path: '/products/:productID', component: DetailProduct },
   {path: '/category', component: Categories },
   {path: '/orders', component: Orders },
+  {path: '/imgSlider', component: ImgSlider },
 ]
 
 export { publicRoutes }

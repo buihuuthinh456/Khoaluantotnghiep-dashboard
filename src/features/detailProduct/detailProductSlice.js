@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 import { createMoreProductInfo, getDetailProduct, uploadImage } from "../../api";
 
 const initialState = {
   isLoading: false,
   data: null,
+  moreInfo: null,
 };
 
 export const fetchDetailProduct = createAsyncThunk(
@@ -50,20 +52,29 @@ export const detailProductSlice = createSlice({
     builder
       .addCase(fetchDetailProduct.pending, (state, action) => {
         state.isLoading = true;
+        state.moreInfo = null;
       })
       .addCase(fetchDetailProduct.fulfilled, (state, action) => {
         if (action.payload) {
           const data = action.payload.data;
           state.data = { ...data };
+          state.moreInfo = action.payload.data.moreInfo
         }
-
         state.isLoading = false;
       });
     builder.addCase(createMoreInfoProductAsync.pending, (state, action)=>{
       state.isLoading = true
     }).addCase(createMoreInfoProductAsync.fulfilled,(state,action)=>{
       state.isLoading = false
-      console.log("add complete", action.payload);
+      if (action.payload.status === 200) {
+        toast.success("Tạo thành công", {
+          style: {
+            fontSize: "1.6rem",
+          },
+        });
+      state.data = action.payload.data
+      state.moreInfo = action.payload.data.moreInfo
+      }
     })
   },
 });

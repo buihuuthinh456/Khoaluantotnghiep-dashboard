@@ -3,6 +3,7 @@ import styles from "./SidebarItem.module.scss";
 import { Person, ShoppingCart, HowToReg } from "@material-ui/icons";
 import CategoryIcon from "@mui/icons-material/Category";
 import PlaylistAddCheckCircleIcon from "@mui/icons-material/PlaylistAddCheckCircle";
+import ImageIcon from '@mui/icons-material/Image';
 import { Link } from "react-router-dom";
 
 function SidebarItem({ isSelected, icon, path, name, isCloseNav=null }) {
@@ -22,6 +23,9 @@ function SidebarItem({ isSelected, icon, path, name, isCloseNav=null }) {
           )}
           {icon === "ShoppingCart" && (
             <ShoppingCart style={{ fontSize: 24 }} />
+          )}
+          {icon === "ImageIcon" && (
+            <ImageIcon style={{ fontSize: 24 }} />
           )}
         </div>
         <span>{name}</span>

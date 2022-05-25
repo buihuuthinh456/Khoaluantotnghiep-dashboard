@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Sidebar.module.scss";
 import SidebarItem from "../SidebarItem";
 
+
 import { Person, ShoppingCart, HowToReg } from "@material-ui/icons";
 import CategoryIcon from "@mui/icons-material/Category";
 import PlaylistAddCheckCircleIcon from "@mui/icons-material/PlaylistAddCheckCircle";
@@ -35,6 +36,11 @@ function Sidebar() {
       path: "/orders",
       name: "Orders",
       icon: "ShoppingCart",
+    },
+    {
+      path: "/imgSlider",
+      name: "Image Slider",
+      icon: "ImageIcon",
     },
   ];
   return (

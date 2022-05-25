@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import styles from "./DetailProduct.module.scss";
 
 // MUI
@@ -23,20 +23,20 @@ function DetailProduct() {
   const { productID } = useParams();
   const dispatch = useDispatch();
   const [addMoreInfo, setAddMoreInfo] = useState(false);
-
   const detailProduct = useSelector(selectDetailProduct).data;
   const isLoading = useSelector(selectDetailProduct).isLoading;
-
   useEffect(() => {
     dispatch(fetchDetailProduct(productID));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productID]);
 
-  if (isLoading)
+  if (isLoading && detailProduct)
     return (
-      <Modal>
-        <Loading />
-      </Modal>
+      <Fragment>
+        <Modal>
+          <Loading />
+        </Modal>
+      </Fragment>
     );
   return (
     <div className={styles.container}>
@@ -72,16 +72,16 @@ function DetailProduct() {
         <Button
           variant="contained"
           onClick={() => setAddMoreInfo((state) => !state)}
-        >
+          >
           Add More Info
         </Button>
       </div>
 
-      {addMoreInfo && 
+      {addMoreInfo && (
         <div className={styles.moreInfo}>
-          <MoreInfoProduct id={productID}/>
+          <MoreInfoProduct id={productID} />
         </div>
-      }  
+      )}
     </div>
   );
 }
