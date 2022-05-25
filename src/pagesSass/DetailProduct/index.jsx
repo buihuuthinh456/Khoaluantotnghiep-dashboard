@@ -30,7 +30,7 @@ function DetailProduct() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productID]);
 
-  if (isLoading && detailProduct)
+  if (isLoading)
     return (
       <Fragment>
         <Modal>
@@ -76,6 +76,8 @@ function DetailProduct() {
           Add More Info
         </Button>
       </div>
+
+      {detailProduct.moreInfo.length !== 0 && '123'}
 
       {addMoreInfo && (
         <div className={styles.moreInfo}>

@@ -14,6 +14,7 @@ import Orders from '../pagesSass/Orders'
 // import MoreInfoForm from '../components_SASS/MoreInfoForm'
 import AddForm from '../components_SASS/AddForm'
 import ImgSlider from '../pagesSass/ImgSlider'
+import Profile from '../pagesSass/Profile'
 
 
 // function index() {
@@ -40,6 +41,7 @@ const publicRoutes = [
   {path: '/category', component: Categories },
   {path: '/orders', component: Orders },
   {path: '/imgSlider', component: ImgSlider },
+  {path: '/profile/', component: Profile },
 ]
 
 export { publicRoutes }

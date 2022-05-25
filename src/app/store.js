@@ -7,6 +7,7 @@ import usersReducer from '../features/users/usersSlice';
 import categoriesReducer from '../features/categories/categoriesSlice';
 import ordersReducer from '../features/orders/ordersSlice';
 import imgSliderReducer from '../features/imgSlider/imgSliderSlice';
+import profileReducer from '../features/profile/profileSlice';
 
 
 export const store = configureStore({
@@ -19,5 +20,6 @@ export const store = configureStore({
     categories:categoriesReducer,
     orders:ordersReducer,
     imgSlider: imgSliderReducer,
+    profile: profileReducer,
   },
 });

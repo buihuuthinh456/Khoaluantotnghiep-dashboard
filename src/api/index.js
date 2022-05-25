@@ -165,3 +165,10 @@ export const deleteSliderImage = (payload) => {
     })
 }
 
+// History
+export const historyPayment = () => axios({
+    method:"get",
+    url: `${URL}/api/payment/history`,
+    headers: {Authorization: localStorage.getItem('accessToken')},
+})
+

@@ -21,7 +21,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getInfo());
+    if (accessToken) dispatch(getInfo());
   }, [accessToken]);
 
   return (

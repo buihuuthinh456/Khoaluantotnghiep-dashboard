@@ -2,11 +2,6 @@ import {createAsyncThunk,createSlice} from '@reduxjs/toolkit';
 
 import {getUsers} from '../../api'
 
-
-
-
-
-
 const initialState = {
     isLoading: false,
     users:[],
@@ -24,7 +19,6 @@ export const fetchUsers = createAsyncThunk(
         }
     }
 )
-
 
 export const usersSlice = createSlice({
     name:"users",

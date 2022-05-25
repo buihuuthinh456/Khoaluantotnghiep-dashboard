@@ -42,6 +42,7 @@ export const getInfo = createAsyncThunk(
       console.log(response)
       return response.data;
     } catch (error) {
+        localStorage.removeItem("accessToken")
         console.log(error.response)
         toast.error(error.response.data.msg, {
           position: toast.POSITION.TOP_RIGHT,

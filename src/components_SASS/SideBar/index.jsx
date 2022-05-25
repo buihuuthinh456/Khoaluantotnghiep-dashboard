@@ -6,13 +6,13 @@ import SidebarItem from "../SidebarItem";
 import { Person, ShoppingCart, HowToReg } from "@material-ui/icons";
 import CategoryIcon from "@mui/icons-material/Category";
 import PlaylistAddCheckCircleIcon from "@mui/icons-material/PlaylistAddCheckCircle";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectLogin } from "../../features/login/loginSlice";
 
 function Sidebar() {
   let location = useLocation();
-
+  const navigate = useNavigate()
   const userInfo = useSelector(selectLogin).info;
   const isLogin = useSelector(selectLogin).isLogin
   // sidebar data
@@ -48,7 +48,7 @@ function Sidebar() {
       <div className={styles.logo}>TShop</div>
 
       {isLogin && (
-        <div className={styles.userInfo}>
+        <div className={styles.userInfo} onClick={()=>navigate('/profile')}>
           <div className={styles.imgWrapper}>
             <img src="/images/default-user-image.jpg" alt="user-ava" />
           </div>
