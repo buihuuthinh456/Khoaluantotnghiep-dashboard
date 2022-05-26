@@ -59,3 +59,16 @@
 .history {
     margin-top: 36px;
 }
+
+.headerButton {
+  button {
+    padding: 8px 12px;
+    font-size: 1.45rem;
+    background-color: $primary-color;
+
+    &:hover {
+        background-color: $primary-color;
+        opacity: 0.85;
+    }
+}
+}

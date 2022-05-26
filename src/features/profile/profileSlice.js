@@ -4,7 +4,7 @@ import {historyPayment} from '../../api'
 
 const initialState = {
     isLoading: false,
-    data:null,
+    history:null,
 };
 
 
@@ -30,7 +30,7 @@ export const profileSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getHistoryPayment.fulfilled,(state,action)=>{
-                console.log("history fulfilled", action.payload);
+                state.history = action.payload.data
                 state.isLoading=false;
             })
     }
