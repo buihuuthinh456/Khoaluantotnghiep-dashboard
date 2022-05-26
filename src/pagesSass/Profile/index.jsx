@@ -157,7 +157,7 @@ function Profile() {
 
       <div className={styles.history}>
         <h2 className={styles.header}>Lịch sử giao dịch</h2>
-        {history.length === 0 ? (
+        {history === null || history.length === 0 ? (
           <h2>Bạn không có lịch sử mua hàng</h2>
         ) : (
           <>

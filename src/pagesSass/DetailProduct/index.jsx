@@ -24,6 +24,7 @@ function DetailProduct() {
   const dispatch = useDispatch();
   const [addMoreInfo, setAddMoreInfo] = useState(false);
   const detailProduct = useSelector(selectDetailProduct).data;
+  const moreInfo = useSelector(selectDetailProduct).moreInfo;
   const isLoading = useSelector(selectDetailProduct).isLoading;
   useEffect(() => {
     dispatch(fetchDetailProduct(productID));
@@ -68,16 +69,32 @@ function DetailProduct() {
         </div>
       )}
 
+      {moreInfo.length !== 0 && (
+        <>
+          <div className={styles.moreInfoContent}>
+            <h2>More Info</h2>
+
+            {moreInfo.map((item, index) => (
+              <div className={styles.moreInfoBody} key={index}>
+                <h2 className={styles.title}>{item.title}</h2>
+                {item.table && <div className={styles.table}>table</div>}
+                <div className={styles.imgWrapper}>
+                  <img src={item.url_img[0].url} alt="Product" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
       <div className={styles.addMoreInfo}>
         <Button
           variant="contained"
           onClick={() => setAddMoreInfo((state) => !state)}
-          >
+        >
           Add More Info
         </Button>
       </div>
-
-      {detailProduct.moreInfo.length !== 0 && '123'}
 
       {addMoreInfo && (
         <div className={styles.moreInfo}>
