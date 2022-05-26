@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   selectDetailProduct,
   fetchDetailProduct,
+  deleteMoreInfoProductAsync,
 } from "../../features/detailProduct/detailProductSlice";
 // Others
 import { Link, useParams } from "react-router-dom";
@@ -24,12 +25,32 @@ function DetailProduct() {
   const dispatch = useDispatch();
   const [addMoreInfo, setAddMoreInfo] = useState(false);
   const detailProduct = useSelector(selectDetailProduct).data;
+  const isReload = useSelector(selectDetailProduct).isReload;
   const moreInfo = useSelector(selectDetailProduct).moreInfo;
   const isLoading = useSelector(selectDetailProduct).isLoading;
   useEffect(() => {
     dispatch(fetchDetailProduct(productID));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productID]);
+
+  useEffect(() => {
+    if (isReload) {
+      dispatch(fetchDetailProduct(productID));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isReload]);
+
+  const handleDelete = (data, productID) => {
+    if (localStorage.getItem("accessToken")) {
+      const dataSend = {
+        productID,
+        data,
+      };
+      dispatch(deleteMoreInfoProductAsync(dataSend));
+    } else {
+      console.log("please Login");
+    }
+  };
 
   if (isLoading)
     return (
@@ -69,18 +90,31 @@ function DetailProduct() {
         </div>
       )}
 
-      {moreInfo.length !== 0 && (
+      {moreInfo === null || moreInfo.length === 0 ? (
+        "123"
+      ) : (
         <>
           <div className={styles.moreInfoContent}>
-            <h2>More Info</h2>
+            <h4>Thông tin thêm về sản phẩm</h4>
 
             {moreInfo.map((item, index) => (
               <div className={styles.moreInfoBody} key={index}>
-                <h2 className={styles.title}>{item.title}</h2>
+                <div className={styles.moreInfoHeader}>
+                    <h5>Mô tả</h5>
+                    <p>{item.moreDesc}</p>
+                </div>
                 {item.table && <div className={styles.table}>table</div>}
                 <div className={styles.imgWrapper}>
                   <img src={item.url_img[0].url} alt="Product" />
                 </div>
+
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => handleDelete(item, productID)}
+                >
+                  Delete
+                </Button>
               </div>
             ))}
           </div>

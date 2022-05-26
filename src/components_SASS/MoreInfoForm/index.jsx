@@ -15,8 +15,7 @@ import { createMoreInfoProductAsync } from "../../features/detailProduct/detailP
 //
 
 function MoreInfoProduct({ id }) {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState();
 
   //   function
@@ -31,28 +30,29 @@ function MoreInfoProduct({ id }) {
     const form = new FormData();
     form.append("fileUpload", selectedFile);
     if (localStorage.getItem("accessToken")) {
-        const data = {
-            id: id,
-            value: values,
-            formImg: form,
-        }
-        dispatch(createMoreInfoProductAsync(data))
+      const data = {
+        id: id,
+        value: values,
+        formImg: form,
+      };
+      console.log("dataSubmit", data)
+      dispatch(createMoreInfoProductAsync(data));
     } else {
-        console.log("vui lòng đăng nhập");
+      console.log("vui lòng đăng nhập");
     }
 
-    callback()
+    callback();
   };
 
   return (
     <div className={styles.container}>
       <Formik
         initialValues={{
-          title: "",
+          moreDesc: "",
           table: "",
         }}
         validationSchema={Yup.object({
-          title: Yup.string().required("Thông tin này bắt buộc phải có"),
+          moreDesc: Yup.string().required("Thông tin này bắt buộc phải có"),
         })}
         onSubmit={(values, { resetForm }) => {
           handleSubmit(values, resetForm);
@@ -60,33 +60,65 @@ function MoreInfoProduct({ id }) {
       >
         {(formik) => (
           <form onSubmit={formik.handleSubmit} className={styles.form}>
+            {/* <h1>Ảnh sơ đồ chân</h1> */}
             <div className={styles.wrapper}>
+              <div className={styles.imgUpload}> 
+                <input
+                  placeholder="Chọn ảnh"
+                  type="file"
+                  onChange={handleUpload}
+                  id="image"
+                  name="Image"
+                  style={{ margin: 8, marginRight: 0, marginLeft: 0 }}
+                />
+
+                <div className={styles.submitBtn}>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    isSubmitting={formik.isSubmitting}
+                    disable={formik.isSubmitting}
+                    onMouseDown={(event) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </div>
               <div className={styles.productInfo}>
                 <div className={styles.field}>
                   <TextField
                     required
+                    multiline
+                    minRows={3}
                     error={
-                      formik.errors.title && formik.touched.title ? true : false
+                      formik.errors.moreDesc && formik.touched.moreDesc
+                        ? true
+                        : false
                     }
                     helperText={
-                      formik.errors.title
-                        ? formik.errors.title
-                        : formik.touched.title
-                        ? formik.touched.title
+                      formik.errors.moreDesc
+                        ? formik.errors.moreDesc
+                        : formik.touched.moreDesc
+                        ? formik.touched.moreDesc
                         : ""
                     }
                     color={
-                      formik.errors.title && formik.touched.title
+                      formik.errors.moreDesc && formik.touched.moreDesc
                         ? "error"
                         : "success"
                     }
                     focused={
-                      formik.errors.title ? false : formik.touched.title && true
+                      formik.errors.moreDesc
+                        ? false
+                        : formik.touched.moreDesc && true
                     }
-                    id="title"
-                    label="Enter title"
+                    fullWidth
+                    id="moreDesc"
+                    label="Mô tả về sản phẩm"
                     size="large"
-                    {...formik.getFieldProps("title")}
+                    {...formik.getFieldProps("moreDesc")}
                   ></TextField>
                 </div>
                 <div className={styles.field}>
@@ -94,38 +126,17 @@ function MoreInfoProduct({ id }) {
                     id="table"
                     multiline
                     minRows={3}
-                    style={{ width: "100%", minHeight: "200px" }}
-                    label="Nhập bảng thông số (nếu có)"
+                    style={{
+                      width: "100%",
+                      minHeight: "200px",
+                      marginLeft: 20,
+                    }}
+                    label="Bảng thông số kỹ thuật (truyền dưới dạng html)"
                     size="large"
                     {...formik.getFieldProps("table")}
                   ></TextField>
                 </div>
               </div>
-
-              <div className={styles.imgUpload}>
-                <h1>Ảnh sơ đồ chân</h1>
-                <input
-                  type="file"
-                  onChange={handleUpload}
-                  id="image"
-                  name="Image"
-                  style={{ margin: 8, marginRight: 0, marginLeft: 0 }}
-                />
-              </div>
-            </div>
-
-            <div className={styles.submitBtn}>
-              <Button
-                variant="contained"
-                type="submit"
-                isSubmitting={formik.isSubmitting}
-                disable={formik.isSubmitting}
-                onMouseDown={(event) => {
-                  event.preventDefault();
-                }}
-              >
-                Submit
-              </Button>
             </div>
           </form>
         )}

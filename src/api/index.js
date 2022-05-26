@@ -137,6 +137,17 @@ export const createMoreProductInfo = (id, payload) => {
     })
 }
 
+export const deleteMoreProductInfo = (id, payload) => {
+    return axios({
+        method:"delete",
+        url:`${URL}/api/product/${id}/more`,
+        headers: {Authorization: localStorage.getItem('accessToken')},
+        data: {
+            moreInfoDataUpdate: payload
+        }
+    })
+}
+
 // Slider Image
 
 export const createSliderImage = (payload) => {
