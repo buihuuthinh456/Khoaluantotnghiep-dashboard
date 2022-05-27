@@ -11,10 +11,10 @@ import Loading from "../../components/Loading";
 // Others
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { createMoreInfoProductAsync } from "../../features/detailProduct/detailProductSlice";
+import { createMoreInfoProductAsync, updateMoreInfoProductAsync } from "../../features/detailProduct/detailProductSlice";
 //
 
-function MoreInfoProduct({ id }) {
+function MoreInfoProduct({ id, isEdit, dataSend, afterSubmit }) {
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState();
 
@@ -30,24 +30,36 @@ function MoreInfoProduct({ id }) {
     const form = new FormData();
     form.append("fileUpload", selectedFile);
     if (localStorage.getItem("accessToken")) {
-      const data = {
+      let data = {
         id: id,
         value: values,
         formImg: form,
       };
-      console.log("dataSubmit", data)
-      dispatch(createMoreInfoProductAsync(data));
+      
+      if (isEdit) {
+        data = {
+          ...data,
+          _id: dataSend._id
+        }
+        dispatch(updateMoreInfoProductAsync(data))
+        afterSubmit()
+      } else {
+        dispatch(createMoreInfoProductAsync(data));
+        afterSubmit()
+      }
     } else {
       console.log("vui lòng đăng nhập");
     }
-
     callback();
   };
 
   return (
     <div className={styles.container}>
       <Formik
-        initialValues={{
+        initialValues={dataSend ?  {
+          moreDesc: dataSend.moreDesc,
+          table: dataSend.table
+        }:{
           moreDesc: "",
           table: "",
         }}

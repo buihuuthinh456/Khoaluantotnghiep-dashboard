@@ -28,6 +28,9 @@ function DetailProduct() {
   const isReload = useSelector(selectDetailProduct).isReload;
   const moreInfo = useSelector(selectDetailProduct).moreInfo;
   const isLoading = useSelector(selectDetailProduct).isLoading;
+
+  const [isEdit, setIsEdit] = useState(false);
+  const [data, setData] = useState(null);
   useEffect(() => {
     dispatch(fetchDetailProduct(productID));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,6 +54,8 @@ function DetailProduct() {
       console.log("please Login");
     }
   };
+
+  const fakeTable = `Điện áp làm việc: DC/AC 12-24V tải điện: 10A Encoding: Học_Khả năng thực thiện: tự khóa, kết nối hoặc chạy jog: đầu ra hoạt động (đầu ra 220 volt)_Tần số nhận: 433MHZ_Khoảng cách từ xa: 50 mét`;
 
   if (isLoading)
     return (
@@ -91,7 +96,7 @@ function DetailProduct() {
       )}
 
       {moreInfo === null || moreInfo.length === 0 ? (
-        "123"
+        ""
       ) : (
         <>
           <div className={styles.moreInfoContent}>
@@ -100,21 +105,42 @@ function DetailProduct() {
             {moreInfo.map((item, index) => (
               <div className={styles.moreInfoBody} key={index}>
                 <div className={styles.moreInfoHeader}>
-                    <h5>Mô tả</h5>
-                    <p>{item.moreDesc}</p>
+                  <h5>Mô tả</h5>
+                  <p>{item.moreDesc}</p>
                 </div>
                 {item.table && <div className={styles.table}>table</div>}
+                <ul>
+                  <h5>Thông số kỹ thuật</h5>
+                  {fakeTable &&
+                    fakeTable
+                      .split("_")
+                      .map((item, index) => <li key={index}>{item}</li>)}
+                </ul>
                 <div className={styles.imgWrapper}>
                   <img src={item.url_img[0].url} alt="Product" />
                 </div>
 
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={() => handleDelete(item, productID)}
-                >
-                  Delete
-                </Button>
+                <div className={styles.button}>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    style={{ marginRight: 15 }}
+                    onClick={() => {
+                      setAddMoreInfo((state) => !state);
+                      setIsEdit(true);
+                      setData(item);
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => handleDelete(item, productID)}
+                  >
+                    Delete
+                  </Button>
+                </div>
               </div>
             ))}
           </div>
@@ -122,17 +148,30 @@ function DetailProduct() {
       )}
 
       <div className={styles.addMoreInfo}>
-        <Button
-          variant="contained"
-          onClick={() => setAddMoreInfo((state) => !state)}
-        >
-          Add More Info
-        </Button>
+        {moreInfo === null || moreInfo.length === 0 ? (
+          <Button
+            variant="contained"
+            onClick={() => setAddMoreInfo((state) => !state)}
+          >
+            Add More Info
+          </Button>
+        ) : (
+          ""
+        )}
       </div>
 
       {addMoreInfo && (
         <div className={styles.moreInfo}>
-          <MoreInfoProduct id={productID} />
+          <MoreInfoProduct
+            id={productID}
+            isEdit={isEdit}
+            dataSend={data}
+            afterSubmit={() => {
+              setData(null);
+              setIsEdit(false)
+              setAddMoreInfo(false)
+            }}
+          />
         </div>
       )}
     </div>

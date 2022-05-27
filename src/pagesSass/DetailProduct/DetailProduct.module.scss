@@ -108,6 +108,10 @@
             font-size: 1.4rem;
         }
     }
+
+    ul {
+        margin-top: 12px;
+    }
 }
 
 
@@ -118,5 +122,12 @@
 
 .imgWrapper {
 
+}
+
+.button {
+    button {
+        padding: 8px;
+        font-size: 1.45rem;
+    }
 }
 

@@ -128,9 +128,20 @@ export const createMoreProductInfo = (id, payload) => {
     const dataPost = {
         moreInfoData: payload
     }
-    console.log("dataPosttttt", dataPost);
     return axios({
         method: "post",
+        url: `${URL}/api/product/${id}/more`,
+        data: dataPost,
+        headers: {Authorization: localStorage.getItem('accessToken')},
+    })
+}
+
+export const updateMoreProductInfo = (id, payload) => {
+    const dataPost = {
+        moreInfoDataUpdate: payload
+    }
+    return axios({
+        method: "put",
         url: `${URL}/api/product/${id}/more`,
         data: dataPost,
         headers: {Authorization: localStorage.getItem('accessToken')},

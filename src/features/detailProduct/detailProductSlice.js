@@ -5,6 +5,7 @@ import {
   createMoreProductInfo,
   deleteMoreProductInfo,
   getDetailProduct,
+  updateMoreProductInfo,
   uploadImage,
 } from "../../api";
 
@@ -53,11 +54,35 @@ export const createMoreInfoProductAsync = createAsyncThunk(
   }
 );
 
+export const updateMoreInfoProductAsync = createAsyncThunk(
+  "detailProduct/updateMoreInfoProductAsync",
+  async (payload) => {
+    try {
+      const { id, value, formImg, _id } = payload;
+      const imgUpload = await uploadImage(
+        formImg,
+        localStorage.getItem("accessToken")
+      );
+      const { data } = imgUpload;
+      const dataPost = {
+        moreDesc: value.moreDesc,
+        table: value.table,
+        _id: _id,
+        url_img: [data],
+      };
+      const response = await updateMoreProductInfo(id, dataPost);
+      return response;
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
+);
+
 export const deleteMoreInfoProductAsync = createAsyncThunk(
   "detailProduct/deleteMoreInfoProductAsync",
   async (payload) => {
     try {
-      const {productID, data} = payload
+      const { productID, data } = payload;
       const response = await deleteMoreProductInfo(productID, data);
       return response;
     } catch (error) {
@@ -114,7 +139,23 @@ export const detailProductSlice = createSlice({
               fontSize: "1.6rem",
             },
           });
-        state.isReload = true
+          state.isReload = true;
+        }
+      });
+    builder
+      .addCase(updateMoreInfoProductAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateMoreInfoProductAsync.fulfilled, (state, action) => {
+        if (action.payload.status === 200) {
+          state.isLoading = false;
+          toast.success("Cập nhật thành công", {
+            style: {
+              fontSize: "1.6rem",
+            },
+          });
+          state.data = action.payload.data
+          state.isReload = true;
         }
       });
   },
