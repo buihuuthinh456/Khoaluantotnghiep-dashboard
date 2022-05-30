@@ -147,8 +147,8 @@ export const detailProductSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateMoreInfoProductAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
         if (action.payload.status === 200) {
-          state.isLoading = false;
           toast.success("Cập nhật thành công", {
             style: {
               fontSize: "1.6rem",

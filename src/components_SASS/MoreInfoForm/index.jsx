@@ -11,7 +11,10 @@ import Loading from "../../components/Loading";
 // Others
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { createMoreInfoProductAsync, updateMoreInfoProductAsync } from "../../features/detailProduct/detailProductSlice";
+import {
+  createMoreInfoProductAsync,
+  updateMoreInfoProductAsync,
+} from "../../features/detailProduct/detailProductSlice";
 //
 
 function MoreInfoProduct({ id, isEdit, dataSend, afterSubmit }) {
@@ -35,17 +38,16 @@ function MoreInfoProduct({ id, isEdit, dataSend, afterSubmit }) {
         value: values,
         formImg: form,
       };
-      
       if (isEdit) {
         data = {
           ...data,
-          _id: dataSend._id
-        }
-        dispatch(updateMoreInfoProductAsync(data))
-        afterSubmit()
+          _id: dataSend._id,
+        };
+        dispatch(updateMoreInfoProductAsync(data));
+        afterSubmit();
       } else {
         dispatch(createMoreInfoProductAsync(data));
-        afterSubmit()
+        afterSubmit();
       }
     } else {
       console.log("vui lòng đăng nhập");
@@ -56,13 +58,17 @@ function MoreInfoProduct({ id, isEdit, dataSend, afterSubmit }) {
   return (
     <div className={styles.container}>
       <Formik
-        initialValues={dataSend ?  {
-          moreDesc: dataSend.moreDesc,
-          table: dataSend.table
-        }:{
-          moreDesc: "",
-          table: "",
-        }}
+        initialValues={
+          dataSend
+            ? {
+                moreDesc: dataSend.moreDesc,
+                table: dataSend.table,
+              }
+            : {
+                moreDesc: "",
+                table: "",
+              }
+        }
         validationSchema={Yup.object({
           moreDesc: Yup.string().required("Thông tin này bắt buộc phải có"),
         })}
@@ -74,7 +80,7 @@ function MoreInfoProduct({ id, isEdit, dataSend, afterSubmit }) {
           <form onSubmit={formik.handleSubmit} className={styles.form}>
             {/* <h1>Ảnh sơ đồ chân</h1> */}
             <div className={styles.wrapper}>
-              <div className={styles.imgUpload}> 
+              <div className={styles.imgUpload}>
                 <input
                   placeholder="Chọn ảnh"
                   type="file"

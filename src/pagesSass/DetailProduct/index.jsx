@@ -31,6 +31,8 @@ function DetailProduct() {
 
   const [isEdit, setIsEdit] = useState(false);
   const [data, setData] = useState(null);
+  const [tableData, setTableData] = useState(null);
+
   useEffect(() => {
     dispatch(fetchDetailProduct(productID));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -108,14 +110,16 @@ function DetailProduct() {
                   <h5>Mô tả</h5>
                   <p>{item.moreDesc}</p>
                 </div>
-                {item.table && <div className={styles.table}>table</div>}
-                <ul>
-                  <h5>Thông số kỹ thuật</h5>
-                  {fakeTable &&
-                    fakeTable
-                      .split("_")
-                      .map((item, index) => <li key={index}>{item}</li>)}
-                </ul>
+                {item.table && (
+                  <ul>
+                    <h5>Thông số kỹ thuật</h5>
+                    {item.table &&
+                      item.table
+                        .split("_")
+                        .map((item, index) => <li key={index}>{item}</li>)}
+                  </ul>
+                )}
+
                 <div className={styles.imgWrapper}>
                   <img src={item.url_img[0].url} alt="Product" />
                 </div>
@@ -168,8 +172,8 @@ function DetailProduct() {
             dataSend={data}
             afterSubmit={() => {
               setData(null);
-              setIsEdit(false)
-              setAddMoreInfo(false)
+              setIsEdit(false);
+              setAddMoreInfo(false);
             }}
           />
         </div>
