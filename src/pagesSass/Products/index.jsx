@@ -76,7 +76,10 @@ function Products() {
   }, []);
 
   useEffect(() => {
-    if (isReload) dispatch(fetchProducts());
+    if (isReload) {
+      dispatch(fetchProducts());
+      setCategory("all")
+    }
   }, [isReload]);
 
   useEffect(() => {
@@ -89,7 +92,7 @@ function Products() {
   const columns = [
     { field: "id", headerName: "No", width: 30 },
     { field: "name", headerName: "Tên sản phẩm", flex: 1 },
-    { field: "category", headerName: "Phân loại", width: 150},
+    { field: "category", headerName: "Phân loại", width: 150 },
     {
       field: "price",
       headerName: "Giá tiền",
@@ -196,7 +199,7 @@ function Products() {
     setCategory(e.target.value);
     const value = e.target.value === "all" ? undefined : e.target.value;
     setQuery((state) => {
-      const param = { ...state, "category[regex]": value, page: 1};
+      const param = { ...state, "category[regex]": value, page: 1 };
       Object.keys(param).forEach((key) => {
         return (
           (param[key] === undefined || param[key] === false) &&
@@ -221,7 +224,11 @@ function Products() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>
-          {mountForm ? (isEdit ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm") : "Sản phẩm"}
+          {mountForm
+            ? isEdit
+              ? "Chỉnh sửa sản phẩm"
+              : "Thêm sản phẩm"
+            : "Sản phẩm"}
         </h2>
         {!mountForm && (
           <div className={styles.category}>

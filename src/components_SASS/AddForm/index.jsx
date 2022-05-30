@@ -22,11 +22,11 @@ import * as Yup from "yup";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 function AddForm({ isEdit, dataSend, afterSubmit }) {
-  const [preData, setPreData] = useState()
+  const [preData, setPreData] = useState();
 
-  useEffect(()=>{
-    setPreData(dataSend)
-  }, [dataSend])
+  useEffect(() => {
+    setPreData(dataSend);
+  }, [dataSend]);
   // redux
   const loginState = useSelector(selectLogin);
   const listCategory = useSelector(selectProducts).category;
@@ -70,15 +70,15 @@ function AddForm({ isEdit, dataSend, afterSubmit }) {
     };
     if (!isEdit) {
       dispatch(createProductThunk(data));
-      func()
+      func();
     } else {
       data = {
         ...data,
-        id: dataSend._id
-      }
+        id: dataSend._id,
+      };
       console.log("data send when edit", data);
       dispatch(updateProductAsync(data));
-      afterSubmit()
+      afterSubmit();
     }
   };
 
@@ -336,21 +336,26 @@ function AddForm({ isEdit, dataSend, afterSubmit }) {
                     <img src={preview} alt="..."></img>
                   </div>
                 )}
-              </div>
-            </div>
 
-            <div className={styles.submitBtn}>
-              <Button
-                variant="contained"
-                type="submit"
-                isSubmitting={formik.isSubmitting}
-                disable={formik.isSubmitting}
-                onMouseDown={(event) => {
-                  event.preventDefault();
-                }}
-              >
-                {isEdit ? "Chỉnh sửa" : "Tạo mới"}
-              </Button>
+                {dataSend.images && <div className={styles.preview}>
+                    <h3 style={{margin: "20px 0"}}>Ảnh trước</h3>
+                    <img src={dataSend.images[0].url} alt="..."></img>
+                  </div>}
+
+                <div className={styles.submitBtn}>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    isSubmitting={formik.isSubmitting}
+                    disable={formik.isSubmitting}
+                    onMouseDown={(event) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    {isEdit ? "Chỉnh sửa" : "Tạo mới"}
+                  </Button>
+                </div>
+              </div>
             </div>
           </form>
         )}
