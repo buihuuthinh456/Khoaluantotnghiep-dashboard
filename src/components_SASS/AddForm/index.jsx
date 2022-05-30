@@ -339,17 +339,6 @@ function AddForm({ isEdit, dataSend, afterSubmit }) {
               </div>
             </div>
 
-            {/* <div className={styles.moreInfoBtn}>
-              <Button
-                variant="contained"
-                onClick={() => setMountInfo((state) => !state)}
-              >
-                More Info
-              </Button>
-
-              {mountInfo && <div className={styles.moreInfoContain}>123</div>}
-            </div> */}
-
             <div className={styles.submitBtn}>
               <Button
                 variant="contained"
@@ -360,7 +349,7 @@ function AddForm({ isEdit, dataSend, afterSubmit }) {
                   event.preventDefault();
                 }}
               >
-                Submit
+                {isEdit ? "Chỉnh sửa" : "Tạo mới"}
               </Button>
             </div>
           </form>

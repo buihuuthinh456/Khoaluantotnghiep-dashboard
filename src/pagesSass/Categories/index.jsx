@@ -51,8 +51,8 @@ function Categories() {
   // data columns
   const columns = [
     { field: "id", headerName: "No", width: 70 },
-    { field: "name", headerName: "Category Name", flex: 1, sortable: true },
-    { field: "_id", headerName: "Category ID", flex: 1 },
+    { field: "name", headerName: "Tên Phân Loại", flex: 1, sortable: true },
+    { field: "_id", headerName: "Mã ID", flex: 1 },
     {
       field: "Option",
       headerName: "Option",
@@ -130,7 +130,7 @@ function Categories() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2>Categories</h2>
+        <h2>Phân loại</h2>
         {!mountForm ? (
           <div className={styles.headerButton}>
             <Button variant="contained" onClick={() => handleSwitchPage()}>

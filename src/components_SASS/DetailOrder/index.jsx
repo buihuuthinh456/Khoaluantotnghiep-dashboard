@@ -39,8 +39,6 @@ function DetailOrder({ dataRow }) {
       row.push({ name: key, value: dataRow[key] });
     }
   }
-  console.log("row", row);
-
   //   Da trich extraData , dung de render chi tiet cart
   const cart = extraData.cart;
 
@@ -85,7 +83,6 @@ function DetailOrder({ dataRow }) {
           <h1 className={styles.header}>Thông tin giỏ hàng</h1>
 
           <ul className={styles.cartList}>
-            {console.log("extradata cart", cart)}
             {cart &&
               cart.map((item, index) => {
                 return (
@@ -102,42 +99,7 @@ function DetailOrder({ dataRow }) {
                   </li>
                 );
               })}
-
-            {/* <li className={styles.cartItem}>
-                  <div className={styles.imgWrapper}>
-                    <img src="images/default-user-image.jpg" alt="1231231" />
-                  </div>
-
-                  <div className={styles.productInfo}>
-                    <div className={styles.productName}>
-                    Kit Thí Nghiệm Họ 8051
-                    </div>
-
-                    <div className={styles.productPrice}>
-                      50000
-                    </div>
-                  </div>
-
-                </li>
-
-                <li className={styles.cartItem}>
-                  <div className={styles.imgWrapper}>
-                    <img src="images/default-user-image.jpg" alt="1231231" />
-                  </div>
-
-                  <div className={styles.productInfo}>
-                    <div className={styles.productName}>
-                      2146
-                    </div>
-
-                    <div className={styles.productPrice}>
-                      50000
-                    </div>
-                  </div>
-
-                </li> */}
           </ul>
-          {/* <BuyProducts></BuyProducts> */}
         </div>
       </div>
     </>

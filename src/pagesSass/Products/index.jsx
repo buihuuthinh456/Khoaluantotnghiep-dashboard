@@ -86,22 +86,13 @@ function Products() {
     }
   }, [mountForm]);
 
-  // useEffect(() => {
-  //   // if (dataSelect._id) {
-
-  //   //   // dispatch(deleteProductAsync(dataSelect._id))
-  //   // }
-  //   console.log('data confirm', isConfirm)
-  // }, [isConfirm]);
-
-  //   data columns
   const columns = [
     { field: "id", headerName: "No", width: 30 },
-    { field: "name", headerName: "Product Name", flex: 1 },
-    { field: "category", headerName: "Category", width: 150},
+    { field: "name", headerName: "Tên sản phẩm", flex: 1 },
+    { field: "category", headerName: "Phân loại", width: 150},
     {
       field: "price",
-      headerName: "Price",
+      headerName: "Giá tiền",
       width: 150,
       renderCell: (param) => {
         return <span>{CurrencyFormat(param.row.price)}</span>;
@@ -205,7 +196,7 @@ function Products() {
     setCategory(e.target.value);
     const value = e.target.value === "all" ? undefined : e.target.value;
     setQuery((state) => {
-      const param = { ...state, "category[regex]": value };
+      const param = { ...state, "category[regex]": value, page: 1};
       Object.keys(param).forEach((key) => {
         return (
           (param[key] === undefined || param[key] === false) &&
@@ -230,7 +221,7 @@ function Products() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>
-          {mountForm ? (isEdit ? "Edit Product" : "Add Product") : "Products"}
+          {mountForm ? (isEdit ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm") : "Sản phẩm"}
         </h2>
         {!mountForm && (
           <div className={styles.category}>

@@ -82,21 +82,21 @@ function Header() {
               </div>
 
               <ul className={styles.userController}>
-                <li className={styles.userControllerItem}>
+                <li className={styles.userControllerItem} onClick={()=>navigate("/")}>
                   <Home />
-                  <span>Home</span>
+                  <span>Trang chủ</span>
                 </li>
-                <li className={styles.userControllerItem}>
+                <li className={styles.userControllerItem} onClick={()=>navigate("/profile")}>
                   <Person />
-                  <span>User</span>
+                  <span>Người dùng</span>
                 </li>
-                <li className={styles.userControllerItem}>
+                {/* <li className={styles.userControllerItem} onClick={()=>navigate("/profile")}>
                   <Settings />
-                  <span>Settings</span>
-                </li>
+                  <span>Cài đặt</span>
+                </li> */}
 
                 <div className={styles.logout}>
-                  <button onClick={(e)=>handleLogout(e)}>Logout</button>
+                  <button onClick={(e)=>handleLogout(e)}>Đăng xuất</button>
                 </div>
               </ul>
             </div>

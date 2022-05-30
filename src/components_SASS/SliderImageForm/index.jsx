@@ -42,7 +42,7 @@ function SliderImageForm() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Chọn ảnh Slider</h1>
+      {/* <h1 className={styles.title}>Chọn ảnh Slider</h1> */}
 
       <Formik
         initialValues={{
@@ -80,7 +80,7 @@ function SliderImageForm() {
                     formik.errors.name ? false : formik.touched.name && true
                   }
                   id="name"
-                  label="Enter name"
+                  label="Nhập tên cho ảnh trượt"
                   size="large"
                   {...formik.getFieldProps("name")}
                 ></TextField>
@@ -106,7 +106,7 @@ function SliderImageForm() {
                     event.preventDefault();
                   }}
                 >
-                  Submit
+                  Tạo ảnh
                 </Button>
               </div>
             </div>

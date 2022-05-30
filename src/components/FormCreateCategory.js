@@ -62,7 +62,7 @@ function FormCreateCategory({ isEdit, dataRow }) {
   return (
     <Container>
       <Header>
-        <h1>{isEdit ? "Edit Category" : "Create Category"}</h1>
+        <h1>{isEdit ? "Chỉnh sửa phân loại" : "Tạo phân loại mới"}</h1>
       </Header>
 
       <Formik
@@ -131,7 +131,7 @@ function FormCreateCategory({ isEdit, dataRow }) {
                   event.preventDefault();
                 }}
               >
-                Create Product
+                {isEdit ? "Chỉnh Sửa" : "Tạo mới"}
               </Button>
             </Field>
           </Form>

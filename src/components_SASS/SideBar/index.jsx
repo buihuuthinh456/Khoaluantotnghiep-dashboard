@@ -19,27 +19,27 @@ function Sidebar() {
   let sidebarItem = [
     {
       path: "/",
-      name: "User",
+      name: "Người dùng",
       icon: "Person",
     },
     {
       path: "/category",
-      name: "Category",
+      name: "Phân loại",
       icon: "CategoryIcon",
     },
     {
       path: "/products",
-      name: "Product",
+      name: "Sản phẩm",
       icon: "PlaylistAddCheckCircleIcon",
     },
     {
       path: "/orders",
-      name: "Orders",
+      name: "Đơn hàng",
       icon: "ShoppingCart",
     },
     {
       path: "/imgSlider",
-      name: "Image Slider",
+      name: "Ảnh trượt",
       icon: "ImageIcon",
     },
   ];

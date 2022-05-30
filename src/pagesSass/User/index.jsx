@@ -45,7 +45,7 @@ function User() {
     { field: "id", headerName: "ID", width: 50 },
     {
       field: "user",
-      headerName: "User",
+      headerName: "Tên người dùng",
       sortable: true,
       flex: 1,
       renderCell: (param) => {
@@ -90,6 +90,11 @@ function User() {
     };
   });
 
+  // function DOM
+  const handleDetail = (e) => {
+    console.log("row select", e.row);
+  }
+
   //   Loading
   if (data.isLoading)
     return (
@@ -100,7 +105,7 @@ function User() {
   //   render
   return (
     <div className={styles.container}>
-      <h2>USER</h2>
+      <h2>Người dùng</h2>
       <div className={styles.dataContainer}>
         <DataGrid
           style={{ fontSize: "1.6rem" }}
@@ -109,7 +114,7 @@ function User() {
           pageSize={8}
           rowsPerPageOptions={[5]}
           autoHeight
-          //   onRowClick={(e) => console.log("user select", e.row)}
+          onRowDoubleClick={(e)=>handleDetail(e)}
           // checkboxSelection
         />
       </div>

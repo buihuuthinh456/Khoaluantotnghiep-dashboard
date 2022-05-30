@@ -44,7 +44,7 @@ function ImgSlider() {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.title}>
-          <h1>Slider Image</h1>
+          <h1>Ảnh trượt</h1>
         </div>
 
         <div className={styles.addBtn}>

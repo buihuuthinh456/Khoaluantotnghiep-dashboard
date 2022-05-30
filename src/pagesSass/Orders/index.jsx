@@ -16,6 +16,7 @@ import DetailOrder from "../../components_SASS/DetailOrder";
 import styles from "./Orders.module.scss";
 import Modal from "../../components/Modal";
 import Loading from "../../components/Loading";
+import CurrencyFormat from "../../functionJS";
 
 function Orders() {
   const loginState = useSelector(selectLogin);
@@ -55,14 +56,14 @@ function Orders() {
 
   const columns = [
     { field: "id", headerName: "STT", width: 50 },
-    { field: "transId", headerName: "TransID", width: 150 },
+    { field: "transId", headerName: "Trans ID", width: 150 },
     {
       field: "amount",
-      headerName: "Amount",
+      headerName: "Giá tiền",
       width: 150,
     },
-    { field: "userId", headerName: "userID", flex: 1 },
-    { field: "createdAt", headerName: "YYYY-MM-DD", flex: 1 },
+    { field: "userId", headerName: "User ID", flex: 1 },
+    { field: "createdAt", headerName: "Ngày giao dịch", flex: 1 },
     {
       field: "Option",
       headerName: "Option",
@@ -98,6 +99,7 @@ function Orders() {
   const rows = orders.orders.map((item, index) => {
     return {
       ...item,
+      amount: CurrencyFormat(item.amount),
       id: index + 1,
       createdAt: item.createdAt,
     };
@@ -112,7 +114,7 @@ function Orders() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2>Order</h2>
+        <h2>Đơn hàng</h2>
 
         {!mountForm ? (
           ""
