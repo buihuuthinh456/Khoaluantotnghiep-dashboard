@@ -4,7 +4,7 @@ import styles from "./Profile.module.scss";
 import Modal from "../../components/Modal";
 import Loading from "../../components/Loading";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -14,7 +14,8 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectsProfile,
-  getHistoryPayment,
+  getUserInfo,
+  getHistoryByIDAsync,
 } from "../../features/profile/profileSlice";
 import { selectLogin } from "../../features/login/loginSlice";
 import { DataGrid } from "@mui/x-data-grid";
@@ -23,24 +24,22 @@ import DetailOrder from "../../components_SASS/DetailOrder";
 function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { userID } = useParams();
   const loginState = useSelector(selectLogin);
   const history = useSelector(selectsProfile).history;
+  const userInfo = useSelector(selectsProfile).info;
   const isLoading = useSelector(selectsProfile).isLoading;
 
   const [mountForm, setMountForm] = useState(false);
   const [dataRow, setDataRow] = useState(null);
 
   useEffect(() => {
-    dispatch(getHistoryPayment());
-    if (!loginState.isLogin) {
-      navigate("/login");
-      toast.warning("You have to login", {
-        style: {
-          fontSize: "1.6rem",
-        },
-      });
-    }
-  }, []);
+    dispatch(getUserInfo(userID));
+  }, [userID]);
+
+  useEffect(()=> {
+    dispatch(getHistoryByIDAsync(userID));
+  }, [userID])
 
   const handleSwitchPage = () => {
     if (loginState.isLogin && loginState.isAdmin) {
@@ -112,47 +111,55 @@ function Profile() {
     );
   return (
     <div className={styles.container}>
+
+      <div className={styles.back}>
+        <Link to={"/"}>
+            Back
+        </Link>
+      </div>
+
       <h2 className={styles.header}>Profile</h2>
 
       <div className={styles.card}>
         <div className={styles.imgWrapper}>
-          <img src="images/default-user-image.jpg" alt="1" />
+          <img src="/images/default-user-image.jpg" alt="1" />
         </div>
+        {userInfo && (
+          <ul className={styles.profile}>
+            <li className={styles.userProfile}>
+              <TextField
+                fullWidth
+                id="outlined-name"
+                label="Tên người dùng"
+                variant="standard"
+                value={userInfo.name}
+                InputProps={{
+                  readOnly: true,
+                }}
+                InputLabelProps={{ shrink: true }}
+              />
+            </li>
+            <li className={styles.userProfile}>
+              <TextField
+                fullWidth
+                id="outlined-name"
+                label="Địa chỉ email"
+                variant="standard"
+                value={userInfo.email}
+                InputProps={{
+                  readOnly: true,
+                }}
+                InputLabelProps={{ shrink: true }}
+              />
+            </li>
 
-        <ul className={styles.profile}>
-          <li className={styles.userProfile}>
-            <TextField
-              fullWidth
-              id="outlined-name"
-              label="Tên người dùng"
-              variant="standard"
-              value={loginState.info.name}
-              InputProps={{
-                readOnly: true,
-              }}
-              InputLabelProps={{ shrink: true }}
-            />
-          </li>
-          <li className={styles.userProfile}>
-            <TextField
-              fullWidth
-              id="outlined-name"
-              label="Địa chỉ email"
-              variant="standard"
-              value={loginState.info.email}
-              InputProps={{
-                readOnly: true,
-              }}
-              InputLabelProps={{ shrink: true }}
-            />
-          </li>
-
-          <div className={styles.options}>
-            <div className={styles.btnOptions}>
-              <Button variant="contained">Change PassWord</Button>
+            <div className={styles.options}>
+              <div className={styles.btnOptions}>
+                <Button variant="contained">Change PassWord</Button>
+              </div>
             </div>
-          </div>
-        </ul>
+          </ul>
+        )}
       </div>
 
       <div className={styles.history}>
@@ -172,22 +179,24 @@ function Profile() {
               </div>
             )}
 
-            <div className={styles.historyContainer}>
-              {!mountForm ? (
-                <DataGrid
-                  style={{ fontSize: "1.6rem" }}
-                  rows={rows}
-                  columns={columns}
-                  pageSize={8}
-                  rowsPerPageOptions={[5]}
-                  autoHeight
-                  //   onRowClick={(e) => console.log("user select", e.row)}
-                  // checkboxSelection
-                />
-              ) : (
-                <DetailOrder dataRow={dataRow} />
-              )}
-            </div>
+            {history && (
+              <div className={styles.historyContainer}>
+                {!mountForm ? (
+                  <DataGrid
+                    style={{ fontSize: "1.6rem" }}
+                    rows={rows}
+                    columns={columns}
+                    pageSize={8}
+                    rowsPerPageOptions={[5]}
+                    autoHeight
+                    //   onRowClick={(e) => console.log("user select", e.row)}
+                    // checkboxSelection
+                  />
+                ) : (
+                  <DetailOrder dataRow={dataRow} />
+                )}
+              </div>
+            )}
           </>
         )}
       </div>

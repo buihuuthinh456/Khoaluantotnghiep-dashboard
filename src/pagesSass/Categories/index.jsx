@@ -161,7 +161,6 @@ function Categories() {
         </div>
       )}
       {mountForm && <FormCreateCategory isEdit={isEdit} dataRow={dataRow} />}
-      {console.log("data row", dataRow)}
       {beforeAction && (
         <BeforeAction
           title="Xóa Category"

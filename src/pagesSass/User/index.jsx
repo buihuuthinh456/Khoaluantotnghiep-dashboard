@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./User.module.scss";
 // router
 import { useNavigate } from "react-router-dom";
 // redux
-import { selectUsers, fetchUsers } from "../../features/users/usersSlice";
+import { selectUsers, fetchUsers, deleteUserThunk } from "../../features/users/usersSlice";
 import { selectLogin } from "../../features/login/loginSlice";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -11,16 +11,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import Loading from "../../components/Loading";
 import Modal from "../../components/Modal";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 // Others
 import { toast } from "react-toastify";
+import BeforeAction from "../../components_SASS/BeforeAction";
+import { Button } from "@mui/material";
 
 function User() {
   // redux select
   const data = useSelector(selectUsers);
-  console.log("user Data", data);
   const token = useSelector(selectLogin).accessToken;
   const isLogin = useSelector(selectLogin).isLogin;
+  const isReload = useSelector(selectUsers).isReload
+  // useState
+  const [dataRow, setDataRow] = useState(null)
+  const [beforeAction, setBeforeAction] = useState(false)
 
   // function
   const navigate = useNavigate();
@@ -39,6 +46,10 @@ function User() {
       dispatch(fetchUsers(token));
     }
   }, [dispatch]);
+
+  useEffect(()=>{
+    if (isReload) dispatch(fetchUsers(token));
+  }, [isReload])
 
   // collumns table
   const columns = [
@@ -59,27 +70,27 @@ function User() {
     },
     { field: "isAdmin", headerName: "Admin", flex: 1, type: 'boolean' },
     { field: "_id", headerName: "Code", flex: 1 },
-    // { field: "Option", headerName: "Option", flex: 1, renderCell: (param) => {
-    //     const handleClick = (e) => {
-    //         // e.stopPropagation()
-    //         console.log('hello World')
-    //     }
-    //     return (
-    //         <div className={styles.option}>
-    //             <div className={styles.optionEdit}>
-    //                 <Button variant="contained" color="success">
-    //                     <EditIcon></EditIcon>
-    //                 </Button>
-    //             </div>
-    //             <div className={styles.optionDelelte}>
-    //                 <Button variant="contained" color="error">
-    //                     <DeleteIcon></DeleteIcon>
-    //                 </Button>
-    //             </div>
-    //         </div>
-    //     )
+    { field: "Option", headerName: "Option", flex: 1, renderCell: (param) => {
+        const handleClick = (e) => {
+            // e.stopPropagation()
+            console.log('hello World')
+        }
+        return (
+            <div className={styles.option}>
+                <div className={styles.optionEdit}>
+                    <Button variant="contained" color="success" onClick={()=>navigate(`/profile/${param.row._id}`)}>
+                        <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
+                    </Button>
+                </div>
+                <div className={styles.optionDelelte}>
+                    <Button variant="contained" color="error" onClick={()=>setBeforeAction(true)}>
+                        <DeleteIcon></DeleteIcon>
+                    </Button>
+                </div>
+            </div>
+        )
         
-    // }}
+    }}
   ];
   //   rows table
   const rows = data.users.map((item, index) => {
@@ -92,7 +103,7 @@ function User() {
 
   // function DOM
   const handleDetail = (e) => {
-    console.log("row select", e.row);
+    navigate(`profile/${e.row._id}`)
   }
 
   //   Loading
@@ -114,10 +125,20 @@ function User() {
           pageSize={8}
           rowsPerPageOptions={[5]}
           autoHeight
+          onRowClick={(e)=>setDataRow(e.row)}
           onRowDoubleClick={(e)=>handleDetail(e)}
           // checkboxSelection
         />
       </div>
+      {console.log("dataRow", dataRow)}
+      {beforeAction && <BeforeAction
+        title = "Bạn có muốn xóa người dùng ?"
+        onCancel={()=>setBeforeAction(false)}
+        onConfirm={()=> {
+          setBeforeAction(false)
+          dispatch(deleteUserThunk(dataRow._id))
+        }}
+      ></BeforeAction>}
     </div>
   );
 }

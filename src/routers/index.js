@@ -41,7 +41,7 @@ const publicRoutes = [
   {path: '/category', component: Categories },
   {path: '/orders', component: Orders },
   {path: '/imgSlider', component: ImgSlider },
-  {path: '/profile/', component: Profile },
+  {path: '/profile/:userID', component: Profile },
 ]
 
 export { publicRoutes }

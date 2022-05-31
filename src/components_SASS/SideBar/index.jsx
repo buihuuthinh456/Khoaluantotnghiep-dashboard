@@ -48,7 +48,7 @@ function Sidebar() {
       <div className={styles.logo}>TShop</div>
 
       {isLogin && (
-        <div className={styles.userInfo} onClick={()=>navigate('/profile')}>
+        <div className={styles.userInfo} onClick={()=>navigate(`/profile/${userInfo._id}`)}>
           <div className={styles.imgWrapper}>
             <img src="/images/default-user-image.jpg" alt="user-ava" />
           </div>
