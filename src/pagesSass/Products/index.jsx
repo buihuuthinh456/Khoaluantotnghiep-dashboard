@@ -44,7 +44,6 @@ function Products() {
   const isLoading = useSelector(selectProducts).isLoading;
   const isReload = useSelector(selectProducts).isReload;
   const totalPageValue = useSelector(selectProducts).totalPage;
-  const user = useSelector(selectLogin);
   const loginState = useSelector(selectLogin);
   //   useState
   const [totalPage, setTotalPage] = useState(totalPageValue);

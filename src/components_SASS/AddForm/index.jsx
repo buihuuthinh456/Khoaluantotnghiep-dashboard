@@ -20,6 +20,7 @@ import Button from "@mui/material/Button";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { toast } from "react-toastify";
 
 function AddForm({ isEdit, dataSend, afterSubmit }) {
   const [preData, setPreData] = useState();
@@ -27,6 +28,7 @@ function AddForm({ isEdit, dataSend, afterSubmit }) {
   useEffect(() => {
     setPreData(dataSend);
   }, [dataSend]);
+  console.log("dataSend", dataSend)
   // redux
   const loginState = useSelector(selectLogin);
   const listCategory = useSelector(selectProducts).category;
@@ -60,25 +62,61 @@ function AddForm({ isEdit, dataSend, afterSubmit }) {
   };
 
   const handleSubmit = async (values, func) => {
-    const form = new FormData();
-    form.append("fileUpload", selectedFile);
+    // const form = new FormData();
+    // form.append("fileUpload", selectedFile);
+    // const accessToken = loginState.accessToken;
+    // let data = {
+    //   value: values,
+    //   formImg: form,
+    //   accessToken: accessToken,
+    // };
+    // if (!isEdit) {
+    //   dispatch(createProductThunk(data));
+    //   func();
+    // } else {
+    //   data = {
+    //     ...dataSend,
+    //     ...data,
+    //     id: dataSend._id,
+    //   };
+    //   console.log("data send when edit", data);
+    //   dispatch(updateProductAsync(data));
+    //   afterSubmit();
+    // }
+
+    let form = null
+    if (selectedFile) {
+      form = new FormData()
+      form.append("fileUpload", selectedFile);
+    }
     const accessToken = loginState.accessToken;
     let data = {
+      ...dataSend,
       value: values,
-      img: form,
+      formImg: form,
       accessToken: accessToken,
-    };
+    }
     if (!isEdit) {
-      dispatch(createProductThunk(data));
-      func();
+      if (form === null) {
+        toast.warning("Vui lòng chọn ảnh", {
+          style: {
+            fontSize: "1.6rem",
+          },
+        });
+      } else {
+        console.log("dataSubmit", data)
+        dispatch(createProductThunk(data));
+        afterSubmit();
+        func();
+      }
     } else {
       data = {
         ...data,
         id: dataSend._id,
-      };
-      console.log("data send when edit", data);
+      }
       dispatch(updateProductAsync(data));
       afterSubmit();
+      func();
     }
   };
 
@@ -337,7 +375,7 @@ function AddForm({ isEdit, dataSend, afterSubmit }) {
                   </div>
                 )}
 
-                {dataSend.images && <div className={styles.preview}>
+                {dataSend?.images && <div className={styles.preview}>
                     <h3 style={{margin: "20px 0"}}>Ảnh trước</h3>
                     <img src={dataSend.images[0].url} alt="..."></img>
                   </div>}

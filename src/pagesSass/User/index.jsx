@@ -71,10 +71,6 @@ function User() {
     { field: "isAdmin", headerName: "Admin", flex: 1, type: 'boolean' },
     { field: "_id", headerName: "Code", flex: 1 },
     { field: "Option", headerName: "Option", flex: 1, renderCell: (param) => {
-        const handleClick = (e) => {
-            // e.stopPropagation()
-            console.log('hello World')
-        }
         return (
             <div className={styles.option}>
                 <div className={styles.optionEdit}>

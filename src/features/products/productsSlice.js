@@ -37,9 +37,9 @@ export const createProductThunk = createAsyncThunk(
   async (dataPass) => {
     try {
       const accessToken = dataPass.accessToken;
-      const img = dataPass.img;
+      const formImg = dataPass.formImg;
       const value = dataPass.value;
-      const imgUpload = await uploadImage(img, accessToken);
+      const imgUpload = await uploadImage(formImg, accessToken);
       const { data } = imgUpload;
       const { name, productID, category, price, description } = value;
       const dataPost = {
@@ -55,11 +55,6 @@ export const createProductThunk = createAsyncThunk(
       return res;
     } catch (error) {
       console.log(error.response);
-      //   toast.error(error.response.msg, {
-      //     style: {
-      //       fontSize: "1.6rem",
-      //     },
-      //   });
       return error.response;
     }
   }
@@ -69,8 +64,25 @@ export const updateProductAsync = createAsyncThunk(
   "products/updateProductAsync",
   async (payload) => {
     try {
-      const accessToken = payload.accessToken;
-      const img = payload.img;
+      if (payload.formImg === null || payload.formImg === undefined) {
+        const accessToken = payload.accessToken;
+        const value = payload.value;
+        const id = payload.id;
+        const img = payload.images
+        const { name, productID, category, price, description } = value;
+        const dataPost = {
+          productId: productID,
+          name: name,
+          description: description,
+          price: price,
+          category: category,
+          images: img,
+        };
+        const res = await updateProduct(dataPost, accessToken, id);
+        return res;
+      } else {
+        const accessToken = payload.accessToken;
+      const img = payload.formImg;
       const value = payload.value;
       const id = payload.id;
       const imgUpload = await uploadImage(img, accessToken);
@@ -86,6 +98,25 @@ export const updateProductAsync = createAsyncThunk(
       };
       const res = await updateProduct(dataPost, accessToken, id);
       return res;
+      }
+      // console.log("payload update", payload);
+      // const accessToken = payload.accessToken;
+      // const img = payload.img;
+      // const value = payload.value;
+      // const id = payload.id;
+      // const imgUpload = await uploadImage(img, accessToken);
+      // const { data } = imgUpload;
+      // const { name, productID, category, price, description } = value;
+      // const dataPost = {
+      //   productId: productID,
+      //   name: name,
+      //   description: description,
+      //   price: price,
+      //   category: category,
+      //   images: [data],
+      // };
+      // const res = await updateProduct(dataPost, accessToken, id);
+      // return res;
     } catch (error) {
       console.log(error.response);
       //   toast.error(error.response.msg, {
@@ -153,7 +184,6 @@ export const productsSlice = createSlice({
       .addCase(createProductThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isReload = true;
-        console.log(action.payload);
         if (action.payload.status === 400) {
           toast.error("Create product error", {
             style: {
