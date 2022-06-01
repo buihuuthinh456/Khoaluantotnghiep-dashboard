@@ -153,11 +153,11 @@ function Profile() {
               />
             </li>
 
-            <div className={styles.options}>
+            {/* <div className={styles.options}>
               <div className={styles.btnOptions}>
                 <Button variant="contained">Change PassWord</Button>
               </div>
-            </div>
+            </div> */}
           </ul>
         )}
       </div>

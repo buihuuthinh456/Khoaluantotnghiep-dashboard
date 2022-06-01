@@ -234,3 +234,14 @@ export const historyPaymentByID = (id) => {
     headers: { Authorization: localStorage.getItem("accessToken") },
   });
 };
+
+// Change password 
+
+export const changePassword = (payload) => {
+  return axios({
+    method:"put",
+    url: `${URL}/user/password`,
+    headers: { Authorization: localStorage.getItem("accessToken") },
+    data: payload
+  })
+}

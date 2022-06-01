@@ -15,9 +15,11 @@ import {
   Person,
   Settings,
 } from "@material-ui/icons";
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 
 // Components
 import NavbarMenuMobile from "../NavbarMenuMobile";
+import ChangePassword from "../ChangePassword"
 // Others
 import { useNavigate } from 'react-router-dom'
 
@@ -33,7 +35,7 @@ function Header() {
 
   const [isLogin, setIsLogin] = useState(false);
   const [userInfo, setUserInfo] = useState({});
-
+  const [openChangePassword, setOpenChangePassword] = useState(false)
   const [userBox, setUserBox] = useState(false);
 
   const handleOpenUser = () => {
@@ -86,14 +88,14 @@ function Header() {
                   <Home />
                   <span>Trang chủ</span>
                 </li>
-                <li className={styles.userControllerItem} onClick={()=>navigate("/profile")}>
+                <li className={styles.userControllerItem} onClick={()=>navigate(`/profile/${userInfo._id}`)}>
                   <Person />
                   <span>Người dùng</span>
                 </li>
-                {/* <li className={styles.userControllerItem} onClick={()=>navigate("/profile")}>
-                  <Settings />
-                  <span>Cài đặt</span>
-                </li> */}
+                <li className={styles.userControllerItem} onClick={()=>setOpenChangePassword(true)}>
+                  <SettingsApplicationsIcon />
+                  <span>Đổi mật khẩu</span>
+                </li>
 
                 <div className={styles.logout}>
                   <button onClick={(e)=>handleLogout(e)}>Đăng xuất</button>
@@ -108,6 +110,10 @@ function Header() {
           <Button variant="contained" onClick={()=>navigate('/login')}>Login</Button>
         </div>
       )}
+
+      {openChangePassword && <ChangePassword
+        onClose = {()=>setOpenChangePassword(false)}
+      ></ChangePassword>}
     </div>
   );
 }
