@@ -18,7 +18,7 @@ import { Link, useParams } from "react-router-dom";
 import CurrencyFormat from "../../functionJS";
 import { Button } from "@mui/material";
 import AddForm from "../../components_SASS/AddForm";
-import MoreInfoProduct from "../../components_SASS/MoreInfoForm";
+import MoreInfoForm from "../../components_SASS/MoreInfoForm";
 
 function DetailProduct() {
   const { productID } = useParams();
@@ -166,7 +166,7 @@ function DetailProduct() {
 
       {addMoreInfo && (
         <div className={styles.moreInfo}>
-          <MoreInfoProduct
+          <MoreInfoForm
             id={productID}
             isEdit={isEdit}
             dataSend={data}

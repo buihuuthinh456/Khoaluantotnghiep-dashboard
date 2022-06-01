@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import Modal from "../../components/Modal";
 import Loading from "../../components/Loading";
 // Others
+import { toast } from "react-toastify";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {
@@ -18,6 +19,7 @@ import {
 //
 
 function MoreInfoProduct({ id, isEdit, dataSend, afterSubmit }) {
+  console.log("dataSend", dataSend);
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState();
 
@@ -30,29 +32,56 @@ function MoreInfoProduct({ id, isEdit, dataSend, afterSubmit }) {
 
   //   submit
   const handleSubmit = (values, callback) => {
-    const form = new FormData();
-    form.append("fileUpload", selectedFile);
-    if (localStorage.getItem("accessToken")) {
-      let data = {
-        id: id,
-        value: values,
-        formImg: form,
-      };
-      if (isEdit) {
-        data = {
-          ...data,
-          _id: dataSend._id,
-        };
-        dispatch(updateMoreInfoProductAsync(data));
-        afterSubmit();
-      } else {
-        dispatch(createMoreInfoProductAsync(data));
-        afterSubmit();
-      }
-    } else {
-      console.log("vui lòng đăng nhập");
+    // const form = new FormData();
+    // form.append("fileUpload", selectedFile);
+    // if (localStorage.getItem("accessToken")) {
+    //   let data = {
+    //     id: id,
+    //     value: values,
+    //     formImg: form,
+    //   };
+    //   if (isEdit) {
+    //     data = {
+    //       ...data,
+    //       _id: dataSend._id,
+    //     };
+    //     dispatch(updateMoreInfoProductAsync(data));
+    //     afterSubmit();
+    //   } else {
+    //     dispatch(createMoreInfoProductAsync(data));
+    //     afterSubmit();
+    //   }
+    // } else {
+    //   console.log("vui lòng đăng nhập");
+    // }
+    // callback();
+
+    let form = null;
+    if (selectedFile) {
+      form = new FormData();
+      form.append("fileUpload", selectedFile);
     }
-    callback();
+    const accessToken = localStorage.getItem("accessToken");
+    let data = {
+      ...dataSend,
+      id: id,
+      value: values,
+      formImg: form,
+      accessToken: accessToken,
+    };
+    if (!isEdit) {
+      dispatch(createMoreInfoProductAsync(data));
+      afterSubmit();
+      callback();
+    } else {
+      data = {
+        ...data,
+        _id: dataSend._id,
+      };
+      dispatch(updateMoreInfoProductAsync(data));
+      afterSubmit();
+      callback();
+    }
   };
 
   return (
@@ -90,6 +119,12 @@ function MoreInfoProduct({ id, isEdit, dataSend, afterSubmit }) {
                   style={{ margin: 8, marginRight: 0, marginLeft: 0 }}
                 />
 
+                {/* {dataSend?.url_img && (
+                  <div className={styles.preview}>
+                    <h3 style={{ margin: "20px 0" }}>Ảnh trước</h3>
+                    <img src={dataSend.url_img[0].url} alt="..."></img>
+                  </div>
+                )} */}
                 <div className={styles.submitBtn}>
                   <Button
                     variant="contained"

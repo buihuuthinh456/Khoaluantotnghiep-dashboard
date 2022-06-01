@@ -58,20 +58,44 @@ export const updateMoreInfoProductAsync = createAsyncThunk(
   "detailProduct/updateMoreInfoProductAsync",
   async (payload) => {
     try {
-      const { id, value, formImg, _id } = payload;
-      const imgUpload = await uploadImage(
-        formImg,
-        localStorage.getItem("accessToken")
-      );
-      const { data } = imgUpload;
-      const dataPost = {
-        moreDesc: value.moreDesc,
-        table: value.table,
-        _id: _id,
-        url_img: [data],
-      };
-      const response = await updateMoreProductInfo(id, dataPost);
-      return response;
+      // const { id, value, formImg, _id } = payload;
+      // const imgUpload = await uploadImage(
+      //   formImg,
+      //   localStorage.getItem("accessToken")
+      // );
+      // const { data } = imgUpload;
+      // const dataPost = {
+      //   moreDesc: value.moreDesc,
+      //   table: value.table,
+      //   _id: _id,
+      //   url_img: [data],
+      // };
+      // const response = await updateMoreProductInfo(id, dataPost);
+      // return response;
+      const { value, formImg, id, _id, accessToken } = payload;
+      if (payload.formImg === null || payload.formImg === undefined) {
+        const dataPost = {
+          moreDesc: value.moreDesc,
+          table: value.table,
+          _id: _id,
+          url_img: payload.url_img,
+        };
+        console.log("dataPost", dataPost)
+        const response = await updateMoreProductInfo(id, dataPost);
+        return response;
+      } else {
+        const imgUpload = await uploadImage(formImg, accessToken);
+        const {data} = imgUpload
+        const dataPost = {
+          moreDesc: value.moreDesc,
+          table: value.table,
+          _id: _id,
+          url_img: [data],
+        };
+        console.log("dataPost", dataPost)
+        const response = await updateMoreProductInfo(id, dataPost);
+        return response;
+      }
     } catch (error) {
       console.log(error.response);
     }
@@ -154,7 +178,7 @@ export const detailProductSlice = createSlice({
               fontSize: "1.6rem",
             },
           });
-          state.data = action.payload.data
+          state.data = action.payload.data;
           state.isReload = true;
         }
       });
