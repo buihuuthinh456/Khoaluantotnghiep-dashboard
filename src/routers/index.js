@@ -15,6 +15,8 @@ import Orders from '../pagesSass/Orders'
 import AddForm from '../components_SASS/AddForm'
 import ImgSlider from '../pagesSass/ImgSlider'
 import Profile from '../pagesSass/Profile'
+import ForgetPassword from '../pagesSass/ForgetPassword'
+import ResetPassord from '../pagesSass/ResetPassord'
 
 
 // function index() {
@@ -42,6 +44,8 @@ const publicRoutes = [
   {path: '/orders', component: Orders },
   {path: '/imgSlider', component: ImgSlider },
   {path: '/profile/:userID', component: Profile },
+  {path: '/forgetPassWord', component: ForgetPassword},
+  {path: '/resetPassword', component: ResetPassord}
 ]
 
 export { publicRoutes }

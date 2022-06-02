@@ -235,6 +235,15 @@ export const historyPaymentByID = (id) => {
   });
 };
 
+// send request Password
+export const requestResetPassword = (payload) => {
+  return axios({
+    method: "POST",
+    url: `${URL}/user/password`,
+    data: payload
+  })
+}
+
 // Change password 
 
 export const changePassword = (payload) => {

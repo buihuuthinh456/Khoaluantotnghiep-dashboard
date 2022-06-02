@@ -39,6 +39,11 @@ function NavbarMenuMobile() {
       name: "Orders",
       icon: "ShoppingCart",
     },
+    {
+      path: "/imgSlider",
+      name: "Ảnh trượt",
+      icon: "ImageIcon",
+    },
   ];
   return (
     <div className={styles.container}>
