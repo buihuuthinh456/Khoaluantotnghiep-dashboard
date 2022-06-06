@@ -73,3 +73,9 @@
     line-height: 19px;
   }
 }
+
+:global(.MuiBadge-root) {
+  & :global(.MuiBadge-anchorOriginTopRightRectangular) {
+    font-size: 1.45rem;
+  }
+}

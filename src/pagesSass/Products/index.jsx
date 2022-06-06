@@ -89,13 +89,13 @@ function Products() {
   }, [mountForm]);
 
   const columns = [
-    { field: "id", headerName: "No", width: 30 },
+    { field: "id", headerName: "No", flex:0.2 },
     { field: "name", headerName: "Tên sản phẩm", flex: 1 },
-    { field: "category", headerName: "Phân loại", width: 150 },
+    { field: "category", headerName: "Phân loại", flex: 0.5 },
     {
       field: "price",
       headerName: "Giá tiền",
-      width: 150,
+      flex:0.5,
       renderCell: (param) => {
         return <span>{CurrencyFormat(param.row.price)}</span>;
       },
@@ -232,7 +232,7 @@ function Products() {
         {!mountForm && (
           <div className={styles.category}>
             <FormControl>
-              <InputLabel id="filter-data">Category</InputLabel>
+              <InputLabel id="filter-data">Phân loại</InputLabel>
               <Select
                 labelId="filter-data"
                 id="demo-simple-select"
@@ -240,7 +240,7 @@ function Products() {
                 label="Filter"
                 onChange={handleChangeCategory}
               >
-                <MenuItem value="all">All</MenuItem>
+                <MenuItem value="all">Toàn bộ sản phẩm</MenuItem>
                 {categories &&
                   categories.map((item) => {
                     return (
@@ -257,14 +257,14 @@ function Products() {
           <div className={styles.headerButton}>
             <Button variant="contained" onClick={() => handleAddForm()}>
               <AddIcon style={{ fontSize: 20 }}></AddIcon>
-              ADD
+              Thêm
             </Button>
           </div>
         ) : (
           <div className={styles.headerButton}>
             <Button variant="contained" onClick={() => handleAddForm()}>
               <ArrowBackIcon style={{ fontSize: 20 }} />
-              Back
+              Trở về
             </Button>
           </div>
         )}

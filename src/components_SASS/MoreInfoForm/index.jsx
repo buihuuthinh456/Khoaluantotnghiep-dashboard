@@ -135,7 +135,7 @@ function MoreInfoProduct({ id, isEdit, dataSend, afterSubmit }) {
                       event.preventDefault();
                     }}
                   >
-                    Submit
+                    Gửi
                   </Button>
                 </div>
               </div>

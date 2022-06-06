@@ -69,7 +69,7 @@ function User() {
       },
     },
     { field: "isAdmin", headerName: "Admin", flex: 1, type: 'boolean' },
-    { field: "_id", headerName: "Code", flex: 1 },
+    { field: "email", headerName: "Email", flex: 1 },
     { field: "Option", headerName: "Option", flex: 1, renderCell: (param) => {
         return (
             <div className={styles.option}>

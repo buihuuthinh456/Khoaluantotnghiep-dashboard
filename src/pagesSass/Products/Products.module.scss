@@ -66,8 +66,19 @@
     .optionBtn {
         position: relative;
         margin-right: 48px;
+        @include miniPC(){
+            margin-right: 8px;
+            &>button{
+                max-width: 32px;
+                // max-height: 24px;
+            }
+        }
         @include tablet() {
-            margin-right: 20px;
+            &>button{
+                max-width: 32px;
+                // max-height: 24px;
+            }
+            margin-right: 12px;
         }
         button {
             padding: 8px 0;

@@ -106,8 +106,8 @@ function Header() {
         </div>
       ) : (
         <div className={styles.loginSection}>
-          <Button style={{margin: 12}} variant="outlined" onClick={()=>navigate('/register')}>Register</Button>
-          <Button variant="contained" onClick={()=>navigate('/login')}>Login</Button>
+          <Button style={{margin: 12}} variant="outlined" onClick={()=>navigate('/register')}>Đăng kí</Button>
+          <Button variant="contained" onClick={()=>navigate('/login')}>Đăng nhập</Button>
         </div>
       )}
 

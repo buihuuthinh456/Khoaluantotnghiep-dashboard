@@ -135,7 +135,7 @@ function Login() {
 
   return (
     <Container>
-      <Header>Login Form</Header>
+      <Header>Đăng nhập</Header>
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={Yup.object({
@@ -161,7 +161,7 @@ function Login() {
                     : null
                 }
               >
-                Email Address<span style={{ color: "red" }}>*</span>
+                Địa chỉ email<span style={{ color: "red" }}>*</span>
               </Label>
               <Input
                 id="email"
@@ -174,7 +174,7 @@ function Login() {
                     ? "handling"
                     : null
                 }
-                placeholder="...Your Email"
+                placeholder="...Địa chỉ Email"
               />
             </Field>
             {formik.touched.email && formik.errors.email ? (
@@ -191,7 +191,7 @@ function Login() {
                     : null
                 }
               >
-                Your Password<span style={{ color: "red" }}>*</span>
+                Mật khẩu<span style={{ color: "red" }}>*</span>
               </Label>
               <Input
                 id="password"
@@ -204,7 +204,7 @@ function Login() {
                     ? "handling"
                     : null
                 }
-                placeholder="...Your password"
+                placeholder="...Mật khẩu"
               />
             </Field>
             {formik.touched.password && formik.errors.password ? (

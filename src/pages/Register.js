@@ -115,7 +115,7 @@ function Register() {
 
   return (
     <Container>
-        <Header>Register Form</Header>
+        <Header>Đăng kí</Header>
         <Text>Những thông tin có dấu <span style={{color:'red'}}>*</span> là những thông tin bắt buộc phải có</Text>
         <Formik
           initialValues={{ firstName: '', lastName: '', email: '',password:'',passwordConfirm:'' }}
@@ -139,14 +139,14 @@ function Register() {
               <Field>
                 <Label htmlFor="firstName"
                   state={formik.errors.firstName?"error":formik.touched.firstName?"handling":null}
-                >First Name<span style={{color:'red'}}>*</span></Label>
+                >Họ tên<span style={{color:'red'}}>*</span></Label>
                 <Input
                   id="firstName"
                   type="text"
                   {...formik.getFieldProps('firstName')}
                   state={formik.errors.firstName?"error":formik.touched.firstName?"handling":null}
                   
-                  placeholder="...First Name"
+                  placeholder="...Họ tên"
                   
                 />
               </Field>
@@ -157,14 +157,14 @@ function Register() {
               <Field>
                 <Label htmlFor="lastName"
                   state={formik.errors.lastName?"error":formik.touched.lastName?"handling":null}
-                >Last Name<span style={{color:'red'}}>*</span></Label>
+                >Tên<span style={{color:'red'}}>*</span></Label>
                 <Input
                   id="lastName"
                   type="text"
                   {...formik.getFieldProps('lastName')}
                   state={formik.errors.lastName?"error":formik.touched.lastName?"handling":null}
                   
-                  placeholder="...Last Name"
+                  placeholder="...Tên"
                 />
               </Field>
               {formik.touched.lastName && formik.errors.lastName ? (
@@ -176,14 +176,14 @@ function Register() {
                 <Label 
                   htmlFor="email"
                   state={formik.errors.email?"error":formik.touched.email?"handling":null}
-                >Email Address<span style={{color:'red'}}>*</span></Label>
+                >Địa chỉ email<span style={{color:'red'}}>*</span></Label>
                 <Input 
                   id="email" 
                   type="email" 
                   {...formik.getFieldProps('email')} 
                   state={formik.errors.email?"error":formik.touched.email?"handling":null}
                   
-                  placeholder="...Your Email"
+                  placeholder="...Email của bạn"
                 />
               </Field>
               {formik.touched.email && formik.errors.email ? (
@@ -193,14 +193,14 @@ function Register() {
                 <Label 
                   htmlFor="password"
                   state={formik.errors.password?"error":formik.touched.password?"handling":null}
-                >Your Password<span style={{color:'red'}}>*</span></Label>
+                >Mật khẩu<span style={{color:'red'}}>*</span></Label>
                 <Input 
                   id="password" 
                   type="password" 
                   {...formik.getFieldProps('password')} 
                   state={formik.errors.password?"error":formik.touched.password?"handling":null}
                   
-                  placeholder="...Your password"
+                  placeholder="...Mật khẩu"
                 />
               </Field>
               {formik.touched.password && formik.errors.password ? (
@@ -211,14 +211,14 @@ function Register() {
                 <Label 
                   htmlFor="passwordConfirm"
                   state={formik.errors.passwordConfirm?"error":formik.touched.passwordConfirm?"handling":null}
-                >Password Confirm<span style={{color:'red'}}>*</span></Label>
+                >Xác nhận mật khẩu<span style={{color:'red'}}>*</span></Label>
                 <Input 
                   id="passwordConfirm" 
                   type="password" 
                   {...formik.getFieldProps('passwordConfirm')} 
                   state={formik.errors.passwordConfirm?"error":formik.touched.passwordConfirm?"handling":null}
                   
-                  placeholder="...Password Confirm"
+                  placeholder="...Xác nhận mật khẩu"
                 />
               </Field>
               {formik.touched.passwordConfirm && formik.errors.passwordConfirm ? (

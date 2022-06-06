@@ -70,7 +70,7 @@ function DetailProduct() {
   return (
     <div className={styles.container}>
       <div className={styles.back}>
-        <Link to={"/products"}>Back</Link>
+        <Link to={"/products"}>Trở về</Link>
       </div>
       {detailProduct && (
         <div className={styles.productContent} key={detailProduct._id}>
@@ -90,7 +90,7 @@ function DetailProduct() {
             </div>
 
             <div className={styles.desc}>
-              <h2>Description</h2>
+              <h2>Mô tả</h2>
               <span>{detailProduct.description}</span>
             </div>
           </div>
@@ -135,14 +135,14 @@ function DetailProduct() {
                       setData(item);
                     }}
                   >
-                    Edit
+                    Chỉnh sửa
                   </Button>
                   <Button
                     variant="contained"
                     color="error"
                     onClick={() => handleDelete(item, productID)}
                   >
-                    Delete
+                    Xóa
                   </Button>
                 </div>
               </div>

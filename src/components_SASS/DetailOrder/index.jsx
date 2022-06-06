@@ -8,6 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Badge from '@mui/material/Badge';
 
 import CurrencyFormat from "../../functionJS";
 
@@ -87,8 +88,11 @@ function DetailOrder({ dataRow }) {
               cart.map((item, index) => {
                 return (
                   <li className={styles.cartItem} key={item._id}>
+                    {console.log("item", item)}
                     <div className={styles.imgWrapper}>
-                      <img src={item.images[0].url} alt="1231231" />
+                      <Badge badgeContent={item?.quantity} color="primary">
+                        <img src={item.images[0].url} alt="1231231" />
+                      </Badge>
                     </div>
                     <div className={styles.productInfo}>
                       <div className={styles.productName}>{item.name}</div>

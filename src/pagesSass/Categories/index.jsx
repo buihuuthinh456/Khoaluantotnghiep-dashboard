@@ -135,14 +135,14 @@ function Categories() {
           <div className={styles.headerButton}>
             <Button variant="contained" onClick={() => handleSwitchPage()}>
               <AddIcon style={{ fontSize: 20 }}></AddIcon>
-              ADD
+              Thêm
             </Button>
           </div>
         ) : (
           <div className={styles.headerButton}>
             <Button variant="contained" onClick={() => handleSwitchPage()}>
               <ArrowBackIcon style={{ fontSize: 20 }} />
-              Back
+              Trở về
             </Button>
           </div>
         )}

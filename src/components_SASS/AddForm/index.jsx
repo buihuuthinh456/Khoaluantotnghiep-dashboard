@@ -193,7 +193,7 @@ function AddForm({ isEdit, dataSend, afterSubmit }) {
                     }
                     fullWidth
                     id="productID"
-                    label="Product ID"
+                    label="Mã ID sản phẩm"
                     size="large"
                     {...formik.getFieldProps("productID")}
                   ></TextField>
@@ -227,7 +227,7 @@ function AddForm({ isEdit, dataSend, afterSubmit }) {
                     }
                     fullWidth
                     id="name"
-                    label="Name"
+                    label="Tên sản phẩm"
                     size="large"
                     {...formik.getFieldProps("name")}
                   ></TextField>
@@ -259,7 +259,7 @@ function AddForm({ isEdit, dataSend, afterSubmit }) {
                         : formik.touched.category && true
                     }
                   >
-                    <InputLabel id="filter-data">Category</InputLabel>
+                    <InputLabel id="filter-data">Phân loại</InputLabel>
                     <Select
                       labelId="filter-data"
                       id="category"
@@ -310,7 +310,7 @@ function AddForm({ isEdit, dataSend, afterSubmit }) {
                     }
                     fullWidth
                     id="price"
-                    label="Price"
+                    label="Giá tiền"
                     size="large"
                     {...formik.getFieldProps("price")}
                   ></TextField>
@@ -351,16 +351,16 @@ function AddForm({ isEdit, dataSend, afterSubmit }) {
                     }
                     style={{ width: "100%", minHeight: "200px" }}
                     id="description"
-                    label="description"
+                    label=""
                     size="large"
-                    placeholder="Description"
+                    placeholder="Mô tả sản phẩm"
                     {...formik.getFieldProps("description")}
                   ></TextField>
                 </div>
               </div>
 
               <div className={styles.imgUpload}>
-                <h1>Image</h1>
+                <h1>Ảnh sản phẩm</h1>
                 <input
                   type="file"
                   onChange={handleUpload}
