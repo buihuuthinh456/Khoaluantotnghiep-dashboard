@@ -8,6 +8,7 @@ import categoriesReducer from '../features/categories/categoriesSlice';
 import ordersReducer from '../features/orders/ordersSlice';
 import imgSliderReducer from '../features/imgSlider/imgSliderSlice';
 import profileReducer from '../features/profile/profileSlice';
+import analysisReducer from '../features/analysis/analysisSlice'
 
 
 export const store = configureStore({
@@ -21,5 +22,6 @@ export const store = configureStore({
     orders:ordersReducer,
     imgSlider: imgSliderReducer,
     profile: profileReducer,
+    analysis: analysisReducer,
   },
 });

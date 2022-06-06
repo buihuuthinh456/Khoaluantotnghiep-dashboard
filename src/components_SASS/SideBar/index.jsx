@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Sidebar.module.scss";
 import SidebarItem from "../SidebarItem";
 
-
+import BarChartIcon from '@mui/icons-material/BarChart';
 import { Person, ShoppingCart, HowToReg } from "@material-ui/icons";
 import CategoryIcon from "@mui/icons-material/Category";
 import PlaylistAddCheckCircleIcon from "@mui/icons-material/PlaylistAddCheckCircle";
@@ -41,6 +41,11 @@ function Sidebar() {
       path: "/imgSlider",
       name: "Ảnh trượt",
       icon: "ImageIcon",
+    },
+    {
+      path: "/analysis",
+      name: "Thống kê",
+      icon: "BarChartIcon",
     },
   ];
   return (

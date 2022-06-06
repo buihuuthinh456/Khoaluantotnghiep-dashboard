@@ -1,0 +1,44 @@
+@use "../../scss/" as *;
+
+.container {
+  padding: 20px 36px;
+}
+
+.title {
+}
+
+.header {
+}
+
+.dateChoose {
+  margin-top: 16px;
+  display: flex;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
+  label {
+    margin-right: 12px;
+    font-size: 1.6rem;
+    color: $text-color;
+    font-weight: 400;
+  }
+  .input {
+    input {
+      font-size: 1.45rem;
+      padding: 4px 8px;
+    }
+  }
+}
+
+.body {
+  margin-top: 20px;
+}
+
+.barChart {
+  // display: flex;
+  height: 60vh;
+}
+

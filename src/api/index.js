@@ -254,3 +254,12 @@ export const changePassword = (payload) => {
     data: payload
   })
 }
+
+// Data analysis
+export const getDataAnalysis = (query) => {
+  return axios({
+    method:"get",
+    url: `${URL}/analysis?${query}`,
+    headers: { Authorization: localStorage.getItem("accessToken") },
+  })
+}

@@ -17,6 +17,7 @@ import ImgSlider from '../pagesSass/ImgSlider'
 import Profile from '../pagesSass/Profile'
 import ForgetPassword from '../pagesSass/ForgetPassword'
 import ResetPassord from '../pagesSass/ResetPassord'
+import Analysis from '../pagesSass/Analysis'
 
 
 // function index() {
@@ -45,7 +46,8 @@ const publicRoutes = [
   {path: '/imgSlider', component: ImgSlider },
   {path: '/profile/:userID', component: Profile },
   {path: '/forgetPassWord', component: ForgetPassword},
-  {path: '/resetPassword', component: ResetPassord}
+  {path: '/resetPassword', component: ResetPassord},
+  {path: '/analysis', component: Analysis},
 ]
 
 export { publicRoutes }

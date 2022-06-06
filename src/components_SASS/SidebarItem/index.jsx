@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./SidebarItem.module.scss";
 import { Person, ShoppingCart, HowToReg } from "@material-ui/icons";
+import BarChartIcon from '@mui/icons-material/BarChart';
 import CategoryIcon from "@mui/icons-material/Category";
 import PlaylistAddCheckCircleIcon from "@mui/icons-material/PlaylistAddCheckCircle";
 import ImageIcon from '@mui/icons-material/Image';
@@ -26,6 +27,9 @@ function SidebarItem({ isSelected, icon, path, name, isCloseNav=null }) {
           )}
           {icon === "ImageIcon" && (
             <ImageIcon style={{ fontSize: 24 }} />
+          )}
+          {icon === "BarChartIcon" && (
+            <BarChartIcon style={{ fontSize: 24 }} />
           )}
         </div>
         <span>{name}</span>
