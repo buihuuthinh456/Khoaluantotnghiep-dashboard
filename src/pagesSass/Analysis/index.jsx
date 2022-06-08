@@ -102,33 +102,105 @@ function Analysis() {
       <div className={styles.body}>
         <div className={styles.barChart}>
           {dataChart && dataChart.length !== 0 && (
-            <Bar
-              responsive={true}
-              data={{
-                labels:
-                  dataChart &&
-                  dataChart?.accessData.map((item) => [item?.time]),
-                datasets: [
-                  {
-                    label: "Số lượt truy cập",
-                    backgroundColor: [
-                      "#3e95cd",
-                      "#8e5ea2",
-                      "#3cba9f",
-                      "#e8c3b9",
-                      "#c45850",
-                    ],
-                    data:
-                      dataChart &&
-                      dataChart?.accessData.map((item) => [item?.count]),
+            <>
+              <Bar
+                data={{
+                  labels:
+                    dataChart &&
+                    dataChart?.accessData.map((item) => [item?.time]),
+                  datasets: [
+                    {
+                      label: "Số lượt truy cập",
+                      backgroundColor: ["#3e95cd"],
+                      data:
+                        dataChart &&
+                        dataChart?.accessData.map((item) => [item?.count]),
+                    },
+                  ],
+                }}
+                options={{
+                  maintainAspectRatio: false,
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      position: "top",
+                    },
+                    title: {
+                      display: true,
+                      text: "Số lượt truy cập",
+                    },
                   },
-                ],
-              }}
-              options={{
-                maintainAspectRatio: false,
-                legend: { display: false },
-              }}
-            />
+                }}
+              />
+
+              <Bar
+                data={{
+                  labels:
+                    dataChart &&
+                    dataChart?.paymentData.map((item) => [item?.createdAt]),
+                  datasets: [
+                    {
+                      label: "Tổng giá tiền",
+                      yAxisID: "amount",
+                      backgroundColor: ["#3e95cd"],
+                      data:
+                        dataChart &&
+                        dataChart?.paymentData.map((item) => [item?.amount]),
+                    },
+                    {
+                      label: "Số đơn hàng",
+                      yAxisID: "countOrder",
+                      backgroundColor: ["rgba(255, 99, 132, 0.5)"],
+                      data:
+                        dataChart &&
+                        dataChart?.paymentData.map((item) => [
+                          item?.countOrder,
+                        ]),
+                    },
+                  ],
+                }}
+                options={{
+                  maintainAspectRatio: false,
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      position: "top",
+                    },
+                    title: {
+                      display: true,
+                      text: "Thanh toán",
+                    },
+                  },
+                  scales: {
+                    // yAxes: [{
+                    //   id: 'amount',
+                    //   position: 'left',
+                    // }, {
+                    //   display: false,
+                    //   id: 'countOrder',
+                    //   position: 'right',
+                    //   ticks: {
+                    //     max: 1,
+                    //     min: 0
+                    //   }
+                    // }]
+
+                    amount: {
+                      type: "linear",
+                      position: "left",
+                    },
+                    countOrder: {
+                      type: "linear",
+                      position: "right",
+                      ticks: {
+                        max: 1,
+                        min: 0,
+                      },
+                    },
+                  },
+                }}
+              />
+            </>
           )}
         </div>
       </div>
